@@ -2,18 +2,16 @@ package com.example.aleperf.bakingapp;
 
 import java.util.List;
 
-/**
- * Created by Tundra on 09/03/2018.
- */
+
 
 public class Recipe {
 
     public int id;
     public String name;
-    List<Ingredient> ingredients;
-    List<Step> steps;
-    int servings;
-    String image;
+    public List<Ingredient> ingredients;
+    public List<Step> steps;
+    public int servings;
+    public String image;
 
     public int getId() {
         return id;
@@ -40,11 +38,11 @@ public class Recipe {
     }
 
     public class Ingredient{
-        int quantity;
+        float quantity;
         String measure;
         String ingredient;
 
-        public int getQuantity() {
+        public float getQuantity() {
             return quantity;
         }
 
@@ -61,7 +59,7 @@ public class Recipe {
         int id;
         String shortDescription;
         String description;
-        String videoUrl;
+        String videoURL;
         String thumbnailURL;
 
         public int getId() {
@@ -76,8 +74,8 @@ public class Recipe {
             return description;
         }
 
-        public String getVideoUrl() {
-            return videoUrl;
+        public String getVideoURL() {
+            return videoURL;
         }
 
         public String getThumbnailURL() {
