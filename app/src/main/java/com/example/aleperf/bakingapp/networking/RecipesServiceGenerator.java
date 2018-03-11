@@ -1,4 +1,4 @@
-package com.example.aleperf.bakingapp;
+package com.example.aleperf.bakingapp.networking;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;

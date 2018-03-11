@@ -1,4 +1,4 @@
-package com.example.aleperf.bakingapp;
+package com.example.aleperf.bakingapp.model;
 
 import java.util.List;
 
