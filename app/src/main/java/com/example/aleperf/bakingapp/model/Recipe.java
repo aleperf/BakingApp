@@ -51,10 +51,16 @@ public class Recipe {
         return image;
     }
 
-    public class Ingredient{
+    public static class Ingredient{
         float quantity;
         String measure;
         String ingredient;
+
+        public Ingredient(float quantity, String measure, String ingredient){
+            this.quantity = quantity;
+            this.measure = measure;
+            this.ingredient = ingredient;
+        }
 
         public float getQuantity() {
             return quantity;
@@ -69,7 +75,7 @@ public class Recipe {
         }
     }
 
-    public class Step{
+    public static class Step{
         int id;
         String shortDescription;
         String description;
