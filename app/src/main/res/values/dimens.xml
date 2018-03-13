@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- recipe_card_item dimensions (cardView) -->
     <dimen name="card_view_width">300dp</dimen>
     <dimen name="card_view_height">220dp</dimen>
     <dimen name="card_view_image_height">120dp</dimen>

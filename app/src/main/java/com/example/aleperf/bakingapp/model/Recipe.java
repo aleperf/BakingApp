@@ -1,17 +1,31 @@
 package com.example.aleperf.bakingapp.model;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+
 import java.util.List;
 
 
-
+@Entity(tableName = "RECIPES_TABLE")
 public class Recipe {
 
+    @PrimaryKey
     public int id;
     public String name;
     public List<Ingredient> ingredients;
     public List<Step> steps;
     public int servings;
     public String image;
+
+    public Recipe(int id, String name, List<Ingredient> ingredients, List<Step> steps, int servings, String image){
+        this.id = id;
+        this.name = name;
+        this.ingredients = ingredients;
+        this.steps = steps;
+        this.servings = servings;
+        this.image = image;
+
+    }
 
     public int getId() {
         return id;
