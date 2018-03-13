@@ -1,6 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-</android.support.constraint.ConstraintLayout>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_margin="16dp"
+    android:padding="8dp"
+    android:layout_width="@dimen/card_view_width"
+    android:layout_height="@dimen/card_view_height"
+    android:layout_gravity="center_horizontal"
+    android:background="@color/cardColor"
+    app:cardCornerRadius="@dimen/card_view_corner_radius"
+    app:cardElevation="2dp">
+
+    <android.support.constraint.ConstraintLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/cardColor">
+
+
+        <ImageView
+            android:id="@+id/cake_image"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/card_view_image_height"
+            android:scaleType="fitXY"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/cake_placeholder_16_9" />
+
+        <TextView
+            android:id="@+id/cake_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/CardViewTitle"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:textSize="21sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cake_image"
+            tools:text="Nutella Pie" />
+
+        <TextView
+            android:id="@+id/servings_label"
+            style="@style/CardViewStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:text="Servings: "
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cake_name"
+            tools:text="Servings: " />
+
+        <TextView
+            android:id="@+id/servings_number"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            style="@style/CardViewStyle"
+            android:layout_marginStart="8dp"
+            tools:text="8"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/servings_label"
+            app:layout_constraintStart_toEndOf="@+id/servings_label" />
+
+        <TextView
+            android:id="@+id/steps_label"
+            style="@style/CardViewStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Steps: "
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/servings_label"
+            app:layout_constraintEnd_toStartOf="@+id/steps_number"
+            app:layout_constraintTop_toBottomOf="@+id/cake_name"
+            tools:text="Steps: " />
+
+        <TextView
+            android:id="@+id/steps_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/CardViewStyle"
+            android:layout_marginEnd="24dp"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/steps_label"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="10" />
+    </android.support.constraint.ConstraintLayout>
+</android.support.v7.widget.CardView>

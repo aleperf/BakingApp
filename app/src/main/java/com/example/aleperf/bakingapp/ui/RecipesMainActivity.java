@@ -5,6 +5,9 @@ import android.os.Bundle;
 
 import com.example.aleperf.bakingapp.R;
 
+/**
+ * Launcher for the app, coordinates fragments.
+ */
 public class RecipesMainActivity extends AppCompatActivity {
 
     private static String TAG = RecipesMainActivity.class.getSimpleName();
