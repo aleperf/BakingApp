@@ -4,7 +4,6 @@ package com.example.aleperf.bakingapp.ui;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,9 +35,6 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipesV
     @Override
     public void onBindViewHolder(@NonNull RecipesViewHolder holder, int position) {
         Recipe recipe = recipes.get(position);
-        if(recipe == null){
-            Log.d("uffa", "la recipe nell'adapter è null");
-        }
         holder.bindRecipe(recipe);
     }
 
@@ -73,7 +69,6 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipesV
         }
 
         public void bindRecipe(Recipe recipe){
-            Log.d("uffa", "sto chiamando binding");
             String imageUrl = recipe.getImage();
             if(imageUrl != null && imageUrl.length() > 0){
                 //loadImage with Picasso
