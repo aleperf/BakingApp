@@ -75,7 +75,7 @@ public class Recipe {
         }
     }
 
-    public static class Step{
+    public static class Step {
         int id;
         String shortDescription;
         String description;
