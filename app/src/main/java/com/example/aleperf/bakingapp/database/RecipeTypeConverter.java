@@ -1,14 +1,10 @@
 package com.example.aleperf.bakingapp.database;
 
-
 import android.arch.persistence.room.TypeConverter;
-
-import com.example.aleperf.bakingapp.model.Recipe;
 import com.example.aleperf.bakingapp.model.Recipe.Ingredient;
 import com.example.aleperf.bakingapp.model.Recipe.Step;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,14 +38,14 @@ public class RecipeTypeConverter {
             return new ArrayList<>();
         }
 
-        Type recipeListType = new TypeToken<List<Ingredient>>() {
+        Type recipeListType = new TypeToken<List<Step>>() {
         }.getType();
 
         return gson.fromJson(jsonString, recipeListType);
     }
 
     @TypeConverter
-    String convertStepListToJson(List<Step> steps) {
+   public static String convertStepListToJson(List<Step> steps) {
         return gson.toJson(steps);
     }
 

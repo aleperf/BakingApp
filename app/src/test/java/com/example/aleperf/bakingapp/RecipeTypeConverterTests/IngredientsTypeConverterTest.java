@@ -1,4 +1,4 @@
-package com.example.aleperf.bakingapp;
+package com.example.aleperf.bakingapp.RecipeTypeConverterTests;
 
 
 
@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class IngredientsConverterTest {
+public class IngredientsTypeConverterTest {
 
     private final static float QUANTITY_1 = 2f;
     private final static float QUANTITY_2 = 6f;
@@ -35,15 +35,11 @@ public class IngredientsConverterTest {
     private final static String INGREDIENT_7 = "Mascapone Cheese(room temperature)";
     private final static String INGREDIENT_8 = "heavy cream(cold)";
 
-    private final static Ingredient INGREDIENT_A = new Ingredient(2f, "CUP","Graham Cracker crumbs" );
-    private final static Ingredient INGREDIENT_B = new Ingredient(6f, "TBLSP", "unsalted butter, melted");
+    private final static Ingredient INGREDIENT_A = new Ingredient(2.5f, "CUP","Graham Cracker crumbs" );
+    private final static Ingredient INGREDIENT_B = new Ingredient(6.5f, "TBLSP", "unsalted butter, melted");
     private final static Ingredient INGREDIENT_C = new Ingredient(1.5f, "TSP","granulated sugar");
 
-    private final String JSON_MOCK = "[{\"quantity\":2.0,\"measure\":\"CUP\",\"ingredient\":\"Graham Cracker crumbs\"},{\"quantity\":6.0,\"measure\":\"TBLSP\",\"ingredient\":\"unsalted butter, melted\"},{\"quantity\":1.5,\"measure\":\"TSP\",\"ingredient\":\"granulated sugar\"}]";
-
-
-
-
+    private final String JSON_MOCK = "[{\"quantity\":2.5,\"measure\":\"CUP\",\"ingredient\":\"Graham Cracker crumbs\"},{\"quantity\":6.5,\"measure\":\"TBLSP\",\"ingredient\":\"unsalted butter, melted\"},{\"quantity\":1.5,\"measure\":\"TSP\",\"ingredient\":\"granulated sugar\"}]";
 
     private final static String NUTELLA_PIE_INGREDIENTS_JSON = "[\n" +
             "      {\n" +
