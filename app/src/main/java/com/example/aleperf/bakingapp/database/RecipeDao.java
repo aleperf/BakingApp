@@ -2,27 +2,42 @@ package com.example.aleperf.bakingapp.database;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
+import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
+import android.arch.persistence.room.Update;
 
 import com.example.aleperf.bakingapp.model.Recipe;
 
 import java.util.List;
+
+
 
 import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
 
 @Dao
 public interface RecipeDao {
 
-    @Query("SELECT * FROM Recipe.RECIPES_TABLE")
+    @Query("SELECT * FROM RECIPES_TABLE")
     LiveData<List<Recipe>> getAllRecipes();
 
-    @Query("SELECT * FROM Recipe.RECIPES_TABLE WHERE id = :id LIMIT 1")
+    @Query("SELECT * FROM RECIPES_TABLE WHERE id = :id LIMIT 1")
     Recipe getRecipeWithId(int id);
 
     @Insert(onConflict = REPLACE)
-    void insertRecipes(List<Recipe> recipes);
+    void insertAllRecipes(List<Recipe> recipes);
 
     @Insert(onConflict = REPLACE)
     void insertRecipe(Recipe recipe);
+
+    @Delete
+    void deleteRecipe(Recipe recipe);
+
+    @Delete
+    void deleteAllRecipes(List<Recipe> recipes);
+
+    @Update(onConflict = REPLACE)
+    void updateRecipe(Recipe recipe);
+
+
 }

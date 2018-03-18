@@ -5,4 +5,5 @@
     <color name="colorAccent">#FF4081</color>
     <color name="cardColor">#FCDCE1</color>
     <color name="card_textview_color">#663401</color>
+    <color name="toolbar_title">#FFFFFF</color>
 </resources>
