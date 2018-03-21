@@ -14,6 +14,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.Maybe;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -30,7 +31,7 @@ public class RecipesViewModel extends ViewModel {
         this.repository = repository;
     }
 
-    public LiveData<List<Recipe>> getRecipes(){
+    public Maybe<List<Recipe>> getRecipes(){
 
         return repository.getAllRecipes();
     }

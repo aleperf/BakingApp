@@ -12,6 +12,9 @@ import com.example.aleperf.bakingapp.model.Recipe;
 import java.util.List;
 
 
+import io.reactivex.Flowable;
+import io.reactivex.Maybe;
+import io.reactivex.Single;
 
 import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
 
@@ -19,10 +22,13 @@ import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
 public interface RecipeDao {
 
     @Query("SELECT * FROM RECIPES_TABLE")
-    LiveData<List<Recipe>> getAllRecipes();
+    Maybe<List<Recipe>> getAllRecipes();
+
+    @Query("SELECT COUNT ID FROM RECIPES_TABLE")
+    Single<Integer> getNumberOfRecipes();
 
     @Query("SELECT * FROM RECIPES_TABLE WHERE id = :id LIMIT 1")
-    Recipe getRecipeWithId(int id);
+    Single<Recipe> getRecipeWithId(int id);
 
     @Insert(onConflict = REPLACE)
     void insertAllRecipes(List<Recipe> recipes);
