@@ -24,8 +24,8 @@ public interface RecipeDao {
     @Query("SELECT * FROM RECIPES_TABLE")
     Maybe<List<Recipe>> getAllRecipes();
 
-    @Query("SELECT COUNT ID FROM RECIPES_TABLE")
-    Single<Integer> getNumberOfRecipes();
+    @Query("SELECT COUNT (ID) FROM RECIPES_TABLE")
+    Maybe<Integer> getNumberOfRecipes();
 
     @Query("SELECT * FROM RECIPES_TABLE WHERE id = :id LIMIT 1")
     Single<Recipe> getRecipeWithId(int id);

@@ -3,6 +3,7 @@ package com.example.aleperf.bakingapp.ui;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,24 +16,43 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.aleperf.bakingapp.BakingApplication;
 import com.example.aleperf.bakingapp.R;
 import com.example.aleperf.bakingapp.RecipesViewModel;
 import com.example.aleperf.bakingapp.model.Recipe;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
+import io.reactivex.MaybeObserver;
+import io.reactivex.disposables.Disposable;
+
 /**
  * Shows the intro cards for every recipe
  */
 public class RecipesMasterFragment extends Fragment{
+
+    private final String TAG = RecipesMasterFragment.class.getSimpleName();
     RecyclerView recipesGrid;
     RecipesViewModel model;
     RecipesAdapter adapter;
+    @Inject
+    ViewModelProvider.Factory viewModelFactory;
+
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        model = ViewModelProviders.of(getActivity()).get(RecipesViewModel.class);
+        ((BakingApplication)getActivity().getApplication()).getBakingApplicationComponent().inject(this);
+
+
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
     }
 
@@ -45,19 +65,33 @@ public class RecipesMasterFragment extends Fragment{
         recipesGrid.setLayoutManager(gridLayoutManager);
         adapter = new RecipesAdapter(getActivity());
         recipesGrid.setAdapter(adapter);
-
-        model.getRecipes().observe(this, new Observer<List<Recipe>>(){
+        model = ViewModelProviders.of(this, viewModelFactory).get(RecipesViewModel.class);
+        model.getRecipes().subscribe(new MaybeObserver<List<Recipe>>() {
             @Override
-            public void onChanged(@Nullable List<Recipe>listLiveData) {
-                if(listLiveData != null){
-                    adapter.setRecipes(listLiveData);
+            public void onSubscribe(Disposable d) {
 
-                } else {
-                    Log.d("TAG", "listLiveData is null");
-                }
+            }
+
+            @Override
+            public void onSuccess(List<Recipe> recipes) {
+                Log.d(TAG, "Recipes loaded, recipes.size() = " + String.valueOf(recipes.size()));
+                adapter.setRecipes(recipes);
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.d(TAG, "error: " + e.getMessage());
+            }
+
+            @Override
+            public void onComplete() {
+
             }
         });
         return root;
 
     }
+
+
 }

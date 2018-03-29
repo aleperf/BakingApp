@@ -1,31 +1,19 @@
 package com.example.aleperf.bakingapp.database;
 
 
-import android.arch.lifecycle.LifecycleOwner;
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.Observer;
-import android.content.Context;
-import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.example.aleperf.bakingapp.model.Recipe;
-import com.example.aleperf.bakingapp.networking.RecipesClient;
+import com.example.aleperf.bakingapp.networking.RecipesService;
 
-import org.reactivestreams.Subscription;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import io.reactivex.Completable;
-import io.reactivex.Flowable;
 import io.reactivex.Maybe;
 import io.reactivex.MaybeObserver;
-import io.reactivex.Observable;
-import io.reactivex.Scheduler;
 import io.reactivex.Single;
-import io.reactivex.SingleOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
@@ -33,62 +21,32 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RecipeRepositoryImpl implements RecipeRepository{
+/**
+ * Implementation of the Repository Pattern. The repository is the only source of data in the app,
+ * it manage the database and the networking.
+ */
+
+public class RecipeRepositoryImpl implements RecipeRepository {
 
     private final String TAG = RecipeRepositoryImpl.class.getSimpleName();
 
+
     RecipeDao recipeDao;
 
-    RecipesClient client;
-
-
+    RecipesService client;
 
 
     @Inject
-    public RecipeRepositoryImpl(RecipeDao recipeDao, RecipesClient client){
+    public RecipeRepositoryImpl(RecipeDao recipeDao, RecipesService client) {
         this.recipeDao = recipeDao;
         this.client = client;
-
-        getAllRecipes().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
-                new MaybeObserver<List<Recipe>>() {
-                    List<Recipe> actualRecipes = new ArrayList<>();
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onSuccess(List<Recipe> recipes) {
-                     actualRecipes.addAll(recipes);
-                     Log.d(TAG, "adding recipes in onSuccess, recipes.size = " + String.valueOf(recipes.size()));
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-                     if(actualRecipes.size() == 0){
-                         Log.d(TAG, "No recipes found");
-                         loadRecipes();
-                     }
-                    }
-                }
-        );
-
-
-
-
-        }
-        //qui potrei far partire il network
-        //TODO potrei far partire il networking da qui, con una chiamata ad initializeDatabase.
+    }
 
 
     @Override
     public Maybe<List<Recipe>> getAllRecipes() {
-       return getAllRecipes().observeOn(AndroidSchedulers.mainThread());
+        checkForEmptyDatabase();
+        return recipeDao.getAllRecipes().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 
     @Override
@@ -98,26 +56,79 @@ public class RecipeRepositoryImpl implements RecipeRepository{
 
     @Override
     public void insertAllRecipes(List<Recipe> recipes) {
-        if(recipes == null){
-          return;
+        if (recipes == null) {
+            return;
         }
-        Completable.fromAction(()-> recipeDao.insertAllRecipes(recipes)).subscribeOn(Schedulers.io());
+        Completable.fromAction(() -> recipeDao.insertAllRecipes(recipes)).subscribeOn(Schedulers.io()).subscribe();
 
     }
 
     @Override
     public void insertRecipe(Recipe recipe) {
+        if (recipe == null) {
+            return;
+        }
 
-        Completable.fromAction(()-> recipeDao.insertRecipe(recipe)).subscribeOn(Schedulers.io());
+        Completable.fromAction(() -> recipeDao.insertRecipe(recipe)).subscribeOn(Schedulers.io());
     }
 
-    private void loadRecipes(){
+    /**
+     * Check if the database is empty, if it is empty load recipes
+     * from network and insert new data in the database
+     */
+
+    public void checkForEmptyDatabase() {
+        recipeDao.getNumberOfRecipes().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
+                new MaybeObserver<Integer>() {
+                    Integer recipeCount = 0;
+
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        Log.d(TAG, "subscribing in Maybe");
+                    }
+
+                    @Override
+                    public void onSuccess(Integer integer) {
+
+                        recipeCount = integer;
+                        Log.d(TAG, "in onSuccess, recipeCount == " + recipeCount);
+                        if (recipeCount == 0) {
+                            loadRecipes();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        Log.d(TAG, "in on Complete, recipeCount == " + recipeCount);
+                        if (recipeCount == 0) {
+                            Log.d(TAG, "in on complete, loading recipes");
+                            loadRecipes();
+                        }
+                    }
+                }
+        );
+    }
+
+    /**
+     * Load recipes from network and insert them in the database
+     */
+
+    private void loadRecipes() {
         Call<List<Recipe>> call = client.getAllRecipes();
         call.enqueue(new Callback<List<Recipe>>() {
             @Override
             public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
                 List<Recipe> responseRecipes = response.body();
-                recipeDao.insertAllRecipes(responseRecipes);
+                insertAllRecipes(responseRecipes);
+                Log.d(TAG, "recipes inserted");
+                if (responseRecipes != null) {
+                    Log.d(TAG, "recipes size: " + responseRecipes.size());
+                }
 
             }
 

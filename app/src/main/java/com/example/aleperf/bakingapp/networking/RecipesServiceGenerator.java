@@ -20,7 +20,7 @@ public class RecipesServiceGenerator {
 
     private static Retrofit retrofit = builder.build();
 
-    public static RecipesClient createRecipeService() {
-        return retrofit.create(RecipesClient.class);
+    public static RecipesService createRecipeService() {
+        return retrofit.create(RecipesService.class);
     }
 }
