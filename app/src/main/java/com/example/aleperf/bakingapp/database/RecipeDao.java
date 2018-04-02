@@ -22,7 +22,7 @@ import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
 public interface RecipeDao {
 
     @Query("SELECT * FROM RECIPES_TABLE")
-    Maybe<List<Recipe>> getAllRecipes();
+    LiveData<List<Recipe>> getAllRecipes();
 
     @Query("SELECT COUNT (ID) FROM RECIPES_TABLE")
     Maybe<Integer> getNumberOfRecipes();

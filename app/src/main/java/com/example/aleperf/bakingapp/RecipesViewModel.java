@@ -1,5 +1,6 @@
 package com.example.aleperf.bakingapp;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
 import android.support.v7.widget.RecyclerView;
 
@@ -17,17 +18,19 @@ public class RecipesViewModel extends ViewModel {
 
     private static final String TAG = RecipesViewModel.class.getSimpleName();
 
-    private Maybe<List<Recipe>> recipes;
+    private RecipeRepositoryImpl repository;
+
 
 
     @Inject
     public RecipesViewModel(RecipeRepositoryImpl repository){
 
-        recipes = repository.getAllRecipes();
+        this.repository = repository;
+
     }
 
-    public Maybe<List<Recipe>> getRecipes(){
+    public LiveData<List<Recipe>> getRecipes(){
 
-        return recipes;
+        return repository.getAllRecipes();
     }
 }

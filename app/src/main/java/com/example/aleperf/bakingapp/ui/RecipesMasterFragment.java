@@ -39,6 +39,7 @@ public class RecipesMasterFragment extends Fragment{
     RecipesAdapter adapter;
     @Inject
     ViewModelProvider.Factory viewModelFactory;
+    LiveData<List<Recipe>> recipes;
 
 
 
@@ -53,7 +54,9 @@ public class RecipesMasterFragment extends Fragment{
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
+        model = ViewModelProviders.of(this, viewModelFactory).get(RecipesViewModel.class);
+        recipes = model.getRecipes();
+        subscribe();
     }
 
     @Nullable
@@ -65,32 +68,20 @@ public class RecipesMasterFragment extends Fragment{
         recipesGrid.setLayoutManager(gridLayoutManager);
         adapter = new RecipesAdapter(getActivity());
         recipesGrid.setAdapter(adapter);
-        model = ViewModelProviders.of(this, viewModelFactory).get(RecipesViewModel.class);
-        model.getRecipes().subscribe(new MaybeObserver<List<Recipe>>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-
-            }
-
-            @Override
-            public void onSuccess(List<Recipe> recipes) {
-                Log.d(TAG, "Recipes loaded, recipes.size() = " + String.valueOf(recipes.size()));
-                adapter.setRecipes(recipes);
-
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                Log.d(TAG, "error: " + e.getMessage());
-            }
-
-            @Override
-            public void onComplete() {
-
-            }
-        });
         return root;
 
+    }
+
+    private void subscribe(){
+        Observer observer = (Observer<List<Recipe>>) recipes -> {
+            if(recipes != null){
+                adapter.setRecipes(recipes);
+            } else {
+                //show here empty message or dialog prompting for connection
+                Log.d(TAG, "adapter is null");
+            }
+        };
+        recipes.observe(this, observer);
     }
 
 

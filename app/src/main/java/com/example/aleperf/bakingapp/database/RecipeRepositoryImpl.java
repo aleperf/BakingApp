@@ -1,6 +1,7 @@
 package com.example.aleperf.bakingapp.database;
 
 
+import android.arch.lifecycle.LiveData;
 import android.util.Log;
 
 import com.example.aleperf.bakingapp.model.Recipe;
@@ -11,7 +12,6 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.reactivex.Completable;
-import io.reactivex.Maybe;
 import io.reactivex.MaybeObserver;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -33,20 +33,26 @@ public class RecipeRepositoryImpl implements RecipeRepository {
 
     RecipeDao recipeDao;
 
-    RecipesService client;
+    RecipesService recipeService;
+
+    LiveData<List<Recipe>> recipes;
 
 
     @Inject
-    public RecipeRepositoryImpl(RecipeDao recipeDao, RecipesService client) {
+    public RecipeRepositoryImpl(RecipeDao recipeDao, RecipesService recipeService) {
         this.recipeDao = recipeDao;
-        this.client = client;
+        this.recipeService = recipeService;
+        recipes = recipeDao.getAllRecipes();
+        initializeDatabase();
     }
 
 
     @Override
-    public Maybe<List<Recipe>> getAllRecipes() {
-        checkForEmptyDatabase();
-        return recipeDao.getAllRecipes().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+    public LiveData<List<Recipe>> getAllRecipes() {
+        if (recipes == null || recipes.getValue() == null) {
+            loadRecipes();
+        }
+        return recipes;
     }
 
     @Override
@@ -77,21 +83,18 @@ public class RecipeRepositoryImpl implements RecipeRepository {
      * from network and insert new data in the database
      */
 
-    public void checkForEmptyDatabase() {
-        recipeDao.getNumberOfRecipes().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
+    public void initializeDatabase() {
+        recipeDao.getNumberOfRecipes().subscribeOn(Schedulers.io()).observeOn(Schedulers.io()).subscribe(
                 new MaybeObserver<Integer>() {
                     Integer recipeCount = 0;
 
                     @Override
                     public void onSubscribe(Disposable d) {
-                        Log.d(TAG, "subscribing in Maybe");
                     }
 
                     @Override
                     public void onSuccess(Integer integer) {
-
                         recipeCount = integer;
-                        Log.d(TAG, "in onSuccess, recipeCount == " + recipeCount);
                         if (recipeCount == 0) {
                             loadRecipes();
                         }
@@ -104,9 +107,7 @@ public class RecipeRepositoryImpl implements RecipeRepository {
 
                     @Override
                     public void onComplete() {
-                        Log.d(TAG, "in on Complete, recipeCount == " + recipeCount);
                         if (recipeCount == 0) {
-                            Log.d(TAG, "in on complete, loading recipes");
                             loadRecipes();
                         }
                     }
@@ -119,17 +120,14 @@ public class RecipeRepositoryImpl implements RecipeRepository {
      */
 
     private void loadRecipes() {
-        Call<List<Recipe>> call = client.getAllRecipes();
+        Call<List<Recipe>> call = recipeService.getAllRecipes();
         call.enqueue(new Callback<List<Recipe>>() {
             @Override
             public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
                 List<Recipe> responseRecipes = response.body();
-                insertAllRecipes(responseRecipes);
-                Log.d(TAG, "recipes inserted");
-                if (responseRecipes != null) {
-                    Log.d(TAG, "recipes size: " + responseRecipes.size());
+                if (responseRecipes != null && responseRecipes.size() > 0) {
+                    insertAllRecipes(responseRecipes);
                 }
-
             }
 
             @Override
