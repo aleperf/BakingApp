@@ -49,7 +49,7 @@ public class RecipeRepositoryImpl implements RecipeRepository {
 
     @Override
     public LiveData<List<Recipe>> getAllRecipes() {
-        if (recipes == null || recipes.getValue() == null) {
+        if (recipes == null || recipes.getValue() == null || recipes.getValue().size() == 0) {
             loadRecipes();
         }
         return recipes;

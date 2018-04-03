@@ -31,8 +31,8 @@ public class RecipeDatabaseModule {
 
     @Provides
     @BakingApplicationScope
-    RecipeRepositoryImpl provideRecipeRepositoryImpl(RecipeDao recipeDao, RecipesService client){
-        return new RecipeRepositoryImpl(recipeDao, client);
+    RecipeRepositoryImpl provideRecipeRepositoryImpl(RecipeDao recipeDao, RecipesService recipesService){
+        return new RecipeRepositoryImpl(recipeDao, recipesService);
     }
 
     @Provides
