@@ -7,13 +7,19 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+
     <style name="CardViewStyle" parent="AppTheme">
         <item name="android:background">@color/cardColor</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/card_textview_color</item>
     </style>
+
     <style name="CardViewTitle" parent="CardViewStyle">
         <item name="android:textSize">21sp</item>
     </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>

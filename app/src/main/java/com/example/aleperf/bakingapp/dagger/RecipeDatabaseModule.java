@@ -8,6 +8,7 @@ import android.arch.persistence.room.Room;
 import com.example.aleperf.bakingapp.BakingViewModelProviderFactory;
 import com.example.aleperf.bakingapp.database.RecipeDao;
 import com.example.aleperf.bakingapp.database.RecipeDatabase;
+import com.example.aleperf.bakingapp.database.RecipeRepository;
 import com.example.aleperf.bakingapp.database.RecipeRepositoryImpl;
 import com.example.aleperf.bakingapp.networking.RecipesService;
 
@@ -31,7 +32,7 @@ public class RecipeDatabaseModule {
 
     @Provides
     @BakingApplicationScope
-    RecipeRepositoryImpl provideRecipeRepositoryImpl(RecipeDao recipeDao, RecipesService recipesService){
+    RecipeRepository provideRecipeRepository(RecipeDao recipeDao, RecipesService recipesService){
         return new RecipeRepositoryImpl(recipeDao, recipesService);
     }
 
@@ -49,7 +50,7 @@ public class RecipeDatabaseModule {
 
     @Provides
     @BakingApplicationScope
-    ViewModelProvider.Factory  getViewModelFactory(RecipeRepositoryImpl repository){
+    ViewModelProvider.Factory  getViewModelFactory(RecipeRepository repository){
         return new BakingViewModelProviderFactory(repository);
     }
 

@@ -5,16 +5,17 @@ import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import android.support.annotation.NonNull;
 
+import com.example.aleperf.bakingapp.database.RecipeRepository;
 import com.example.aleperf.bakingapp.database.RecipeRepositoryImpl;
 
 import javax.inject.Inject;
 
 public class BakingViewModelProviderFactory implements ViewModelProvider.Factory {
 
-    private final RecipeRepositoryImpl repository;
+    private final RecipeRepository repository;
 
     @Inject
-    public BakingViewModelProviderFactory(RecipeRepositoryImpl repository){
+    public BakingViewModelProviderFactory(RecipeRepository repository){
         this.repository = repository;
     }
     @NonNull

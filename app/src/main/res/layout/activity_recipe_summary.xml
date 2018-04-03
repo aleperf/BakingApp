@@ -28,7 +28,7 @@
 
         <fragment
             android:id="@+id/master_recipe_cards"
-            android:name="com.example.aleperf.bakingapp.ui.RecipesMasterFragment"
+            android:name="com.example.aleperf.bakingapp.ui.RecipeSummaryFragment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal" />
