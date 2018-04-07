@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.RecipeSummaryActivity"
+            android:name=".ui.RecipeDetailActivity"
             android:label="@string/title_activity_recipe_summary"
             android:theme="@style/AppTheme"></activity>
     </application>

@@ -15,7 +15,7 @@ import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
 public interface RecipeRepository {
 
     LiveData<List<Recipe>> getAllRecipes();
-    Single<Recipe> getRecipeWithId(int id);
+    LiveData<Recipe> getRecipeWithId(int id);
     void insertAllRecipes(List<Recipe> recipes);
     void insertRecipe(Recipe recipe);
 }

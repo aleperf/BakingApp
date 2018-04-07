@@ -20,6 +20,10 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipesV
     private List<Recipe> recipes;
     private Context context;
 
+    public interface RecipeCallback{
+        void onClickRecipe(int id);
+    }
+
     public RecipesAdapter(Context context){
         this.context = context;
     }

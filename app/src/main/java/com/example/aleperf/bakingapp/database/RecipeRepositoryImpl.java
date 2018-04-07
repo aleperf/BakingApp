@@ -56,8 +56,8 @@ public class RecipeRepositoryImpl implements RecipeRepository {
     }
 
     @Override
-    public Single<Recipe> getRecipeWithId(int id) {
-        return recipeDao.getRecipeWithId(id).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+    public LiveData<Recipe> getRecipeWithId(int id) {
+        return recipeDao.getRecipeWithId(id);
     }
 
     @Override

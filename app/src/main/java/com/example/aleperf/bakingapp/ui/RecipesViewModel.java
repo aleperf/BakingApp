@@ -1,18 +1,14 @@
-package com.example.aleperf.bakingapp;
+package com.example.aleperf.bakingapp.ui;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
-import android.support.v7.widget.RecyclerView;
 
 import com.example.aleperf.bakingapp.database.RecipeRepository;
-import com.example.aleperf.bakingapp.database.RecipeRepositoryImpl;
 import com.example.aleperf.bakingapp.model.Recipe;
 
 import java.util.List;
 
 import javax.inject.Inject;
-
-import io.reactivex.Maybe;
 
 
 public class RecipesViewModel extends ViewModel {

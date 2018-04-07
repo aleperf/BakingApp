@@ -28,7 +28,7 @@ public interface RecipeDao {
     Maybe<Integer> getNumberOfRecipes();
 
     @Query("SELECT * FROM RECIPES_TABLE WHERE id = :id LIMIT 1")
-    Single<Recipe> getRecipeWithId(int id);
+    LiveData<Recipe> getRecipeWithId(int id);
 
     @Insert(onConflict = REPLACE)
     void insertAllRecipes(List<Recipe> recipes);

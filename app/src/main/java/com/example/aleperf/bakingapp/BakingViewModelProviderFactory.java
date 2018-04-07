@@ -6,7 +6,7 @@ import android.arch.lifecycle.ViewModelProvider;
 import android.support.annotation.NonNull;
 
 import com.example.aleperf.bakingapp.database.RecipeRepository;
-import com.example.aleperf.bakingapp.database.RecipeRepositoryImpl;
+import com.example.aleperf.bakingapp.ui.RecipesViewModel;
 
 import javax.inject.Inject;
 

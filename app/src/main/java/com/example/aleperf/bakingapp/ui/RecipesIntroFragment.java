@@ -20,7 +20,6 @@ import android.widget.Toast;
 
 import com.example.aleperf.bakingapp.BakingApplication;
 import com.example.aleperf.bakingapp.R;
-import com.example.aleperf.bakingapp.RecipesViewModel;
 import com.example.aleperf.bakingapp.model.Recipe;
 
 import java.util.List;
