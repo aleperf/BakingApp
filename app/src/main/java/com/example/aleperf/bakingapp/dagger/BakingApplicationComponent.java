@@ -2,9 +2,7 @@ package com.example.aleperf.bakingapp.dagger;
 
 import android.app.Application;
 
-import com.example.aleperf.bakingapp.database.RecipeRepositoryImpl;
-import com.example.aleperf.bakingapp.networking.RecipesService;
-import com.example.aleperf.bakingapp.ui.RecipesMasterFragment;
+import com.example.aleperf.bakingapp.ui.RecipesIntroFragment;
 
 import dagger.Component;
 
@@ -12,7 +10,7 @@ import dagger.Component;
 @Component(modules = {RecipeDatabaseModule.class, RecipesServiceModule.class, ApplicationModule.class})
 public interface BakingApplicationComponent {
 
-     void inject(RecipesMasterFragment fragment);
+     void inject(RecipesIntroFragment fragment);
 
      Application application();
 

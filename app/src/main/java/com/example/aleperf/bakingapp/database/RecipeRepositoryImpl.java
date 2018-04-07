@@ -23,7 +23,7 @@ import retrofit2.Response;
 
 /**
  * Implementation of the Repository Pattern. The repository is the only source of data in the app,
- * it manage the database and the networking.
+ * it manages the database and the networking.
  */
 
 public class RecipeRepositoryImpl implements RecipeRepository {

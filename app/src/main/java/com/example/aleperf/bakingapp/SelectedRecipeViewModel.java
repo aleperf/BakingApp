@@ -3,8 +3,11 @@ package com.example.aleperf.bakingapp;
 import android.arch.lifecycle.ViewModel;
 
 import com.example.aleperf.bakingapp.database.RecipeRepository;
+import com.example.aleperf.bakingapp.model.Recipe;
 
 import javax.inject.Inject;
+
+import io.reactivex.Single;
 
 public class SelectedRecipeViewModel extends ViewModel {
 
@@ -15,6 +18,10 @@ public class SelectedRecipeViewModel extends ViewModel {
     @Inject
     public SelectedRecipeViewModel(RecipeRepository repository){
         this.repository = repository;
+    }
+
+    public Single<Recipe> getSelectedRecipe(int recipeId){
+       return  repository.getRecipeWithId(recipeId);
     }
 
 

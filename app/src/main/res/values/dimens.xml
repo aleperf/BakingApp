@@ -6,4 +6,6 @@
     <dimen name="card_view_image_height">120dp</dimen>
     <dimen name="card_view_corner_radius">2dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <!-- recipe summary ingredients -->
+    <dimen name="ingredient_summary_title_text">21sp</dimen>
 </resources>

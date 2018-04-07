@@ -18,6 +18,28 @@
         <item name="android:textSize">21sp</item>
     </style>
 
+    <!--Ingredient List in fragment_recipe_summary -->
+    <style name="IngredientListTitle" parent="AppTheme">
+        <item name="android:background">@color/ingredients_color_background</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">21sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textColor">@color/ingredients_color_text</item>
+    </style>
+
+    <style name="IngredientListItem" parent="AppTheme">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/ingredients_color_text</item>
+    </style>
+
+    <style name="IngredientListQuantity" parent="AppTheme">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:textColor">@color/ingredients_color_text</item>
+    </style>
+
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
