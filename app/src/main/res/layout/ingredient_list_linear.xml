@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/ingredients_color_background"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -11,46 +12,39 @@
     <TextView
         android:id="@+id/ingredients_title_text_view"
         style="@style/IngredientListTitle"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="100dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         tools:text="Nutella Pie Ingredients" />
 
     <android.support.v7.widget.AppCompatImageButton
         android:id="@+id/button_expand"
-        android:layout_width="24dp"
+        android:layout_width="match_parent"
         android:layout_height="24dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:background="?android:selectableItemBackground"
         android:tint="@color/card_textview_color"
-        app:layout_constraintBottom_toBottomOf="@+id/ingredients_title_text_view"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_gravity="center"
         app:srcCompat="@drawable/ic_keyboard_arrow_down_black_24px" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/ingredient_recycler_view"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ingredients_title_text_view" />
 
     <android.support.v7.widget.AppCompatImageButton
         android:id="@+id/button_hide"
-        android:layout_width="24dp"
+        android:layout_width="match_parent"
         android:layout_height="24dp"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
+        android:layout_gravity="center"
         android:background="?android:selectableItemBackground"
         android:tint="@color/ingredients_color_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ingredient_recycler_view"
         app:srcCompat="@drawable/ic_keyboard_arrow_up_black_24px" />
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

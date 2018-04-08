@@ -1,4 +1,4 @@
-package com.example.aleperf.bakingapp.ui;
+package com.example.aleperf.bakingapp.ui.intro;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
 import com.example.aleperf.bakingapp.R;
+import com.example.aleperf.bakingapp.model.Recipe;
+import com.example.aleperf.bakingapp.ui.recipeDetail.RecipeDetailActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -17,6 +19,7 @@ public class RecipesMainActivity extends AppCompatActivity implements RecipesAda
 
     private static String TAG = RecipesMainActivity.class.getSimpleName();
     private static final String RECIPE_EXTRA_ID = "recipe extra id";
+    private static final String RECIPE_EXTRA_TITLE = "recipe extra title";
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -32,9 +35,10 @@ public class RecipesMainActivity extends AppCompatActivity implements RecipesAda
 
 
     @Override
-    public void onClickRecipe(int id) {
+    public void onClickRecipe(Recipe recipe) {
         Intent intent = new Intent(this, RecipeDetailActivity.class);
-        intent.putExtra(RECIPE_EXTRA_ID, id);
+        intent.putExtra(RECIPE_EXTRA_ID, recipe.getId());
+        intent.putExtra(RECIPE_EXTRA_TITLE, recipe.getName());
         startActivity(intent);
     }
 }

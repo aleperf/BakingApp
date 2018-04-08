@@ -2,8 +2,8 @@ package com.example.aleperf.bakingapp.dagger;
 
 import android.app.Application;
 
-import com.example.aleperf.bakingapp.ui.RecipeSummaryFragment;
-import com.example.aleperf.bakingapp.ui.RecipesIntroFragment;
+import com.example.aleperf.bakingapp.ui.recipeDetail.RecipeSummaryFragment;
+import com.example.aleperf.bakingapp.ui.intro.RecipesIntroFragment;
 
 import dagger.Component;
 

@@ -4,11 +4,10 @@ package com.example.aleperf.bakingapp;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import com.example.aleperf.bakingapp.database.RecipeRepository;
-import com.example.aleperf.bakingapp.ui.RecipeDetailViewModel;
-import com.example.aleperf.bakingapp.ui.RecipesViewModel;
+import com.example.aleperf.bakingapp.ui.recipeDetail.RecipeDetailViewModel;
+import com.example.aleperf.bakingapp.ui.intro.RecipesViewModel;
 
 import javax.inject.Inject;
 

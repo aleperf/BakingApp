@@ -1,4 +1,4 @@
-package com.example.aleperf.bakingapp.ui;
+package com.example.aleperf.bakingapp.ui.intro;
 
 
 import android.content.Context;
@@ -24,7 +24,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipesV
     private Context context;
 
     public interface RecipeCallback{
-        void onClickRecipe(int id);
+        void onClickRecipe(Recipe recipe);
     }
 
     public RecipesAdapter(Context context){
@@ -59,7 +59,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipesV
     }
 
 
-    public class RecipesViewHolder extends RecyclerView.ViewHolder{
+    public class RecipesViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         @BindView(R.id.cake_image)
         ImageView cakeImage;
         @BindView(R.id.cake_name)
@@ -73,6 +73,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipesV
         public RecipesViewHolder(View view){
             super(view);
             ButterKnife.bind(this, view);
+            view.setOnClickListener(this);
             }
 
         public void bindRecipe(Recipe recipe){
@@ -89,7 +90,13 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipesV
         }
 
 
-
+        @Override
+        public void onClick(View v) {
+            if(context instanceof RecipesMainActivity){
+                Recipe recipe = recipes.get(getAdapterPosition());
+                ((RecipesMainActivity) context).onClickRecipe(recipe);
+            }
+        }
     }
 
 

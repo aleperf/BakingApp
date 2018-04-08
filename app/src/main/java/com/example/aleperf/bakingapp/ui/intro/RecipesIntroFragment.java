@@ -1,4 +1,4 @@
-package com.example.aleperf.bakingapp.ui;
+package com.example.aleperf.bakingapp.ui.intro;
 
 
 import android.arch.lifecycle.LiveData;
@@ -36,6 +36,7 @@ import butterknife.Unbinder;
 public class RecipesIntroFragment extends Fragment {
 
     private final String TAG = RecipesIntroFragment.class.getSimpleName();
+    private static final String RECIPE_EXTRA_ID = "recipe extra id";
 
     @BindView(R.id.recipes_grid_intro)
     RecyclerView recipesGrid;

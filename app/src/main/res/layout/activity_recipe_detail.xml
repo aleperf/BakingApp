@@ -14,7 +14,7 @@
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/detail_activity_toolbar"
             android:layout_width="match_parent"
             android:layout_height="120dp"
             app:layout_scrollFlags="scroll|enterAlways"
@@ -28,8 +28,8 @@
 
         <fragment
             android:id="@+id/master_recipe_cards"
-            android:name="com.example.aleperf.bakingapp.ui.RecipeSummaryFragment"
-            android:layout_width="wrap_content"
+            android:name="com.example.aleperf.bakingapp.ui.recipeDetail.RecipeSummaryFragment"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal" />
 

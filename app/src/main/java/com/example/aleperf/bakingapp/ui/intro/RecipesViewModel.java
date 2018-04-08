@@ -1,4 +1,4 @@
-package com.example.aleperf.bakingapp.ui;
+package com.example.aleperf.bakingapp.ui.intro;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
@@ -16,8 +16,6 @@ public class RecipesViewModel extends ViewModel {
     private static final String TAG = RecipesViewModel.class.getSimpleName();
 
     private RecipeRepository repository;
-
-
 
     @Inject
     public RecipesViewModel(RecipeRepository repository){

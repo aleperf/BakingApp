@@ -11,7 +11,7 @@
     android:animateLayoutChanges="true"
     android:orientation="vertical">
 
-   <include layout="@layout/ingredients_list"/>
+    <include layout="@layout/ingredient_list_linear"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recipe_steps"

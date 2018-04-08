@@ -1,4 +1,4 @@
-package com.example.aleperf.bakingapp.ui;
+package com.example.aleperf.bakingapp.ui.recipeDetail;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;

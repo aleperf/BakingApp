@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.RecipesMainActivity">
+        <activity android:name=".ui.intro.RecipesMainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,8 +20,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.RecipeDetailActivity"
-            android:label="@string/title_activity_recipe_summary"
+            android:name=".ui.recipeDetail.RecipeDetailActivity"
+            android:parentActivityName=".ui.intro.RecipesMainActivity"
             android:theme="@style/AppTheme"></activity>
     </application>
 
