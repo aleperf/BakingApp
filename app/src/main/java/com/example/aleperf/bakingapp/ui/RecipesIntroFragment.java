@@ -26,7 +26,9 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * Shows the intro cards for every recipe
@@ -34,13 +36,19 @@ import butterknife.ButterKnife;
 public class RecipesIntroFragment extends Fragment {
 
     private final String TAG = RecipesIntroFragment.class.getSimpleName();
+
+    @BindView(R.id.recipes_grid_intro)
     RecyclerView recipesGrid;
+    @BindView(R.id.empty_image_view)
     ImageView emptyMessageImageView;
+
     RecipesViewModel model;
     RecipesAdapter adapter;
     @Inject
     ViewModelProvider.Factory viewModelFactory;
     LiveData<List<Recipe>> recipes;
+
+    private Unbinder unbinder;
 
 
     @Override
@@ -64,8 +72,8 @@ public class RecipesIntroFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_intro_recipes, container, false);
-        recipesGrid = root.findViewById(R.id.recipes_grid_intro);
-        emptyMessageImageView = root.findViewById(R.id.empty_image_view);
+        unbinder = ButterKnife.bind(this, root);
+
         emptyMessageImageView.setOnClickListener(v -> {
             model.getRecipes();
             Toast.makeText(getContext(), "Fetching Data", Toast.LENGTH_SHORT).show();
@@ -98,5 +106,9 @@ public class RecipesIntroFragment extends Fragment {
         recipes.observe(this, observer);
     }
 
-
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
 }
