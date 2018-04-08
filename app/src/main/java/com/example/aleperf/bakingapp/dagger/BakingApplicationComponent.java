@@ -2,6 +2,7 @@ package com.example.aleperf.bakingapp.dagger;
 
 import android.app.Application;
 
+import com.example.aleperf.bakingapp.ui.RecipeSummaryFragment;
 import com.example.aleperf.bakingapp.ui.RecipesIntroFragment;
 
 import dagger.Component;
@@ -11,6 +12,7 @@ import dagger.Component;
 public interface BakingApplicationComponent {
 
      void inject(RecipesIntroFragment fragment);
+     void inject(RecipeSummaryFragment fragment);
 
      Application application();
 

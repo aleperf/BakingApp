@@ -17,11 +17,13 @@ public class ApplicationModule {
     }
 
     @Provides
+    @BakingApplicationScope
     BakingApplication provideBakingApplication(){
         return application;
     }
 
     @Provides
+    @BakingApplicationScope
     Application provideApplication(){
         return application;
     }

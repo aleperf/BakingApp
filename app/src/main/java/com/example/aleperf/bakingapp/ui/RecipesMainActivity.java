@@ -7,6 +7,9 @@ import android.support.v7.widget.Toolbar;
 
 import com.example.aleperf.bakingapp.R;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Launcher for the app, coordinates fragments.
  */
@@ -15,13 +18,15 @@ public class RecipesMainActivity extends AppCompatActivity implements RecipesAda
     private static String TAG = RecipesMainActivity.class.getSimpleName();
     private static final String RECIPE_EXTRA_ID = "recipe extra id";
 
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_recipes);
-
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        ButterKnife.bind(this);
         setSupportActionBar(toolbar);
     }
 

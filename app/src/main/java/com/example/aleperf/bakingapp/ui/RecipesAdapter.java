@@ -15,6 +15,9 @@ import com.example.aleperf.bakingapp.model.Recipe;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipesViewHolder> {
 
     private List<Recipe> recipes;
@@ -57,20 +60,20 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipesV
 
 
     public class RecipesViewHolder extends RecyclerView.ViewHolder{
-
-        private ImageView cakeImage;
-        private TextView cakeName;
-        private TextView servings;
-        private TextView steps;
+        @BindView(R.id.cake_image)
+        ImageView cakeImage;
+        @BindView(R.id.cake_name)
+        TextView cakeName;
+        @BindView(R.id.servings_number)
+        TextView servings;
+        @BindView(R.id.steps_number)
+        TextView steps;
 
 
         public RecipesViewHolder(View view){
             super(view);
-            cakeImage = view.findViewById(R.id.cake_image);
-            cakeName = view.findViewById(R.id.cake_name);
-            servings = view.findViewById(R.id.servings_number);
-            steps = view.findViewById(R.id.steps_number);
-        }
+            ButterKnife.bind(this, view);
+            }
 
         public void bindRecipe(Recipe recipe){
             String imageUrl = recipe.getImage();

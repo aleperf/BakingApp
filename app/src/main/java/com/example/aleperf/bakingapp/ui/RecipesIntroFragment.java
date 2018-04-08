@@ -26,6 +26,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import butterknife.ButterKnife;
+
 /**
  * Shows the intro cards for every recipe
  */
@@ -45,6 +47,7 @@ public class RecipesIntroFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ((BakingApplication) getActivity().getApplication()).getBakingApplicationComponent().inject(this);
+
 
 
     }
