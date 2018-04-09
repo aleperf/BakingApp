@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingBottom="6dp">
 
     <TextView
         android:id="@+id/ingredient_item_title"
@@ -37,7 +38,7 @@
         android:layout_height="wrap_content"
         style="@style/IngredientListQuantity"
         android:layout_marginStart="8dp"
-        android:text="CUPS"
+        tools:text="CUPS"
         app:layout_constraintBottom_toBottomOf="@+id/ingredient_quantity"
         app:layout_constraintStart_toEndOf="@+id/ingredient_quantity" />
 
