@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="120dp"
             app:layout_scrollFlags="scroll|enterAlways"
-            app:titleTextColor="@color/toolbar_title" />
+            app:titleTextColor="@color/toolbarTitle" />
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.widget.NestedScrollView

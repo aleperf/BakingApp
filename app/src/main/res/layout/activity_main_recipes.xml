@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/app_background"
+    android:background="@color/appBackground"
     android:layout_height="match_parent"
 
     android:layout_gravity="center_horizontal">
@@ -21,7 +21,7 @@
             android:layout_height="120dp"
             android:background="@color/colorPrimary"
             app:layout_scrollFlags="scroll|enterAlways"
-            app:titleTextColor="@color/toolbar_title" />
+            app:titleTextColor="@color/toolbarTitle" />
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.widget.NestedScrollView

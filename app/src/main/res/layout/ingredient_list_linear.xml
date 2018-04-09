@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/ingredients_color_background"
+    android:background="@color/ingredientsColorBackground"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -23,7 +23,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:background="?android:selectableItemBackground"
-        android:tint="@color/card_textview_color"
+        android:tint="@color/cardTextViewColor"
         android:layout_gravity="center"
         />
 
@@ -44,7 +44,7 @@
         android:layout_marginTop="8dp"
         android:layout_gravity="center"
         android:background="?android:selectableItemBackground"
-        android:tint="@color/ingredients_color_text"
+        android:tint="@color/ingredientsColorText"
         app:srcCompat="@drawable/ic_keyboard_arrow_up_black_24px" />
 
 </LinearLayout>

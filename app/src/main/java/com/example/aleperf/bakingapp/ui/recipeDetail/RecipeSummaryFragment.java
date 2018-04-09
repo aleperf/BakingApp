@@ -37,7 +37,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 /**
- * Shows ingredients and summary of descriptions of selected recipe's steps.
+ * Shows ingredients and summary descriptions of selected recipe's steps.
  */
 
 public class RecipeSummaryFragment extends Fragment {
@@ -48,18 +48,23 @@ public class RecipeSummaryFragment extends Fragment {
     @BindView(R.id.ingredients_title_text_view)
     TextView ingredientTitle;
     @BindView(R.id.ingredient_recycler_view)
-    RecyclerView ingredientList;
+    RecyclerView ingredientsRecyclerView;
     @BindView(R.id.button_expand)
     ImageButton buttonExpand;
     @BindView(R.id.button_hide)
     ImageButton buttonHide;
     @BindView(R.id.ingredients_section)
     ConstraintLayout ingredientsSection;
+    @BindView(R.id.recipe_steps)
+    RecyclerView stepsRecyclerView;
 
     RecipeDetailViewModel model;
     @Inject
     ViewModelProvider.Factory viewModelProviderFactory;
     IngredientsAdapter ingredientsAdapter;
+    LinearLayoutManager ingredientsManager;
+    LinearLayoutManager stepsManager;
+    StepsSummaryAdapter stepsAdapter;
     LiveData<Recipe> recipe;
 
     private Unbinder unbinder;
@@ -70,22 +75,28 @@ public class RecipeSummaryFragment extends Fragment {
         super.onCreate(savedInstanceState);
         ((BakingApplication) getActivity().getApplication()).getBakingApplicationComponent().inject(this);
 
-        }
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_recipe_summary, container, false);
         unbinder = ButterKnife.bind(this, root);
-        if(savedInstanceState != null){
+        if (savedInstanceState != null) {
             isExpandedIngredientList = savedInstanceState.getBoolean(INGREDIENTS_EXPANSION_STATE, false);
         }
-        LinearLayoutManager ingredientManager = new LinearLayoutManager(getActivity());
-        ingredientList.setLayoutManager(ingredientManager);
+        ingredientsManager = new LinearLayoutManager(getActivity());
+        ingredientsRecyclerView.setLayoutManager(ingredientsManager);
         ingredientsAdapter = new IngredientsAdapter(getActivity());
-        ingredientList.setAdapter(ingredientsAdapter);
-        addItemDecorator(ingredientList);
-        setIngredientsExpansionListener();
+        ingredientsRecyclerView.setAdapter(ingredientsAdapter);
+        addItemDecorator(ingredientsRecyclerView);
+        addButtonExpansionHideListener();
+
+        stepsManager = new LinearLayoutManager(getActivity());
+        stepsRecyclerView.setLayoutManager(stepsManager);
+        stepsAdapter = new StepsSummaryAdapter(getActivity());
+        stepsRecyclerView.setAdapter(stepsAdapter);
+
 
         return root;
 
@@ -107,12 +118,12 @@ public class RecipeSummaryFragment extends Fragment {
                 if (recipe != null) {
                     ingredientTitle.setText(recipe.getName() + getString(R.string.recipe_ingredient));
                     ingredientsAdapter.setIngredients(recipe);
-                    }
+                    stepsAdapter.setSteps(recipe.getSteps());
+                }
             }
         };
         recipe.observe(this, observer);
     }
-
 
 
     /**
@@ -125,7 +136,11 @@ public class RecipeSummaryFragment extends Fragment {
         recyclerView.addItemDecoration(itemDecorator);
     }
 
-    private void setIngredientsExpansionListener(){
+    /**
+     * Add listeners on the buttons for expanding and hiding the ingredients list
+     */
+
+    private void addButtonExpansionHideListener() {
 
         View.OnClickListener listener = new View.OnClickListener() {
 
@@ -134,7 +149,7 @@ public class RecipeSummaryFragment extends Fragment {
                 TransitionManager.beginDelayedTransition(ingredientsSection, new AutoTransition().setDuration(400));
                 setUpIngredientListAppearance(isExpandedIngredientList);
                 isExpandedIngredientList = !isExpandedIngredientList;
-                }
+            }
         };
         buttonExpand.setOnClickListener(listener);
         buttonHide.setOnClickListener(listener);
@@ -142,19 +157,20 @@ public class RecipeSummaryFragment extends Fragment {
 
     /**
      * Change the Ingredients List appearance according to its expansion state
+     *
      * @param isExpanded a boolean representing the state of ingredient list, true if expanded, false if not
      */
 
-    public void setUpIngredientListAppearance(boolean isExpanded){
+    public void setUpIngredientListAppearance(boolean isExpanded) {
 
-        if(isExpanded){
-            ingredientList.setVisibility(View.GONE);
+        if (isExpanded) {
+            ingredientsRecyclerView.setVisibility(View.GONE);
             buttonHide.setVisibility(View.GONE);
             buttonExpand.setVisibility(View.VISIBLE);
 
 
         } else {
-            ingredientList.setVisibility(View.VISIBLE);
+            ingredientsRecyclerView.setVisibility(View.VISIBLE);
             buttonExpand.setVisibility(View.GONE);
             buttonHide.setVisibility(View.VISIBLE);
 
@@ -166,6 +182,7 @@ public class RecipeSummaryFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        //doesn't change the ingredient list expansion, restore the previous one.
         setUpIngredientListAppearance(!isExpandedIngredientList);
     }
 
