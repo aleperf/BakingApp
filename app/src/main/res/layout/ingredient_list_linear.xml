@@ -45,6 +45,6 @@
         android:layout_gravity="center"
         android:background="?android:selectableItemBackground"
         android:tint="@color/ingredientsColorText"
-        app:srcCompat="@drawable/ic_keyboard_arrow_up_black_24px" />
+        app:srcCompat="@drawable/ic_keyboard_arrow_up" />
 
 </LinearLayout>

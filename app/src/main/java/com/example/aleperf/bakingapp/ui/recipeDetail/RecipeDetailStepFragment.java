@@ -14,5 +14,8 @@ import android.view.ViewGroup;
 
 public class RecipeDetailStepFragment extends Fragment {
 
+    private static final String STEP_EXTRA_POSITION = "step extra position";
+    private static final String RECIPE_EXTRA_ID = "recipe extra id";
+
 
 }

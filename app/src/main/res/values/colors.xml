@@ -3,7 +3,7 @@
     <color name="colorPrimary">#795548</color>
     <color name="colorPrimaryDark">#4E342E</color>
     <color name="colorAccent">#FD85A9</color>
-    <color name="cardColor">#FCDCE1</color>
+    <color name="cardColor">#fadae0</color>
     <color name="cardTextViewColor">#663401</color>
     <color name="toolbarTitle">#FFFFFF</color>
     <color name="appBackground">#FDF0F1</color>
@@ -15,6 +15,6 @@
     <color name="ingredientsColorText">#663401</color>
 
     <!-- Steps List Color -->
-    <color name="stepsSummaryColor">#FCDCE1</color>
+    <color name="stepsSummaryColor">#fce4ec</color>
     <color name ="stepsTextViewColor">#663401</color>
 </resources>

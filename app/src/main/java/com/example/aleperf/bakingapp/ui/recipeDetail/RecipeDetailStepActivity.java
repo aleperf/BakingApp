@@ -4,55 +4,52 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.widget.TextView;
+
 
 import com.example.aleperf.bakingapp.R;
 
+import org.w3c.dom.Text;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import com.example.aleperf.bakingapp.ui.recipeDetail.RecipeSummaryFragment.StepSelector;
 
-public class RecipeDetailActivity extends AppCompatActivity implements StepSelector {
+/**
+ * Manage the details about the recipe step.
+ */
+
+public class RecipeDetailStepActivity extends AppCompatActivity {
 
     private static final String STEP_EXTRA_POSITION = "step extra position";
     private static final String RECIPE_EXTRA_TITLE = "recipe extra title";
     private static final String RECIPE_EXTRA_ID = "recipe extra id";
 
-    @BindView(R.id.detail_activity_toolbar)
+    @BindView(R.id.toolbar_detail_step)
     Toolbar toolbar;
-    private int recipeId;
-    private String recipeTitle;
-    private boolean isDualPane = false;
+    @BindView(R.id.test_text_view)
+    TextView testTextView;
 
+    private String recipeTitle;
+    private int recipeId;
+    private int stepPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recipe_detail);
+        setContentView(R.layout.activity_recipe_detail_step);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Intent callingIntent = getIntent();
         recipeTitle = callingIntent.getStringExtra(RECIPE_EXTRA_TITLE);
         recipeId = callingIntent.getIntExtra(RECIPE_EXTRA_ID, 1);
+        stepPosition = callingIntent.getIntExtra(STEP_EXTRA_POSITION, 0);
         getSupportActionBar().setTitle(recipeTitle);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        isDualPane = getResources().getBoolean(R.bool.is_dual_pane);
+        testTextView.setText("Recipe id = " + String.valueOf(recipeId)
+                + " Step Position = " + String.valueOf(stepPosition));
 
-
-        }
-
-    @Override
-    public void onStepSelected(int stepPosition) {
-
-        if(!isDualPane){
-            Intent intent = new Intent(this, RecipeDetailStepActivity.class);
-            intent.putExtra(STEP_EXTRA_POSITION, stepPosition);
-            intent.putExtra(RECIPE_EXTRA_TITLE, recipeTitle);
-            intent.putExtra(RECIPE_EXTRA_ID, recipeId);
-            startActivity(intent);
-        }
 
     }
-
 
 }

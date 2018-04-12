@@ -70,6 +70,10 @@ public class RecipeSummaryFragment extends Fragment {
     private Unbinder unbinder;
     private boolean isExpandedIngredientList = false;
 
+    public interface StepSelector{
+        void onStepSelected(int stepPosition);
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -146,7 +150,7 @@ public class RecipeSummaryFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-                TransitionManager.beginDelayedTransition(ingredientsSection, new AutoTransition().setDuration(400));
+                TransitionManager.beginDelayedTransition(ingredientsSection, new AutoTransition().setDuration(300));
                 setUpIngredientListAppearance(isExpandedIngredientList);
                 isExpandedIngredientList = !isExpandedIngredientList;
             }
@@ -166,12 +170,12 @@ public class RecipeSummaryFragment extends Fragment {
         if (isExpanded) {
             ingredientsRecyclerView.setVisibility(View.GONE);
             buttonHide.setVisibility(View.GONE);
-            buttonExpand.setVisibility(View.VISIBLE);
+            buttonExpand.setImageResource(R.drawable.ic_keyboard_arrow_down);
 
 
         } else {
             ingredientsRecyclerView.setVisibility(View.VISIBLE);
-            buttonExpand.setVisibility(View.GONE);
+            buttonExpand.setImageResource(R.drawable.ic_keyboard_arrow_up);
             buttonHide.setVisibility(View.VISIBLE);
 
 

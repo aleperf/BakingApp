@@ -56,7 +56,7 @@ public class StepsSummaryAdapter extends RecyclerView.Adapter<StepsSummaryAdapte
     }
 
 
-    public class StepsSummaryHolder extends RecyclerView.ViewHolder{
+    public class StepsSummaryHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         @BindView(R.id.step_summary_description)
         TextView summaryDescription;
@@ -66,6 +66,7 @@ public class StepsSummaryAdapter extends RecyclerView.Adapter<StepsSummaryAdapte
        public  StepsSummaryHolder(View view){
            super(view);
            ButterKnife.bind(this, view);
+           itemView.setOnClickListener(this);
        }
 
        void bindSteps(Step step, int position){
@@ -74,6 +75,13 @@ public class StepsSummaryAdapter extends RecyclerView.Adapter<StepsSummaryAdapte
        }
 
 
+        @Override
+        public void onClick(View v) {
+            if(context instanceof RecipeDetailActivity){
+                RecipeDetailActivity recipeDetailActivity = (RecipeDetailActivity) context;
+                recipeDetailActivity.onStepSelected(getAdapterPosition());
 
+            }
+        }
     }
 }

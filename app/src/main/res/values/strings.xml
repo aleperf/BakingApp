@@ -5,4 +5,5 @@
     <string name="step_numerator">STEP\u0020</string>
     <string name="expansion_hint_more">SHOW MORE</string>
     <string name="expansion_hint_less">SHOW LESS</string>
+    <string name="title_activity_recipe_detail_step">RecipeDetailStepActivity</string>
 </resources>

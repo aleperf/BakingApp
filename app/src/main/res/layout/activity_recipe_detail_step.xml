@@ -16,7 +16,7 @@
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/toolbar_detail_step"
             android:layout_width="match_parent"
             android:layout_height="120dp"
             android:background="@color/colorPrimary"
@@ -29,12 +29,17 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <fragment
-            android:id="@+id/master_steps"
-            android:name="com.example.aleperf.bakingapp.ui.intro.RecipesIntroFragment"
+        <FrameLayout
+            android:id="@+id/detail_step_fragment_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal" />
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/test_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="This is step"/>
+
+        </FrameLayout>
 
     </android.support.v4.widget.NestedScrollView>
 </android.support.design.widget.CoordinatorLayout>

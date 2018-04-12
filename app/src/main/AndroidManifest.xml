@@ -22,7 +22,12 @@
         <activity
             android:name=".ui.recipeDetail.RecipeDetailActivity"
             android:parentActivityName=".ui.intro.RecipesMainActivity"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".ui.recipeDetail.RecipeDetailStepActivity"
+            android:label="@string/title_activity_recipe_detail_step"
+            android:parentActivityName=".ui.recipeDetail.RecipeDetailActivity"
+            android:theme="@style/AppTheme"/>
     </application>
 
 </manifest>
