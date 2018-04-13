@@ -70,7 +70,7 @@ public class RecipeSummaryFragment extends Fragment {
     private Unbinder unbinder;
     private boolean isExpandedIngredientList = false;
 
-    public interface StepSelector{
+    public interface StepSelector {
         void onStepSelected(int stepPosition);
     }
 

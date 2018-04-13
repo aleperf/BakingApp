@@ -2,6 +2,7 @@ package com.example.aleperf.bakingapp.ui.recipeDetail;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
@@ -48,6 +49,9 @@ public class RecipeDetailStepActivity extends AppCompatActivity {
 
         testTextView.setText("Recipe id = " + String.valueOf(recipeId)
                 + " Step Position = " + String.valueOf(stepPosition));
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
 
 
     }
