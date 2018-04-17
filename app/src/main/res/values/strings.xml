@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Bey- Bake!</string>
+    <string name="app_name">Bey-Bake!</string>
     <string name="title_activity_recipe_summary">RecipeSummaryActivity</string>
     <string name="recipe_ingredient">\u0020 Ingredients</string>
     <string name="step_numerator">STEP\u0020</string>
