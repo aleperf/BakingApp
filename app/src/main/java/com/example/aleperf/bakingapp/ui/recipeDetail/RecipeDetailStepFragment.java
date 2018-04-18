@@ -11,6 +11,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import com.example.aleperf.bakingapp.model.Recipe.Step;
 import com.example.aleperf.bakingapp.utils.StepFieldsValidator;
 import com.example.aleperf.bakingapp.R;
 import com.example.aleperf.bakingapp.model.Recipe;
+import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
 import com.google.android.exoplayer2.ExoPlaybackException;
@@ -67,6 +69,8 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
     private static final String RECIPE_EXTRA_ID = "recipe extra id";
     private static final String APPLICATION_NAME = "Bei-Bake!";
     private static final String PLAYBACK_POSITION = "playback position";
+    private static final String CURRENT_WINDOW = "current window";
+    private static final String PLAY_WHEN_READY = "play when ready";
 
     private int recipeId;
     private int stepPosition;
@@ -91,7 +95,7 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
     PlayerView playerView;
     @BindView(R.id.step_title)
     TextView stepTitle;
-    @BindView(R.id.steps_number)
+    @BindView(R.id.step_number)
     TextView stepNumber;
     @BindView(R.id.step_long_description)
     TextView stepDescription;
@@ -103,7 +107,7 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
     ImageView thumbnail;
 
 
-    public RecipeDetailStepFragment getInstance(int recipeId, int stepPosition) {
+    public static RecipeDetailStepFragment getInstance(int recipeId, int stepPosition) {
         Bundle bundle = new Bundle();
         bundle.putInt(STEP_EXTRA_POSITION, stepPosition);
         bundle.putInt(RECIPE_EXTRA_ID, recipeId);
@@ -116,14 +120,15 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ((BakingApplication) getActivity().getApplication()).getBakingApplicationComponent().inject(this);
+        setRetainInstance(true);
         if (savedInstanceState == null) {
             Bundle bundle = this.getArguments();
             recipeId = bundle.getInt(RECIPE_EXTRA_ID);
             stepPosition = bundle.getInt(STEP_EXTRA_POSITION);
+
         } else {
             recipeId = savedInstanceState.getInt(RECIPE_EXTRA_ID);
             stepPosition = savedInstanceState.getInt(STEP_EXTRA_POSITION);
-            playbackPosition = savedInstanceState.getLong(PLAYBACK_POSITION);
         }
     }
 
@@ -132,6 +137,15 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_step_detail, container, false);
         unbinder = ButterKnife.bind(this, root);
+
+        if (savedInstanceState != null) {
+            recipeId = savedInstanceState.getInt(RECIPE_EXTRA_ID);
+            stepPosition = savedInstanceState.getInt(STEP_EXTRA_POSITION);
+            playbackPosition = savedInstanceState.getLong(PLAYBACK_POSITION, C.TIME_UNSET);
+            currentWindow = savedInstanceState.getInt(CURRENT_WINDOW, 0);
+            playWhenReady = savedInstanceState.getBoolean(PLAY_WHEN_READY, false);
+
+        }
         return root;
     }
 
@@ -142,17 +156,14 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
         recipe = viewModel.getRecipe(recipeId);
         subscribe();
 
+
     }
 
     private void subscribe() {
-        Observer<Recipe> observer = new Observer<Recipe>() {
-
-            @Override
-            public void onChanged(@Nullable Recipe recipe) {
-                if (recipe != null) {
-                    steps = recipe.getSteps();
-                    updateUI(stepPosition);
-                }
+        Observer<Recipe> observer = recipe -> {
+            if (recipe != null) {
+                steps = recipe.getSteps();
+                updateUI(stepPosition);
             }
         };
         recipe.observe(this, observer);
@@ -187,7 +198,10 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
             exoPlayer.seekTo(currentWindow, playbackPosition);
             MediaSource mediaSource = buildExoPlayerMediaSource(videoUri);
             exoPlayer.prepare(mediaSource);
-            exoPlayer.setPlayWhenReady(true);
+            exoPlayer.setPlayWhenReady(playWhenReady);
+        } else {
+            exoPlayer.setPlayWhenReady(playWhenReady);
+            exoPlayer.seekTo(currentWindow, playbackPosition);
 
         }
 
@@ -238,8 +252,7 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
     @Override
     public void onResume() {
         super.onResume();
-        //TODO: for SDK <= 23 initialize player here
-        if (videoUri != null && (Util.SDK_INT <= 23 || exoPlayer == null)) {
+        if (videoUri != null && Util.SDK_INT <= 23 && exoPlayer == null) {
             initializePlayer();
         }
     }
@@ -247,10 +260,10 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
     @Override
     public void onStart() {
         super.onStart();
-        if (videoUri != null) {
+        if (videoUri != null && Util.SDK_INT > 23 && exoPlayer == null) {
             initializePlayer();
         }
-        //TODO: for SDK > 23 initialize player here
+
     }
 
     @Override
@@ -277,8 +290,12 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
         outState.putInt(STEP_EXTRA_POSITION, stepPosition);
         if (exoPlayer == null) {
             outState.putLong(PLAYBACK_POSITION, playbackPosition);
+            outState.putInt(CURRENT_WINDOW, currentWindow);
+            outState.putBoolean(PLAY_WHEN_READY, playWhenReady);
         } else {
             outState.putLong(PLAYBACK_POSITION, exoPlayer.getCurrentPosition());
+            outState.putInt(CURRENT_WINDOW, exoPlayer.getCurrentWindowIndex());
+            outState.putBoolean(PLAY_WHEN_READY, exoPlayer.getPlayWhenReady());
         }
     }
 
@@ -350,6 +367,7 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
         @Override
         public void onPause() {
             exoPlayer.setPlayWhenReady(false);
+            playbackPosition = exoPlayer.getCurrentPosition();
         }
 
         @Override

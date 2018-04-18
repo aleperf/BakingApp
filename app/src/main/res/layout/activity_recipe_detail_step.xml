@@ -32,13 +32,7 @@
         <FrameLayout
             android:id="@+id/detail_step_fragment_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/test_text_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="This is step"/>
-
+            android:layout_height="match_parent">
         </FrameLayout>
 
     </android.support.v4.widget.NestedScrollView>

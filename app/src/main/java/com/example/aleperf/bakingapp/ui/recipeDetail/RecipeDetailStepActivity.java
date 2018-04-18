@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 
@@ -24,11 +26,10 @@ public class RecipeDetailStepActivity extends AppCompatActivity {
     private static final String STEP_EXTRA_POSITION = "step extra position";
     private static final String RECIPE_EXTRA_TITLE = "recipe extra title";
     private static final String RECIPE_EXTRA_ID = "recipe extra id";
-
+    private static final String FRAGMENT_TAG = "step detail fragment";
     @BindView(R.id.toolbar_detail_step)
     Toolbar toolbar;
-    @BindView(R.id.test_text_view)
-    TextView testTextView;
+
 
     private String recipeTitle;
     private int recipeId;
@@ -46,14 +47,12 @@ public class RecipeDetailStepActivity extends AppCompatActivity {
         stepPosition = callingIntent.getIntExtra(STEP_EXTRA_POSITION, 0);
         getSupportActionBar().setTitle(recipeTitle);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        testTextView.setText("Recipe id = " + String.valueOf(recipeId)
-                + " Step Position = " + String.valueOf(stepPosition));
-
         FragmentManager fragmentManager = getSupportFragmentManager();
-
-
-
+        RecipeDetailStepFragment fragment = (RecipeDetailStepFragment) fragmentManager.findFragmentByTag(FRAGMENT_TAG);
+        if (fragment == null) {
+            fragment = RecipeDetailStepFragment.getInstance(recipeId, stepPosition);
+        }
+        fragmentManager.beginTransaction().replace(R.id.detail_step_fragment_container, fragment, FRAGMENT_TAG).commit();
     }
 
 }
