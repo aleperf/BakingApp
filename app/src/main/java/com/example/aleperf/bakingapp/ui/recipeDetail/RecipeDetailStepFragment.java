@@ -5,6 +5,7 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,6 +13,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -74,6 +77,7 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
     private static final String PLAY_WHEN_READY = "play when ready";
     private static final int PHONE_PORTRAIT = 1;
     private static final int PHONE_LANDSCAPE = 2;
+    private static final int TABLET = 3;
 
     private int recipeId;
     private int stepPosition;
@@ -108,6 +112,10 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
     ImageButton arrowRight;
     @BindView(R.id.recipeThumbnail)
     ImageView thumbnail;
+    @BindView(R.id.next_arrow_text_view)
+    TextView nextTextView;
+    @BindView(R.id.previous_arrow_text_view)
+    TextView previousArrowTextView;
 
 
     public static RecipeDetailStepFragment getInstance(int recipeId, int stepPosition) {
@@ -173,27 +181,59 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
     }
 
     private void updateUI(int stepPosition) {
-        int video_switch = getResources().getInteger(R.integer.max_screen_switch);
         Step step = steps.get(stepPosition);
-        videoUri = StepFieldsValidator.getVideoUri(step);
+        int screen_orientation = getResources().getInteger(R.integer.max_screen_switch);
         String shortDescription = step.getShortDescription();
         String longDescription = step.getDescription();
         stepTitle.setText(shortDescription);
         stepDescription.setText(longDescription);
         stepNumber.setText(String.format(getString(R.string.step_count), stepPosition + 1, steps.size()));
         videoUri = StepFieldsValidator.getVideoUri(step);
+        ActionBar actionBar =((AppCompatActivity) getActivity()).getSupportActionBar();
         if (videoUri != null) {
             playerView.setVisibility(View.VISIBLE);
             initializeMediaSession();
             initializePlayer();
+            if(screen_orientation == PHONE_LANDSCAPE){
+                hideStepInfo();
+                actionBar.hide();
+
+            } else {
+                showStepInfo();
+                actionBar.show();
+            }
         } else {
             playerView.setVisibility(View.GONE);
+            showStepInfo();
+            actionBar.show();
 
         }
         //TODO Load image with Picasso
     }
 
-    private void makeExoPlayerFullScreen(){}
+    private void showStepInfo(){
+
+        stepTitle.setVisibility(View.VISIBLE);
+        stepNumber.setVisibility(View.VISIBLE);
+        stepDescription.setVisibility(View.VISIBLE);
+        arrowLeft.setVisibility(View.VISIBLE);
+        arrowRight.setVisibility(View.VISIBLE);
+        thumbnail.setVisibility(View.VISIBLE);
+        nextTextView.setVisibility(View.VISIBLE);
+        previousArrowTextView.setVisibility(View.VISIBLE);
+    }
+
+    private void hideStepInfo(){
+
+        stepTitle.setVisibility(View.GONE);
+        stepNumber.setVisibility(View.GONE);
+        stepDescription.setVisibility(View.GONE);
+        arrowLeft.setVisibility(View.GONE);
+        arrowRight.setVisibility(View.GONE);
+        thumbnail.setVisibility(View.GONE);
+        nextTextView.setVisibility(View.GONE);
+        previousArrowTextView.setVisibility(View.GONE);
+    }
 
     private void initializePlayer() {
         if (exoPlayer == null) {
@@ -246,12 +286,7 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
                                 PlaybackStateCompat.ACTION_PLAY_PAUSE);
 
         mediaSession.setPlaybackState(stateBuilder.build());
-
-
-        // MySessionCallback has methods that handle callbacks from a media controller.
         mediaSession.setCallback(new MySessionCallback());
-
-        // Start the Media Session since the activity is active.
         mediaSession.setActive(true);
 
     }
@@ -260,7 +295,6 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
     @Override
     public void onResume() {
         super.onResume();
-        hideSystemUi();
         if (videoUri != null && Util.SDK_INT <= 23 && exoPlayer == null) {
             initializePlayer();
         }
@@ -316,7 +350,7 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
 
     @Override
     public void onTracksChanged(TrackGroupArray trackGroups, TrackSelectionArray trackSelections) {
-               Log.d("uffa", "sto cambiando track");
+
     }
 
     @Override
@@ -384,16 +418,5 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
             exoPlayer.seekTo(0);
         }
     }
-
-    @SuppressLint("InlinedApi")
-    private void hideSystemUi() {
-        playerView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
-                | View.SYSTEM_UI_FLAG_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
-    }
-
 
 }
