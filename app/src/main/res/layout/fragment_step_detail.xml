@@ -15,12 +15,10 @@
             android:id="@+id/step_video"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -38,7 +36,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/step_video"
-
             tools:text="Recipe Introduction" />
 
         <ImageView
@@ -54,7 +51,6 @@
         <TextView
             android:id="@+id/step_number"
             style="@style/StepNumeration"
-
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -69,7 +65,6 @@
         <TextView
             android:id="@+id/step_long_description"
             style="@style/StepDetailBase"
-
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
@@ -81,7 +76,6 @@
 
         <ImageButton
             android:id="@+id/arrowLeft"
-
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="24dp"
@@ -96,7 +90,6 @@
             android:id="@+id/arrowRight"
             android:layout_width="50dp"
             android:layout_height="50dp"
-
             android:layout_marginStart="70dp"
             android:background="?android:selectableItemBackground"
             android:scaleType="fitXY"
@@ -111,6 +104,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="PREVIOUS"
+            android:textSize="10sp"
             app:layout_constraintEnd_toStartOf="@+id/arrowLeft"
             app:layout_constraintStart_toEndOf="@+id/arrowLeft"
             app:layout_constraintTop_toBottomOf="@+id/arrowLeft" />
@@ -122,7 +116,6 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-
             android:text="NEXT"
             android:textSize="10sp"
             app:layout_constraintEnd_toStartOf="@+id/arrowRight"
