@@ -176,6 +176,7 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
         String longDescription = step.getDescription();
         stepTitle.setText(shortDescription);
         stepDescription.setText(longDescription);
+        stepNumber.setText(String.format(getString(R.string.step_count), stepPosition + 1, steps.size()));
         videoUri = StepFieldsValidator.getVideoUri(step);
         if (videoUri != null) {
             playerView.setVisibility(View.VISIBLE);
@@ -387,5 +388,6 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
                 | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
     }
+
 
 }
