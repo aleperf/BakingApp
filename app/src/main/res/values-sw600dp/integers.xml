@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--max-screen_switch: used to distinguish if land in phone and tablet
+      1:phone portrait 2: phone landscape 3: tablet-->
+    <integer name="max_screen_switch">3</integer>
+</resources>

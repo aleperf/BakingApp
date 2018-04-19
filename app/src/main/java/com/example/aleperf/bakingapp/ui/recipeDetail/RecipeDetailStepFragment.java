@@ -72,6 +72,8 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
     private static final String PLAYBACK_POSITION = "playback position";
     private static final String CURRENT_WINDOW = "current window";
     private static final String PLAY_WHEN_READY = "play when ready";
+    private static final int PHONE_PORTRAIT = 1;
+    private static final int PHONE_LANDSCAPE = 2;
 
     private int recipeId;
     private int stepPosition;
@@ -171,7 +173,9 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
     }
 
     private void updateUI(int stepPosition) {
+        int video_switch = getResources().getInteger(R.integer.max_screen_switch);
         Step step = steps.get(stepPosition);
+        videoUri = StepFieldsValidator.getVideoUri(step);
         String shortDescription = step.getShortDescription();
         String longDescription = step.getDescription();
         stepTitle.setText(shortDescription);
@@ -188,6 +192,8 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
         }
         //TODO Load image with Picasso
     }
+
+    private void makeExoPlayerFullScreen(){}
 
     private void initializePlayer() {
         if (exoPlayer == null) {
@@ -310,7 +316,7 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
 
     @Override
     public void onTracksChanged(TrackGroupArray trackGroups, TrackSelectionArray trackSelections) {
-
+               Log.d("uffa", "sto cambiando track");
     }
 
     @Override
