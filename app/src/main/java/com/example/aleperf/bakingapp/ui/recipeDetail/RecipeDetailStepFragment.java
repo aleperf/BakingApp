@@ -5,7 +5,6 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,13 +14,13 @@ import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.aleperf.bakingapp.BakingApplication;
 import com.example.aleperf.bakingapp.model.Recipe.Step;
@@ -32,7 +31,6 @@ import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
 import com.google.android.exoplayer2.ExoPlaybackException;
-import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.LoadControl;
 import com.google.android.exoplayer2.PlaybackParameters;
@@ -115,7 +113,11 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
     @BindView(R.id.next_arrow_text_view)
     TextView nextTextView;
     @BindView(R.id.previous_arrow_text_view)
-    TextView previousArrowTextView;
+    TextView previousTextView;
+
+    public interface StepDetailSelector {
+        void showStepDetail(int recipeId, int stepPosition);
+    }
 
 
     public static RecipeDetailStepFragment getInstance(int recipeId, int stepPosition) {
@@ -157,6 +159,10 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
             playWhenReady = savedInstanceState.getBoolean(PLAY_WHEN_READY, false);
 
         }
+
+        StepNavigationListener navigationListener = new StepNavigationListener();
+        arrowLeft.setOnClickListener(navigationListener);
+        arrowRight.setOnClickListener(navigationListener);
         return root;
     }
 
@@ -189,13 +195,14 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
         stepDescription.setText(longDescription);
         stepNumber.setText(String.format(getString(R.string.step_count), stepPosition + 1, steps.size()));
         videoUri = StepFieldsValidator.getVideoUri(step);
-        ActionBar actionBar =((AppCompatActivity) getActivity()).getSupportActionBar();
+        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         if (videoUri != null) {
             playerView.setVisibility(View.VISIBLE);
             initializeMediaSession();
             initializePlayer();
-            if(screen_orientation == PHONE_LANDSCAPE){
+            if (screen_orientation == PHONE_LANDSCAPE) {
                 hideStepInfo();
+                hideSystemUi();
                 actionBar.hide();
 
             } else {
@@ -211,7 +218,7 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
         //TODO Load image with Picasso
     }
 
-    private void showStepInfo(){
+    private void showStepInfo() {
 
         stepTitle.setVisibility(View.VISIBLE);
         stepNumber.setVisibility(View.VISIBLE);
@@ -220,10 +227,10 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
         arrowRight.setVisibility(View.VISIBLE);
         thumbnail.setVisibility(View.VISIBLE);
         nextTextView.setVisibility(View.VISIBLE);
-        previousArrowTextView.setVisibility(View.VISIBLE);
+        previousTextView.setVisibility(View.VISIBLE);
     }
 
-    private void hideStepInfo(){
+    private void hideStepInfo() {
 
         stepTitle.setVisibility(View.GONE);
         stepNumber.setVisibility(View.GONE);
@@ -232,7 +239,17 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
         arrowRight.setVisibility(View.GONE);
         thumbnail.setVisibility(View.GONE);
         nextTextView.setVisibility(View.GONE);
-        previousArrowTextView.setVisibility(View.GONE);
+        previousTextView.setVisibility(View.GONE);
+    }
+
+    @SuppressLint("InlinedApi")
+    private void hideSystemUi() {
+        playerView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
+                | View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
     }
 
     private void initializePlayer() {
@@ -349,7 +366,8 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
     }
 
     @Override
-    public void onTracksChanged(TrackGroupArray trackGroups, TrackSelectionArray trackSelections) {
+    public void onTracksChanged(TrackGroupArray trackGroups, TrackSelectionArray
+            trackSelections) {
 
     }
 
@@ -416,6 +434,37 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
         @Override
         public void onSkipToPrevious() {
             exoPlayer.seekTo(0);
+        }
+    }
+
+    private class StepNavigationListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View view) {
+            int position = stepPosition;
+            int viewId = view.getId();
+            boolean isValidPosition = true;
+            switch (viewId) {
+                case R.id.arrowLeft:
+                    --position;
+                    if (position < 0) {
+                        isValidPosition = false;
+                        Toast.makeText(getActivity(), getString(R.string.no_previous_step), Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+                default:
+                    ++position;
+                    if (position >= steps.size()) {
+                        isValidPosition = false;
+                        Toast.makeText(getActivity(), getString(R.string.no_next_step), Toast.LENGTH_SHORT).show();
+                    }
+            }
+            if (isValidPosition) {
+                if (getActivity() instanceof StepDetailSelector) {
+                    ((StepDetailSelector) getActivity()).showStepDetail(recipeId, position);
+                }
+            }
+
         }
     }
 

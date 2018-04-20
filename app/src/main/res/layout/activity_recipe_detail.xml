@@ -21,17 +21,13 @@
             app:titleTextColor="@color/toolbarTitle" />
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v4.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        <fragment
+    <fragment
             android:id="@+id/master_steps"
             android:name="com.example.aleperf.bakingapp.ui.recipeDetail.RecipeSummaryFragment"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="center_horizontal" />
 
-    </android.support.v4.widget.NestedScrollView>
+
 </android.support.design.widget.CoordinatorLayout>

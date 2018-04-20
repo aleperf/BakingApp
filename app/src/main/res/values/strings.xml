@@ -6,5 +6,7 @@
     <string name="expansion_hint_more">SHOW MORE</string>
     <string name="expansion_hint_less">SHOW LESS</string>
     <string name="title_activity_recipe_detail_step">RecipeDetailStepActivity</string>
-    <string name ="step_count">STEP %d OF %d</string>
+    <string name="step_count">STEP %d OF %d</string>
+    <string name="no_previous_step">No previous step for this recipe</string>
+    <string name="no_next_step">This is the last step for this recipe</string>
 </resources>

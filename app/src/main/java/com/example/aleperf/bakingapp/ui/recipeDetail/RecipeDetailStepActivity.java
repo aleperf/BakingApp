@@ -5,14 +5,9 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.widget.FrameLayout;
-import android.widget.TextView;
 
 
 import com.example.aleperf.bakingapp.R;
-
-import org.w3c.dom.Text;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,7 +16,7 @@ import butterknife.ButterKnife;
  * Manage the details about the recipe step.
  */
 
-public class RecipeDetailStepActivity extends AppCompatActivity {
+public class RecipeDetailStepActivity extends AppCompatActivity implements RecipeDetailStepFragment.StepDetailSelector {
 
     private static final String STEP_EXTRA_POSITION = "step extra position";
     private static final String RECIPE_EXTRA_TITLE = "recipe extra title";
@@ -52,7 +47,15 @@ public class RecipeDetailStepActivity extends AppCompatActivity {
         if (fragment == null) {
             fragment = RecipeDetailStepFragment.getInstance(recipeId, stepPosition);
         }
-        fragmentManager.beginTransaction().replace(R.id.detail_step_fragment_container, fragment, FRAGMENT_TAG).commit();
+        fragmentManager.beginTransaction().replace(R.id.detail_step_fragment_container, fragment,
+                FRAGMENT_TAG).commit();
     }
 
+    @Override
+    public void showStepDetail(int recipeId, int stepPosition) {
+        RecipeDetailStepFragment fragment = RecipeDetailStepFragment.getInstance(recipeId, stepPosition);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.detail_step_fragment_container,
+                fragment, FRAGMENT_TAG).commit();
+    }
 }

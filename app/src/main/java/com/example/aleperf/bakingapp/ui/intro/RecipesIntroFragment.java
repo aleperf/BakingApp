@@ -92,7 +92,7 @@ public class RecipesIntroFragment extends Fragment {
      */
 
     private void subscribe() {
-        Observer observer = (Observer<List<Recipe>>) recipes -> {
+        Observer<List<Recipe>> observer = recipes -> {
             if (recipes != null && recipes.size() != 0) {
                 emptyMessageImageView.setVisibility(View.GONE);
                 recipesGrid.setVisibility(View.VISIBLE);
