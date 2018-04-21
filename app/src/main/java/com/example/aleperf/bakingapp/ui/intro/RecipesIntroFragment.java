@@ -6,16 +6,20 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.example.aleperf.bakingapp.BakingApplication;
@@ -35,27 +39,32 @@ import butterknife.Unbinder;
  */
 public class RecipesIntroFragment extends Fragment {
 
-    private final String TAG = RecipesIntroFragment.class.getSimpleName();
-    private static final String RECIPE_EXTRA_ID = "recipe extra id";
+    private static final String TAG = RecipesIntroFragment.class.getSimpleName();
+    private static final String SCROLL_X_POS = "x scroll position";
+    private static final String SCROLL_Y_POS = "y scroll position";
 
     @BindView(R.id.recipes_grid_intro)
-    RecyclerView recipesGrid;
+    RecyclerView recipesRecyclerView;
     @BindView(R.id.empty_image_view)
     ImageView emptyMessageImageView;
-
+    @BindView(R.id.recipes_intro_scroll_view)
+    NestedScrollView introScrollView;
     RecipesViewModel model;
     RecipesAdapter adapter;
     @Inject
     ViewModelProvider.Factory viewModelFactory;
     LiveData<List<Recipe>> recipes;
-
+    GridLayoutManager gridLayoutManager;
     private Unbinder unbinder;
+    private int scrollX;
+    private int scrollY;
 
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ((BakingApplication) getActivity().getApplication()).getBakingApplicationComponent().inject(this);
+        setRetainInstance(true);
 
 
 
@@ -74,18 +83,37 @@ public class RecipesIntroFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_intro_recipes, container, false);
         unbinder = ButterKnife.bind(this, root);
-
         emptyMessageImageView.setOnClickListener(v -> {
             model.getRecipes();
             Toast.makeText(getContext(), "Fetching Data", Toast.LENGTH_SHORT).show();
         });
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 1);
-        recipesGrid.setLayoutManager(gridLayoutManager);
+        gridLayoutManager = new GridLayoutManager(getActivity(), 1);
+        recipesRecyclerView.setLayoutManager(gridLayoutManager);
         adapter = new RecipesAdapter(getActivity());
-        recipesGrid.setAdapter(adapter);
+        recipesRecyclerView.setAdapter(adapter);
+
         return root;
 
     }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        if(savedInstanceState != null) {
+            scrollX = savedInstanceState.getInt(SCROLL_X_POS);
+            scrollY = savedInstanceState.getInt(SCROLL_Y_POS);
+            ViewTreeObserver viewTreeObserver = introScrollView.getViewTreeObserver();
+            //wait for the NestedScrollView to be added to the layout and then scroll
+            viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    introScrollView.scrollTo(scrollX, scrollY);
+                }
+            });
+        }
+    }
+
+
 
     /**
      * Subscribe to the recipe observable and change the UI according to its content.
@@ -95,21 +123,31 @@ public class RecipesIntroFragment extends Fragment {
         Observer<List<Recipe>> observer = recipes -> {
             if (recipes != null && recipes.size() != 0) {
                 emptyMessageImageView.setVisibility(View.GONE);
-                recipesGrid.setVisibility(View.VISIBLE);
+                recipesRecyclerView.setVisibility(View.VISIBLE);
                 adapter.setRecipes(recipes);
             } else {
                 //show here empty message or dialog prompting for connection
-                Log.d(TAG, "adapter is null");
-                recipesGrid.setVisibility(View.GONE);
+                recipesRecyclerView.setVisibility(View.GONE);
                 emptyMessageImageView.setVisibility(View.VISIBLE);
             }
         };
         recipes.observe(this, observer);
     }
 
+
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        scrollX = introScrollView.getScrollX();
+        scrollY = introScrollView.getScrollY();
+        outState.putInt(SCROLL_X_POS, scrollX);
+        outState.putInt(SCROLL_Y_POS, scrollY);
     }
 }

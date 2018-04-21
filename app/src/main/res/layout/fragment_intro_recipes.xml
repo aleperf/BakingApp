@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/recipes_intro_scroll_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center_horizontal"
@@ -17,7 +23,6 @@
 
 
     <android.support.v7.widget.RecyclerView
-
         android:id="@+id/recipes_grid_intro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -25,3 +30,4 @@
 
 
 </LinearLayout>
+</android.support.v4.widget.NestedScrollView>
