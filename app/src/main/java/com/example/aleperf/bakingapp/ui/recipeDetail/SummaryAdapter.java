@@ -21,6 +21,7 @@ import butterknife.ButterKnife;
 public class SummaryAdapter extends RecyclerView.Adapter<ViewHolder> {
     private final int VIEW_TYPE_INGREDIENT = 0;
     private final int VIEW_TYPE_STEP = 1;
+    private final int INTRO_POSITION = 1;
     Context context;
     String recipeTitle;
     List<Step> steps;
@@ -123,7 +124,10 @@ public class SummaryAdapter extends RecyclerView.Adapter<ViewHolder> {
         }
 
         void bindSteps(Step step, int position){
-            stepNumber.setText(context.getString(R.string.step_numerator) + String.valueOf(position));
+            if(position == INTRO_POSITION){
+                stepNumber.setText(context.getString(R.string.intro_step));
+            } else {
+            stepNumber.setText(context.getString(R.string.step_numerator) + String.valueOf(position - 1));}
             summaryDescription.setText(step.getShortDescription());
         }
         @Override

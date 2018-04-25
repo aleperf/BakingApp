@@ -76,6 +76,7 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
     private static final int PHONE_PORTRAIT = 1;
     private static final int PHONE_LANDSCAPE = 2;
     private static final int TABLET = 3;
+    private static final int INTRO_STEP = 0;
 
     private int recipeId;
     private int stepPosition;
@@ -193,7 +194,11 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
         String longDescription = step.getDescription();
         stepTitle.setText(shortDescription);
         stepDescription.setText(longDescription);
-        stepNumber.setText(String.format(getString(R.string.step_count), stepPosition + 1, steps.size()));
+        if (stepPosition == INTRO_STEP) {
+            stepNumber.setText(getString(R.string.intro_step));
+        } else {
+            stepNumber.setText(String.format(getString(R.string.step_count), stepPosition, steps.size() -1));
+        }
         videoUri = StepFieldsValidator.getVideoUri(step);
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         if (videoUri != null) {
@@ -460,8 +465,8 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
                     }
             }
             if (isValidPosition) {
-                if (getActivity() instanceof StepDetailSelector) {
-                    ((StepDetailSelector) getActivity()).showStepDetail(recipeId, position);
+                if (getActivity() instanceof StepSelector) {
+                    ((StepSelector) getActivity()).onStepSelected(position);
                 }
             }
 
