@@ -91,33 +91,15 @@ public class RecipesIntroFragment extends Fragment {
         recipesRecyclerView.setLayoutManager(gridLayoutManager);
         adapter = new RecipesAdapter(getActivity());
         recipesRecyclerView.setAdapter(adapter);
+        if(savedInstanceState != null){
+            scrollX = savedInstanceState.getInt(SCROLL_X_POS);
+            scrollY = savedInstanceState.getInt(SCROLL_Y_POS);
+        }
 
         return root;
 
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        if(savedInstanceState != null) {
-            scrollX = savedInstanceState.getInt(SCROLL_X_POS);
-            scrollY = savedInstanceState.getInt(SCROLL_Y_POS);
-            ViewTreeObserver viewTreeObserver = introScrollView.getViewTreeObserver();
-            //wait for the NestedScrollView to be added to the layout and then scroll
-            viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                @Override
-                public void onGlobalLayout() {
-                    introScrollView.scrollTo(scrollX, scrollY);
-                }
-            });
-        }
-    }
-
-
-
-    /**
-     * Subscribe to the recipe observable and change the UI according to its content.
-     */
 
     private void subscribe() {
         Observer<List<Recipe>> observer = recipes -> {
@@ -125,6 +107,9 @@ public class RecipesIntroFragment extends Fragment {
                 emptyMessageImageView.setVisibility(View.GONE);
                 recipesRecyclerView.setVisibility(View.VISIBLE);
                 adapter.setRecipes(recipes);
+                introScrollView.post(() -> {
+                    introScrollView.scrollTo(scrollX, scrollY);
+                    });
             } else {
                 //show here empty message or dialog prompting for connection
                 recipesRecyclerView.setVisibility(View.GONE);
