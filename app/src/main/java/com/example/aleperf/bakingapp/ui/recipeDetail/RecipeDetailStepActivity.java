@@ -16,7 +16,7 @@ import butterknife.ButterKnife;
  * Manage the details about the recipe step.
  */
 
-public class RecipeDetailStepActivity extends AppCompatActivity implements RecipeDetailStepFragment.StepDetailSelector {
+public class RecipeDetailStepActivity extends AppCompatActivity implements StepSelector {
 
     private static final String STEP_EXTRA_POSITION = "step extra position";
     private static final String RECIPE_EXTRA_TITLE = "recipe extra title";
@@ -42,20 +42,20 @@ public class RecipeDetailStepActivity extends AppCompatActivity implements Recip
         stepPosition = callingIntent.getIntExtra(STEP_EXTRA_POSITION, 0);
         getSupportActionBar().setTitle(recipeTitle);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        RecipeDetailStepFragment fragment = (RecipeDetailStepFragment) fragmentManager.findFragmentByTag(FRAGMENT_TAG);
-        if (fragment == null) {
-            fragment = RecipeDetailStepFragment.getInstance(recipeId, stepPosition);
-        }
-        fragmentManager.beginTransaction().replace(R.id.detail_step_fragment_container, fragment,
-                FRAGMENT_TAG).commit();
+        replaceFragment(recipeId, stepPosition);
     }
 
+
+
     @Override
-    public void showStepDetail(int recipeId, int stepPosition) {
-        RecipeDetailStepFragment fragment = RecipeDetailStepFragment.getInstance(recipeId, stepPosition);
+    public void onStepSelected(int position) {
+       replaceFragment(recipeId, position);
+    }
+
+    private void replaceFragment(int recipeId, int position){
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.detail_step_fragment_container,
-                fragment, FRAGMENT_TAG).commit();
+        RecipeDetailStepFragment fragment = RecipeDetailStepFragment.getInstance(recipeId, position);
+        fragmentManager.beginTransaction().replace(R.id.detail_step_fragment_container, fragment,
+                FRAGMENT_TAG).commit();
     }
 }

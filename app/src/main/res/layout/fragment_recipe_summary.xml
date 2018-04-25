@@ -17,12 +17,75 @@
     android:paddingBottom="16dp"
     android:layout_gravity="center_horizontal">
 
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/ingredients_section"
+        android:background="@color/ingredientsColorBackground"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_margin="8dp"
+        android:layout_width="300dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_height="wrap_content"
+        android:paddingBottom="8dp">
 
-    <include layout="@layout/ingredients_list"/>
+
+        <TextView
+            android:id="@+id/ingredients_title_text_view"
+            style="@style/IngredientListTitle"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Nutella Pie Ingredients" />
+
+        <android.support.v7.widget.AppCompatImageButton
+            android:id="@+id/button_expand"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:scaleType="fitXY"
+            android:layout_marginBottom="4dp"
+            android:layout_marginEnd="8dp"
+            android:background="?android:selectableItemBackground"
+            android:tint="@color/cardTextViewColor"
+            app:layout_constraintBottom_toBottomOf="@+id/ingredients_title_text_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/ic_keyboard_arrow_down" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/ingredient_recycler_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ingredients_title_text_view"
+            android:visibility="gone"/>
+
+        <android.support.v7.widget.AppCompatImageButton
+            android:id="@+id/button_hide"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:scaleType="fitXY"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            android:background="?android:selectableItemBackground"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ingredient_recycler_view"
+            app:srcCompat="@drawable/ic_keyboard_arrow_up"
+            android:visibility="gone"/>
+
+
+
+
+    </android.support.constraint.ConstraintLayout>
+
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recipe_steps"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_gravity="center_horizontal"

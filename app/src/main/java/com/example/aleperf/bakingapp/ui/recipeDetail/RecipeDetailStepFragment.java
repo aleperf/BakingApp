@@ -64,7 +64,7 @@ import butterknife.Unbinder;
 
 public class RecipeDetailStepFragment extends Fragment implements Player.EventListener {
 
-    private static final String TAG = RecipeDetailStepFragment.class.getSimpleName();
+    public static final String TAG = RecipeDetailStepFragment.class.getSimpleName();
 
 
     private static final String STEP_EXTRA_POSITION = "step extra position";
