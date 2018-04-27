@@ -14,6 +14,7 @@ import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,7 @@ import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
 import com.google.android.exoplayer2.ExoPlaybackException;
+import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.LoadControl;
 import com.google.android.exoplayer2.PlaybackParameters;
@@ -73,6 +75,7 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
     private static final String PLAYBACK_POSITION = "playback position";
     private static final String CURRENT_WINDOW = "current window";
     private static final String PLAY_WHEN_READY = "play when ready";
+    private static final String VIDEO_DURATION = "exoplayer video duration";
     private static final int PHONE_PORTRAIT = 1;
     private static final int PHONE_LANDSCAPE = 2;
     private static final int TABLET = 3;
@@ -90,12 +93,13 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
     private SimpleExoPlayer exoPlayer;
     private long playbackPosition;
     private int currentWindow;
-    private boolean playWhenReady = true;
+    private boolean playWhenReady = false;
 
     private Uri videoUri;
 
     private MediaSessionCompat mediaSession;
     private PlaybackStateCompat.Builder stateBuilder;
+    private long duration;
 
     @BindView(R.id.step_video)
     PlayerView playerView;
@@ -115,10 +119,6 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
     TextView nextTextView;
     @BindView(R.id.previous_arrow_text_view)
     TextView previousTextView;
-
-    public interface StepDetailSelector {
-        void showStepDetail(int recipeId, int stepPosition);
-    }
 
 
     public static RecipeDetailStepFragment getInstance(int recipeId, int stepPosition) {
@@ -158,6 +158,7 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
             playbackPosition = savedInstanceState.getLong(PLAYBACK_POSITION, C.TIME_UNSET);
             currentWindow = savedInstanceState.getInt(CURRENT_WINDOW, 0);
             playWhenReady = savedInstanceState.getBoolean(PLAY_WHEN_READY, false);
+            duration = savedInstanceState.getLong(VIDEO_DURATION);
 
         }
 
@@ -197,7 +198,7 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
         if (stepPosition == INTRO_STEP) {
             stepNumber.setText(getString(R.string.intro_step));
         } else {
-            stepNumber.setText(String.format(getString(R.string.step_count), stepPosition, steps.size() -1));
+            stepNumber.setText(String.format(getString(R.string.step_count), stepPosition, steps.size() - 1));
         }
         videoUri = StepFieldsValidator.getVideoUri(step);
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
@@ -258,6 +259,7 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
     }
 
     private void initializePlayer() {
+        Log.d("uffa", "sono in initializePlayer e playbackPosition è: " + playbackPosition + " duration: " + duration);
         if (exoPlayer == null) {
             TrackSelector trackSelector = new DefaultTrackSelector();
             LoadControl loadControl = new DefaultLoadControl();
@@ -265,9 +267,16 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
             playerView.setPlayer(exoPlayer);
             exoPlayer.addListener(this);
             exoPlayer.setPlayWhenReady(playWhenReady);
-            exoPlayer.seekTo(currentWindow, playbackPosition);
+            if (duration > 0 && playbackPosition > duration) {
+                Log.d("uffa", "playbackposition è maggiore di duration: "
+                        + playbackPosition + " d: " + duration);
+                exoPlayer.seekTo(0, 0);
+            } else {
+                exoPlayer.seekTo(currentWindow, playbackPosition);
+            }
             MediaSource mediaSource = buildExoPlayerMediaSource(videoUri);
             exoPlayer.prepare(mediaSource);
+
             exoPlayer.setPlayWhenReady(playWhenReady);
         } else {
             exoPlayer.setPlayWhenReady(playWhenReady);
@@ -282,9 +291,11 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
             playbackPosition = exoPlayer.getCurrentPosition();
             currentWindow = exoPlayer.getCurrentWindowIndex();
             playWhenReady = exoPlayer.getPlayWhenReady();
+            exoPlayer.setPlayWhenReady(false);
             exoPlayer.release();
             exoPlayer = null;
         }
+
     }
 
     private MediaSource buildExoPlayerMediaSource(Uri videoUri) {
@@ -334,18 +345,21 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
     @Override
     public void onPause() {
         super.onPause();
-        if (exoPlayer != null && Util.SDK_INT <= 23) {
+        if (Util.SDK_INT <= 23) {
             releasePlayer();
         }
+
     }
+
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         unbinder.unbind();
-        if (exoPlayer != null && Util.SDK_INT > 23) {
+        if (Util.SDK_INT > 23) {
             releasePlayer();
         }
+
     }
 
     @Override
@@ -353,6 +367,7 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
         super.onSaveInstanceState(outState);
         outState.putInt(RECIPE_EXTRA_ID, recipeId);
         outState.putInt(STEP_EXTRA_POSITION, stepPosition);
+        outState.putLong(VIDEO_DURATION, duration);
         if (exoPlayer == null) {
             outState.putLong(PLAYBACK_POSITION, playbackPosition);
             outState.putInt(CURRENT_WINDOW, currentWindow);
@@ -386,6 +401,8 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
         if ((playbackState == Player.STATE_READY) && playWhenReady) {
             stateBuilder.setState(PlaybackStateCompat.STATE_PLAYING,
                     exoPlayer.getCurrentPosition(), 1f);
+            duration = exoPlayer.getDuration();
+            Log.d("uffa", "sono in onPlayerStateChanged e duration è " + duration);
         } else if ((playbackState == Player.STATE_READY)) {
             stateBuilder.setState(PlaybackStateCompat.STATE_PAUSED,
                     exoPlayer.getCurrentPosition(), 1f);

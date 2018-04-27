@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.example.aleperf.bakingapp.R;
 import com.example.aleperf.bakingapp.model.Recipe;
 import com.example.aleperf.bakingapp.model.Recipe.Step;
-import com.example.aleperf.bakingapp.ui.recipeDetail.RecipeDetailStepFragment.StepDetailSelector;
+
 
 import java.util.List;
 
@@ -80,8 +80,8 @@ public class StepsSummaryAdapter extends RecyclerView.Adapter<StepsSummaryAdapte
         @Override
         public void onClick(View v) {
             if(context instanceof StepSelector){
-                RecipeDetailActivity recipeDetailActivity = (RecipeDetailActivity) context;
-                recipeDetailActivity.onStepSelected(getAdapterPosition());
+                StepSelector stepSelector = (StepSelector) context;
+                stepSelector.onStepSelected(getAdapterPosition());
 
             }
         }

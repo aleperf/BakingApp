@@ -60,7 +60,12 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
       notifyDataSetChanged();
   }
 
-  class  IngredientHolder extends RecyclerView.ViewHolder{
+    @Override
+    public int getItemViewType(int position) {
+        return super.getItemViewType(position);
+    }
+
+    class  IngredientHolder extends RecyclerView.ViewHolder{
 
       @BindView(R.id.ingredient_item_title)
       TextView ingredientTitle;

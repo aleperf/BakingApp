@@ -12,9 +12,7 @@ import android.widget.Toast;
 
 import com.example.aleperf.bakingapp.R;
 import com.example.aleperf.bakingapp.model.Recipe.Step;
-
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -38,7 +36,7 @@ public class SummaryAdapter extends RecyclerView.Adapter<ViewHolder> {
         switch(viewType){
             case VIEW_TYPE_INGREDIENT:
                 view = inflater.inflate(R.layout.ingredients_card_selection, parent, false);
-                return new IngredientTitleHolder(view);
+                return new IngredientTitleHolder(view, context, recipeTitle);
             default:
                view  = inflater.inflate(R.layout.step_item, parent, false);
                return new StepHolder(view);
@@ -88,28 +86,7 @@ public class SummaryAdapter extends RecyclerView.Adapter<ViewHolder> {
         this.steps = steps;
     }
 
-    public class IngredientTitleHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        @BindView(R.id.ingredients_text_view)
-        TextView ingredientsTextView;
 
-        public IngredientTitleHolder(View view) {
-            super(view);
-            ButterKnife.bind(this, view);
-            view.setOnClickListener(this);
-
-        }
-
-        @Override
-        public void onClick(View v) {
-            //TODO START THE INGREDIENTS ACTIVITY OR DIALOG
-            Toast.makeText(context, "clicking " + recipeTitle, Toast.LENGTH_SHORT).show();
-        }
-
-        public void  bindIngredient(String recipeName){
-            String ingredientsTitle = context.getResources().getString(R.string.recipe_ingredient);
-            ingredientsTextView.setText(String.format(ingredientsTitle, recipeName));
-        }
-    }
 
     public class StepHolder extends RecyclerView.ViewHolder implements  View.OnClickListener{
         @BindView(R.id.step_summary_description)
@@ -134,7 +111,7 @@ public class SummaryAdapter extends RecyclerView.Adapter<ViewHolder> {
         public void onClick(View v) {
             if(context instanceof StepSelector){
                 StepSelector stepSelector = (StepSelector) context;
-                stepSelector.onStepSelected(getAdapterPosition() - 1);
+                stepSelector.onStepSelected(getAdapterPosition());
 
             }
         }

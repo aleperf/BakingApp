@@ -6,12 +6,16 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+
 import com.example.aleperf.bakingapp.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-
+/**
+ * Manage the detailed info for a single recipe (phone and tablet)
+ */
 
 public class RecipeDetailActivity extends AppCompatActivity implements StepSelector {
 
@@ -21,6 +25,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements StepSelec
     private static final String STEP_POSITION = "step position";
     private static final String RECIPE_ID = "recipe id";
     private static final String RECIPE_TITLE = "recipe title";
+    private static final String TAG = RecipeDetailActivity.class.getSimpleName();
 
 
     @BindView(R.id.detail_activity_toolbar)
@@ -57,19 +62,24 @@ public class RecipeDetailActivity extends AppCompatActivity implements StepSelec
     }
 
     @Override
-    public void onStepSelected(int stepPosition) {
-        this.stepPosition = stepPosition;
-        if (!isDualPane) {
-            Intent intent = new Intent(this, RecipeDetailStepActivity.class);
-            intent.putExtra(STEP_EXTRA_POSITION, stepPosition);
-            intent.putExtra(RECIPE_EXTRA_TITLE, recipeTitle);
-            intent.putExtra(RECIPE_EXTRA_ID, recipeId);
-            startActivity(intent);
-        } else {
-            replaceFragment(recipeId, stepPosition);
+    public void onStepSelected(int position) {
+        this.stepPosition = position;
+        switch (position) {
+            case 0:
+                //TO DO LAUNCH DIALOG INGREDIENTS
+                break;
+            default:
+                if (!isDualPane) {
+                    Intent intent = new Intent(this, RecipeDetailStepActivity.class);
+                    intent.putExtra(STEP_EXTRA_POSITION, stepPosition - 1);
+                    intent.putExtra(RECIPE_EXTRA_TITLE, recipeTitle);
+                    intent.putExtra(RECIPE_EXTRA_ID, recipeId);
+                    startActivity(intent);
+                } else {
+                    replaceFragment(recipeId, stepPosition);
 
+                }
         }
-
     }
 
     @Override
