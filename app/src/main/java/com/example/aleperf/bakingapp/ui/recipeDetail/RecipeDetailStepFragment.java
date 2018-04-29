@@ -121,7 +121,7 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
     TextView previousTextView;
 
 
-    public static RecipeDetailStepFragment getInstance(int recipeId, int stepPosition) {
+    public static RecipeDetailStepFragment newInstance(int recipeId, int stepPosition) {
         Bundle bundle = new Bundle();
         bundle.putInt(STEP_EXTRA_POSITION, stepPosition);
         bundle.putInt(RECIPE_EXTRA_ID, recipeId);

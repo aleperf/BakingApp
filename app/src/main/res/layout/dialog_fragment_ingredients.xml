@@ -9,4 +9,5 @@
     android:layout_gravity="center_horizontal"
     android:id="@+id/ingredients_dialog_rv"
     android:background="@color/ingredientsColorBackground"
+    android:paddingBottom="16dp"
     />

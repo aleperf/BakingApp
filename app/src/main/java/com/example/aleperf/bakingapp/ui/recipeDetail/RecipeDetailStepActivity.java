@@ -2,11 +2,9 @@ package com.example.aleperf.bakingapp.ui.recipeDetail;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 
 
 import com.example.aleperf.bakingapp.R;
@@ -63,7 +61,7 @@ public class RecipeDetailStepActivity extends AppCompatActivity implements StepS
         FragmentManager fragmentManager = getSupportFragmentManager();
         RecipeDetailStepFragment fragment = (RecipeDetailStepFragment) fragmentManager.findFragmentByTag(tag);
         if (fragment == null) {
-            fragment = RecipeDetailStepFragment.getInstance(recipeId, position);
+            fragment = RecipeDetailStepFragment.newInstance(recipeId, position);
         }
         fragmentManager.beginTransaction().replace(R.id.detail_step_fragment_container, fragment,
                 tag).commit();

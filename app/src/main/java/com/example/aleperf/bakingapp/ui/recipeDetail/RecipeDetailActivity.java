@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.view.WindowManager;
 
 import com.example.aleperf.bakingapp.R;
 
@@ -17,7 +17,7 @@ import butterknife.ButterKnife;
  * Manage the detailed info for a single recipe (phone and tablet)
  */
 
-public class RecipeDetailActivity extends AppCompatActivity implements StepSelector {
+public class RecipeDetailActivity extends AppCompatActivity implements StepSelector, IngredientsDisplay {
 
     private static final String STEP_EXTRA_POSITION = "step extra position";
     private static final String RECIPE_EXTRA_TITLE = "recipe extra title";
@@ -91,11 +91,17 @@ public class RecipeDetailActivity extends AppCompatActivity implements StepSelec
     }
 
     private void replaceFragment(int recipeId, int stepPosition) {
-        RecipeDetailStepFragment fragment = RecipeDetailStepFragment.getInstance(recipeId, stepPosition);
+        RecipeDetailStepFragment fragment = RecipeDetailStepFragment.newInstance(recipeId, stepPosition);
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.detail_steps_container,
                 fragment).commit();
     }
 
 
+    @Override
+    public void displayIngredients() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        IngredientsDialogFragment ingredientsDialogFragment = IngredientsDialogFragment.newInstance(recipeId, recipeTitle);
+        ingredientsDialogFragment.show(fragmentManager, IngredientsDialogFragment.class.getSimpleName());
+    }
 }

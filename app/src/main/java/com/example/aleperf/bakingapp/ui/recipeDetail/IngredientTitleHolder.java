@@ -41,7 +41,10 @@ public class IngredientTitleHolder extends RecyclerView.ViewHolder implements Vi
     @Override
     public void onClick(View v) {
         if(isClickable){
-            Toast.makeText(context, "Is clickable: " + recipeTitle, Toast.LENGTH_SHORT).show();
+           if(context instanceof IngredientsDisplay){
+               IngredientsDisplay ingredientsDisplay = (IngredientsDisplay) context;
+               ingredientsDisplay.displayIngredients();
+           }
         }
 
     }
