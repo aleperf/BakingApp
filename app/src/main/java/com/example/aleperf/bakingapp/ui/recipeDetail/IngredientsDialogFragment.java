@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -84,6 +86,7 @@ public class IngredientsDialogFragment extends DialogFragment {
         ingredientsRecyclerView.setLayoutManager(layoutManager);
         adapter = new IngredientsAdapter(getActivity(), recipeTitle);
         ingredientsRecyclerView.setAdapter(adapter);
+        addItemDecorator(ingredientsRecyclerView);
         clearButton.setOnClickListener(buttonView -> getDialog().dismiss());
         return view;
     }
@@ -134,5 +137,15 @@ public class IngredientsDialogFragment extends DialogFragment {
             }
         };
         recipe.observe(this, observer);
+    }
+
+    /**
+     * Add a divider decoration to a RecyclerView
+     */
+
+    private void addItemDecorator(RecyclerView recyclerView) {
+        DividerItemDecoration itemDecorator = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL);
+        itemDecorator.setDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.recyclerview_divider));
+        recyclerView.addItemDecoration(itemDecorator);
     }
 }
