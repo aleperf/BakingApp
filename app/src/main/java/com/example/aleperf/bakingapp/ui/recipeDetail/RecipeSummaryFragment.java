@@ -6,25 +6,16 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.transition.AutoTransition;
-
-import android.support.transition.TransitionManager;
 
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import android.view.ViewTreeObserver;
 
 import com.example.aleperf.bakingapp.BakingApplication;
 import com.example.aleperf.bakingapp.R;
@@ -45,7 +36,7 @@ public class RecipeSummaryFragment extends Fragment {
     private static final String RECIPE_EXTRA_ID = "recipe extra id";
 
     private static final String FIRST_VISIBLE_ITEM_POSITION = "first completely visible item position";
-    private int firstVisbileItemPosition;
+    private int firstVisibleItemPosition;
 
 
     @BindView(R.id.summary_recycler_view)
@@ -78,7 +69,7 @@ public class RecipeSummaryFragment extends Fragment {
         summaryAdapter = new SummaryAdapter(getActivity());
         summaryRecyclerView.setAdapter(summaryAdapter);
         if (savedInstanceState != null) {
-            firstVisbileItemPosition = savedInstanceState.getInt(FIRST_VISIBLE_ITEM_POSITION);
+            firstVisibleItemPosition = savedInstanceState.getInt(FIRST_VISIBLE_ITEM_POSITION);
         }
         return root;
 
@@ -98,7 +89,7 @@ public class RecipeSummaryFragment extends Fragment {
         Observer<Recipe> observer = recipe -> {
             if (recipe != null) {
                 summaryAdapter.setSummaryContent(recipe.getName(), recipe.getSteps());
-                summaryRecyclerView.scrollToPosition(firstVisbileItemPosition);
+                summaryRecyclerView.scrollToPosition(firstVisibleItemPosition);
             }
         };
         recipe.observe(this, observer);

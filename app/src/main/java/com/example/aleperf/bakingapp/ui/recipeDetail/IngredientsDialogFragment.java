@@ -36,6 +36,7 @@ public class IngredientsDialogFragment extends DialogFragment {
 
     private final static String RECIPE_ID = "ingredients recipe id";
     private final static String RECIPE_TITLE = "ingredients recipe title";
+    private final static String RECYCLERVIEW_POSITION = "recyclerView scroll position";
     private Unbinder unbinder;
 
     private int recipeId;
@@ -50,6 +51,7 @@ public class IngredientsDialogFragment extends DialogFragment {
     private LiveData<Recipe> recipe;
     private IngredientsAdapter adapter;
     private LinearLayoutManager layoutManager;
+    private int recyclerViewPosition;
 
     public IngredientsDialogFragment() {
         //empty constructor;
@@ -82,6 +84,9 @@ public class IngredientsDialogFragment extends DialogFragment {
         unbinder = ButterKnife.bind(this, view);
         recipeId = getArguments().getInt(RECIPE_ID, 1);
         recipeTitle = getArguments().getString(RECIPE_TITLE, "");
+        if(savedInstanceState != null){
+            recyclerViewPosition = savedInstanceState.getInt(RECYCLERVIEW_POSITION, 0);
+        }
         layoutManager = new LinearLayoutManager(getActivity());
         ingredientsRecyclerView.setLayoutManager(layoutManager);
         adapter = new IngredientsAdapter(getActivity(), recipeTitle);
@@ -127,6 +132,8 @@ public class IngredientsDialogFragment extends DialogFragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        int position = layoutManager.findFirstVisibleItemPosition();
+        outState.putInt(RECYCLERVIEW_POSITION, position);
     }
 
     private void subscribe() {
@@ -134,6 +141,7 @@ public class IngredientsDialogFragment extends DialogFragment {
         Observer<Recipe> observer = recipe -> {
             if (recipe != null) {
                 adapter.setIngredients(recipe);
+                ingredientsRecyclerView.scrollToPosition(recyclerViewPosition);
             }
         };
         recipe.observe(this, observer);
