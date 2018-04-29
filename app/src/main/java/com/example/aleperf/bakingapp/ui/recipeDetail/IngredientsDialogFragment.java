@@ -11,17 +11,15 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.ImageButton;
 
 import com.example.aleperf.bakingapp.BakingApplication;
 import com.example.aleperf.bakingapp.R;
 import com.example.aleperf.bakingapp.model.Recipe;
-import com.example.aleperf.bakingapp.ui.intro.RecipesViewModel;
-import com.google.android.exoplayer2.util.Util;
+
 
 import javax.inject.Inject;
 
@@ -42,6 +40,8 @@ public class IngredientsDialogFragment extends DialogFragment {
     private String recipeTitle;
     @BindView(R.id.ingredients_dialog_rv)
     RecyclerView ingredientsRecyclerView;
+    @BindView(R.id.back_button)
+    ImageButton clearButton;
     @Inject
     ViewModelProvider.Factory viewModelProviderFactory;
     private RecipeDetailViewModel model;
@@ -49,13 +49,12 @@ public class IngredientsDialogFragment extends DialogFragment {
     private IngredientsAdapter adapter;
     private LinearLayoutManager layoutManager;
 
-    public IngredientsDialogFragment(){
-        //required empty constructor;
+    public IngredientsDialogFragment() {
+        //empty constructor;
     }
 
 
-
-    public static IngredientsDialogFragment newInstance(int recipeId, String recipeTitle){
+    public static IngredientsDialogFragment newInstance(int recipeId, String recipeTitle) {
         Bundle bundle = new Bundle();
         bundle.putInt(RECIPE_ID, recipeId);
         bundle.putString(RECIPE_TITLE, recipeTitle);
@@ -69,7 +68,6 @@ public class IngredientsDialogFragment extends DialogFragment {
         super.onCreate(savedInstanceState);
         ((BakingApplication) getActivity().getApplication()).getBakingApplicationComponent().inject(this);
         setRetainInstance(true);
-        Log.d("uffa", "sono in onCreate di IngredientsDialogFragment");
 
 
     }
@@ -86,6 +84,7 @@ public class IngredientsDialogFragment extends DialogFragment {
         ingredientsRecyclerView.setLayoutManager(layoutManager);
         adapter = new IngredientsAdapter(getActivity(), recipeTitle);
         ingredientsRecyclerView.setAdapter(adapter);
+        clearButton.setOnClickListener(buttonView -> getDialog().dismiss());
         return view;
     }
 
@@ -108,8 +107,8 @@ public class IngredientsDialogFragment extends DialogFragment {
 
     @Override
     public void onDestroyView() {
+        //retain dialog fragment on rotation
         Dialog dialog = getDialog();
-        // handles https://code.google.com/p/android/issues/detail?id=17423
         if (dialog != null && getRetainInstance()) {
             dialog.setDismissMessage(null);
         }
@@ -120,17 +119,19 @@ public class IngredientsDialogFragment extends DialogFragment {
     public void onDestroy() {
         super.onDestroy();
         unbinder.unbind();
-
-
     }
 
-    private void subscribe(){
-        Log.d("uffa", "sono in subscribe di IngredientsDialogFragment");
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
+    private void subscribe() {
+
         Observer<Recipe> observer = recipe -> {
             if (recipe != null) {
-                Log.d("uffa", "sono in subscribe di IngredientsDialogFragment e recipe è diverso da null");
                 adapter.setIngredients(recipe);
-                }
+            }
         };
         recipe.observe(this, observer);
     }
