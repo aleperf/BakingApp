@@ -18,7 +18,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.IngredientHolder> {
+public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.IngredientDescriptionHolder> {
 
   Context context;
   List<Recipe.Ingredient> ingredients;
@@ -33,14 +33,14 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
 
   @NonNull
   @Override
-  public IngredientHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+  public IngredientDescriptionHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
       LayoutInflater inflater = LayoutInflater.from(context);
       View view = inflater.inflate(R.layout.ingredient_item, parent, false);
-      return new IngredientHolder(view);
+      return new IngredientDescriptionHolder(view);
   }
 
   @Override
-  public void onBindViewHolder(@NonNull IngredientHolder holder, int position) {
+  public void onBindViewHolder(@NonNull IngredientDescriptionHolder holder, int position) {
       Ingredient ingredient =  ingredients.get(position);
       holder.bindIngredient(ingredient);
 
@@ -65,7 +65,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
         return super.getItemViewType(position);
     }
 
-    class  IngredientHolder extends RecyclerView.ViewHolder{
+    class IngredientDescriptionHolder extends RecyclerView.ViewHolder{
 
       @BindView(R.id.ingredient_item_title)
       TextView ingredientTitle;
@@ -74,7 +74,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
       @BindView(R.id.ingredient_measure)
       TextView ingredientMeasure;
 
-    public IngredientHolder(View view){
+    public IngredientDescriptionHolder(View view){
         super(view);
         ButterKnife.bind(this, view);
         }

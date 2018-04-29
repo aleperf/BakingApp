@@ -2,6 +2,7 @@ package com.example.aleperf.bakingapp.ui.recipeDetail;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,26 +17,32 @@ public class IngredientTitleHolder extends RecyclerView.ViewHolder implements Vi
 
     private Context context;
     private String recipeTitle;
+    private boolean isClickable;
     @BindView(R.id.ingredients_text_view)
     TextView ingredientsTextView;
 
-    public IngredientTitleHolder(View view, Context context, String recipeTitle) {
+
+    public IngredientTitleHolder(View view, Context context, String recipeTitle, boolean isClickable) {
         super(view);
         ButterKnife.bind(this, view);
         this.context = context;
         this.recipeTitle = recipeTitle;
+        this.isClickable = isClickable;
         view.setOnClickListener(this);
 
+
+    }
+
+    public void  bindIngredient(){
+        String ingredientsTitle = context.getResources().getString(R.string.recipe_ingredient);
+        ingredientsTextView.setText(String.format(ingredientsTitle, recipeTitle));
     }
 
     @Override
     public void onClick(View v) {
-        //TODO START THE INGREDIENTS ACTIVITY OR DIALOG
-        Toast.makeText(context, "clicking " + recipeTitle, Toast.LENGTH_SHORT).show();
-    }
+        if(isClickable){
+            Toast.makeText(context, "Is clickable: " + recipeTitle, Toast.LENGTH_SHORT).show();
+        }
 
-    public void  bindIngredient(String recipeName){
-        String ingredientsTitle = context.getResources().getString(R.string.recipe_ingredient);
-        ingredientsTextView.setText(String.format(ingredientsTitle, recipeName));
     }
 }
