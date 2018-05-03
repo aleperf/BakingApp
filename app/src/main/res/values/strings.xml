@@ -11,4 +11,19 @@
     <string name="no_next_step">This is the last step for this recipe</string>
     <string name="intro_step">INTRODUCTION</string>
 
+    <!-- Ingredients measures -->
+    <string name="cups">Cups: %d</string>
+    <string name="table_spoons">Table spoons:\u0020</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="color_chooser_text">Choose Widget Color</string>
+    <string name="add_widget">Add widget</string>
+
+    <!-- widget -->
+    <string name="ingredients_number">Ingredients: %d</string>
+    <string name="title_activity_baking_app_widget_config">BakingAppWidgetConfigActivity</string>
+    <string name="configure">Configure</string>
+
+    <!-- preferences -->
+
+
 </resources>

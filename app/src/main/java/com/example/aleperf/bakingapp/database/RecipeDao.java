@@ -24,6 +24,9 @@ public interface RecipeDao {
     @Query("SELECT * FROM RECIPES_TABLE")
     LiveData<List<Recipe>> getAllRecipes();
 
+    @Query("SELECT * FROM RECIPES_TABLE")
+    Flowable<List<Recipe>> provideAllRecipes();
+
     @Query("SELECT COUNT (ID) FROM RECIPES_TABLE")
     Maybe<Integer> getNumberOfRecipes();
 

@@ -17,4 +17,9 @@
     <!-- Steps List Color -->
     <color name="stepsSummaryColor">#fce4ec</color>
     <color name ="stepsTextViewColor">#663401</color>
+
+    <!--Widget Colors -->
+    <color name="colorOptionYellow">#FFD54F</color>
+    <color name="colorOptionPink">#F8BBD0</color>
+    <color name="widgetColorText">#663401</color>
 </resources>

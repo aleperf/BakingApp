@@ -2,10 +2,14 @@ package com.example.aleperf.bakingapp.dagger;
 
 import android.app.Application;
 
+
 import com.example.aleperf.bakingapp.ui.recipeDetail.IngredientsDialogFragment;
 import com.example.aleperf.bakingapp.ui.recipeDetail.RecipeDetailStepFragment;
 import com.example.aleperf.bakingapp.ui.recipeDetail.RecipeSummaryFragment;
 import com.example.aleperf.bakingapp.ui.intro.RecipesIntroFragment;
+import com.example.aleperf.bakingapp.widget.BakingAppWidget;
+import com.example.aleperf.bakingapp.widget.BakingAppWidgetService;
+
 
 import dagger.Component;
 
@@ -17,6 +21,7 @@ public interface BakingApplicationComponent {
      void inject(RecipeSummaryFragment fragment);
      void inject(RecipeDetailStepFragment fragment);
      void inject(IngredientsDialogFragment dialogFragment);
+     void inject(BakingAppWidgetService service);
 
      Application application();
 

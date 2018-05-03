@@ -20,7 +20,6 @@
 
     <!--Ingredient RecyclerView -->
     <style name="IngredientListTitle" parent="AppTheme">
-        <item name="android:background">@color/ingredientsColorBackground</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">18sp</item>
         <item name="android:gravity">center</item>
@@ -62,9 +61,11 @@
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/stepsTextViewColor</item>
     </style>
+
     <style name="StepDetailTitle" parent="StepDetailBase">
         <item name="android:textSize">18sp</item>
     </style>
+
     <style name="StepDetailNumeration" parent="StepDetailBase">
         <item name="android:textSize">16sp</item>
         <item name="android:textStyle">italic|bold</item>
@@ -74,6 +75,7 @@
         <item name="android:textSize">10sp</item>
         <item name="android:textStyle">bold</item>
     </style>
+
     <style name="StepDetailDescription" parent="AppTheme">
         <item name="android:textSize"></item>
     </style>
