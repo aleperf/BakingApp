@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".ui.intro.RecipesMainActivity"
-            android:launchMode="singleTop">
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,18 +23,27 @@
         </activity>
         <activity
             android:name=".ui.recipeDetail.RecipeDetailActivity"
-            android:launchMode="singleTop"
             android:parentActivityName=".ui.intro.RecipesMainActivity"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.intro.RecipesMainActivity" />
+
+        </activity>
         <activity
             android:name=".ui.recipeDetail.RecipeDetailStepActivity"
             android:label="@string/title_activity_recipe_detail_step"
             android:parentActivityName=".ui.recipeDetail.RecipeDetailActivity"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.recipeDetail.RecipeDetailActivity" />
+        </activity>
 
         <receiver android:name=".widget.BakingAppWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="com.example.aleperf.bakingapp.SHOW_INGREDIENT_ACTION"/>
             </intent-filter>
 
             <meta-data

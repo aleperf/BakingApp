@@ -13,6 +13,7 @@ import android.support.v4.app.Fragment;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,8 +82,13 @@ public class RecipeSummaryFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         model = ViewModelProviders.of(this, viewModelProviderFactory).get(RecipeDetailViewModel.class);
         recipe = model.getRecipe(getActivity().getIntent().getIntExtra(RECIPE_EXTRA_ID, 1));
-
         subscribe();
+        String callingActivityAction = getActivity().getIntent().getAction();
+        if(callingActivityAction != null && callingActivityAction.equals(RecipeDetailActivity.SHOW_INGREDIENTS_ACTION ) && savedInstanceState == null  ){
+            if(getActivity() instanceof IngredientsDisplay);
+            IngredientsDisplay display  = (IngredientsDisplay) getActivity();
+            display.displayIngredients();
+        }
     }
 
     private void subscribe() {

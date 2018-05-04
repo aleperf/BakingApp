@@ -1,14 +1,21 @@
 package com.example.aleperf.bakingapp.ui.recipeDetail;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.example.aleperf.bakingapp.R;
+import com.example.aleperf.bakingapp.ui.intro.RecipesMainActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,8 +32,8 @@ public class RecipeDetailActivity extends AppCompatActivity implements StepSelec
     private static final String STEP_POSITION = "step position";
     private static final String RECIPE_ID = "recipe id";
     private static final String RECIPE_TITLE = "recipe title";
+    public final static String SHOW_INGREDIENTS_ACTION ="com.example.aleperf.bakingapp.SHOW_INGREDIENT_ACTION";
     private static final String TAG = RecipeDetailActivity.class.getSimpleName();
-
 
     @BindView(R.id.detail_activity_toolbar)
     Toolbar toolbar;
@@ -35,7 +42,6 @@ public class RecipeDetailActivity extends AppCompatActivity implements StepSelec
     private boolean isDualPane = false;
     private int stepPosition = 0;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,14 +49,15 @@ public class RecipeDetailActivity extends AppCompatActivity implements StepSelec
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        if (savedInstanceState == null) {
-            Intent callingIntent = getIntent();
+        Intent callingIntent = getIntent();
+        if (savedInstanceState == null || callingIntent.getAction() != null && callingIntent.getAction().equals(SHOW_INGREDIENTS_ACTION)) {
             recipeTitle = callingIntent.getStringExtra(RECIPE_EXTRA_TITLE);
             recipeId = callingIntent.getIntExtra(RECIPE_EXTRA_ID, 1);
         } else {
             recipeTitle = savedInstanceState.getString(RECIPE_TITLE);
             recipeId = savedInstanceState.getInt(RECIPE_ID);
             stepPosition = savedInstanceState.getInt(STEP_POSITION, 0);
+
         }
         getSupportActionBar().setTitle(recipeTitle);
         isDualPane = getResources().getBoolean(R.bool.is_dual_pane);
@@ -58,15 +65,14 @@ public class RecipeDetailActivity extends AppCompatActivity implements StepSelec
             replaceFragment(recipeId, stepPosition);
         }
 
-
-    }
+        }
 
     @Override
     public void onStepSelected(int position) {
         this.stepPosition = position;
         switch (position) {
             case 0:
-                //TO DO LAUNCH DIALOG INGREDIENTS
+                //do nothing, this case is handled by the IngredientTitleHolder
                 break;
             default:
                 if (!isDualPane) {
@@ -81,6 +87,8 @@ public class RecipeDetailActivity extends AppCompatActivity implements StepSelec
                 }
         }
     }
+
+
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -98,10 +106,36 @@ public class RecipeDetailActivity extends AppCompatActivity implements StepSelec
     }
 
 
+
+
     @Override
     public void displayIngredients() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         IngredientsDialogFragment ingredientsDialogFragment = IngredientsDialogFragment.newInstance(recipeId, recipeTitle);
         ingredientsDialogFragment.show(fragmentManager, IngredientsDialogFragment.class.getSimpleName());
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+       if(item.getItemId() == android.R.id.home) {
+           navigateToParent();
+        }
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        navigateToParent();
+    }
+
+    private void navigateToParent(){
+        if(getParent() != null){
+            NavUtils.navigateUpFromSameTask(this);
+            finish();
+        } else {
+            Intent parentIntent = new Intent(this, RecipesMainActivity.class);
+            startActivity(parentIntent);
+            finish();
+        }
     }
 }

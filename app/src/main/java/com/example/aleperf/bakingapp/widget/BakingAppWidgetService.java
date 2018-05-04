@@ -1,34 +1,24 @@
 package com.example.aleperf.bakingapp.widget;
 
-import android.app.Service;
 import android.appwidget.AppWidgetManager;
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.Observer;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.os.IBinder;
-import android.support.annotation.Nullable;
-import android.util.Log;
-import android.view.View;
+import android.os.Bundle;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
 import com.example.aleperf.bakingapp.BakingApplication;
 import com.example.aleperf.bakingapp.R;
 import com.example.aleperf.bakingapp.database.RecipeDao;
-import com.example.aleperf.bakingapp.database.RecipeRepository;
 import com.example.aleperf.bakingapp.model.Recipe;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import io.reactivex.Flowable;
-import io.reactivex.Scheduler;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
@@ -47,35 +37,36 @@ public class BakingAppWidgetService extends RemoteViewsService {
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
 
-
         return new BakingAppRemoteViewFactory(this.getApplicationContext());
     }
 
     public class BakingAppRemoteViewFactory implements RemoteViewsService.RemoteViewsFactory {
 
         Context context;
-        private ArrayList<String> recipesData = new ArrayList<>();
-        private Flowable<List<Recipe>> recipes;
+        private List<Recipe> recipes;
+        private Flowable<List<Recipe>> recipesObs;
 
 
         public BakingAppRemoteViewFactory(Context applicationContext) {
             this.context = applicationContext;
-            recipes = recipeDao.provideAllRecipes();
+            recipesObs = recipeDao.provideAllRecipes();
             subscribe(context);
 
         }
 
+        /**
+         * Observe the the database and triggers a widget update after loading new data
+         *
+         * @param context
+         */
+
         private void subscribe(Context context) {
 
-            recipes = recipeDao.provideAllRecipes();
-            recipes.observeOn(Schedulers.io()).subscribe(new Consumer<List<Recipe>>() {
+            recipesObs = recipeDao.provideAllRecipes();
+            recipesObs.observeOn(Schedulers.io()).subscribe(new Consumer<List<Recipe>>() {
                 @Override
-                public void accept(List<Recipe> recipes) throws Exception {
-                    for (int i = 0; i < recipes.size(); i++) {
-                        String name = recipes.get(i).getName();
-                        recipesData.add(name);
-
-                    }
+                public void accept(List<Recipe> recipesList) throws Exception {
+                    recipes = recipesList;
 
                     AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
                     int appWidgetIds[] = appWidgetManager.getAppWidgetIds(
@@ -104,7 +95,7 @@ public class BakingAppWidgetService extends RemoteViewsService {
         public int getCount() {
 
             if (recipes != null) {
-                return recipesData.size();
+                return recipes.size();
             }
             return 0;
         }
@@ -112,12 +103,21 @@ public class BakingAppWidgetService extends RemoteViewsService {
         @Override
         public RemoteViews getViewAt(int position) {
             Resources res = context.getResources();
-            String name = recipesData.get(position);
-            int ingredientsNumber = 8;
+            Recipe recipe = recipes.get(position);
+            String name = recipe.getName();
+            int id = recipe.getId();
+            int ingredientsNumber = recipe.getIngredients().size();
             String ingredientsText = String.format(res.getString(R.string.ingredients_number), ingredientsNumber);
             RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget_recipe_item);
             rv.setTextViewText(R.id.widget_recipe_name, name);
             rv.setTextViewText(R.id.widget_number_of_ingredients, ingredientsText);
+            //set fillIntent
+            Bundle extras = new Bundle();
+            extras.putString(BakingAppWidget.RECIPE_EXTRA_TITLE, name);
+            extras.putInt(BakingAppWidget.RECIPE_EXTRA_ID, id);
+            Intent fillIntent = new Intent(BakingAppWidget.SHOW_INGREDIENTS_ACTION);
+            fillIntent.putExtras(extras);
+            rv.setOnClickFillInIntent(R.id.widget_item, fillIntent);
             return rv;
 
         }
