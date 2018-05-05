@@ -118,7 +118,7 @@ public class RecipeSummaryFragment extends Fragment {
         super.onSaveInstanceState(outState);
         int position = summaryManager.findFirstVisibleItemPosition();
         outState.putInt(FIRST_VISIBLE_ITEM_POSITION, position);
-        }
+    }
 
 
     @Override
