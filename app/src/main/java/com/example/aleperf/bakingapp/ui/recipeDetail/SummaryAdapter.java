@@ -115,7 +115,7 @@ public class SummaryAdapter extends RecyclerView.Adapter<ViewHolder> {
         public void onClick(View v) {
             if (context instanceof StepSelector) {
                 StepSelector stepSelector = (StepSelector) context;
-                stepSelector.onStepSelected(getAdapterPosition());
+                stepSelector.onStepSelected(getAdapterPosition() - 1);
 
             }
         }

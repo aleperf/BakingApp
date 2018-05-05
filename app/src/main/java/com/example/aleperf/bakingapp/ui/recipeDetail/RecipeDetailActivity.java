@@ -70,17 +70,16 @@ public class RecipeDetailActivity extends AppCompatActivity implements StepSelec
 
     @Override
     public void onStepSelected(int position) {
-        this.stepPosition = position ;
+        this.stepPosition = position;
         if (!isDualPane) {
             Intent intent = new Intent(this, RecipeDetailStepActivity.class);
-            intent.putExtra(STEP_EXTRA_POSITION, position - 1);
+            intent.putExtra(STEP_EXTRA_POSITION, position);
             intent.putExtra(RECIPE_EXTRA_TITLE, recipeTitle);
             intent.putExtra(RECIPE_EXTRA_ID, recipeId);
             startActivity(intent);
         } else {
-            replaceFragment(recipeId, position - 1);
-
-        }
+            replaceFragment(recipeId, position);
+            }
     }
 
 
@@ -92,14 +91,13 @@ public class RecipeDetailActivity extends AppCompatActivity implements StepSelec
         outState.putString(RECIPE_TITLE, recipeTitle);
     }
 
-    private void replaceFragment(int recipeId, int stepPosition) {
+    private void replaceFragment(int recipeId, int position) {
         FragmentManager fragmentManager = getSupportFragmentManager();
-        String tag = RecipeUtilities.createTagForFragment(stepPosition, recipeTitle);
+        String tag = RecipeUtilities.createTagForFragment(position, recipeTitle);
         RecipeDetailStepFragment fragment = (RecipeDetailStepFragment) fragmentManager.findFragmentByTag(tag);
         if (fragment == null) {
-            fragment = RecipeDetailStepFragment.newInstance(recipeId, stepPosition);
+            fragment = RecipeDetailStepFragment.newInstance(recipeId, position);
         }
-
         fragmentManager.beginTransaction().replace(R.id.detail_steps_container,
                 fragment, tag).commit();
     }
