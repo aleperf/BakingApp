@@ -9,7 +9,7 @@
     </style>
 
     <style name="CardViewStyle" parent="AppTheme">
-        <item name="android:background">@color/cardColor</item>
+        <item name="android:background">@color/cardColor2</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/cardTextViewColor</item>
     </style>
@@ -74,10 +74,6 @@
     <style name="StepArrowNavigator" parent="StepDetailBase">
         <item name="android:textSize">10sp</item>
         <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="StepDetailDescription" parent="AppTheme">
-        <item name="android:textSize"></item>
     </style>
 
 
