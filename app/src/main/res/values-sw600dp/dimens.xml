@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- TODO ADD DIMENSIONS FOR LARGER SCREENS -->
+    <dimen name="dialog_fragment_width">400dp</dimen>
+    <dimen name="dialog_fragment_height">600dp</dimen>
 </resources>

@@ -85,9 +85,10 @@ public class RecipesIntroFragment extends Fragment {
         unbinder = ButterKnife.bind(this, root);
         emptyMessageImageView.setOnClickListener(v -> {
             model.getRecipes();
-            Toast.makeText(getContext(), "Fetching Data", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), getString(R.string.intro_fetching_data), Toast.LENGTH_SHORT).show();
         });
-        gridLayoutManager = new GridLayoutManager(getActivity(), 1);
+        int spanCount = getResources().getInteger(R.integer.intro_span_count);
+        gridLayoutManager = new GridLayoutManager(getActivity(),spanCount);
         recipesRecyclerView.setLayoutManager(gridLayoutManager);
         adapter = new RecipesAdapter(getActivity());
         recipesRecyclerView.setAdapter(adapter);

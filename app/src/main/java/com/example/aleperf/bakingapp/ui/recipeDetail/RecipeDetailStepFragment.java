@@ -207,10 +207,12 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
         videoUri = StepFieldsValidator.getVideoUri(step);
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         if (videoUri != null) {
+            Log.d("uffa", "video uri è diverso da null sto settando playerVuew a visibile");
             playerView.setVisibility(View.VISIBLE);
             initializeMediaSession();
             initializePlayer();
             if (screen_orientation == PHONE_LANDSCAPE) {
+                Log.d("uffa", "l'orientamento è phone landscape");
                 hideStepInfo();
                 hideSystemUi();
                 actionBar.hide();
@@ -220,6 +222,7 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
                 actionBar.show();
             }
         } else {
+            Log.d("uffa", "videoUri è null e sto per settare a view gone");
             playerView.setVisibility(View.GONE);
             showStepInfo();
             actionBar.show();
@@ -267,28 +270,18 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
     }
 
     private void initializePlayer() {
-
         if (exoPlayer == null) {
             TrackSelector trackSelector = new DefaultTrackSelector();
             LoadControl loadControl = new DefaultLoadControl();
             exoPlayer = ExoPlayerFactory.newSimpleInstance(new DefaultRenderersFactory(getActivity()), trackSelector, loadControl);
-            playerView.setPlayer(exoPlayer);
-            exoPlayer.addListener(this);
-            exoPlayer.setPlayWhenReady(playWhenReady);
-            if (duration > 0 && playbackPosition > duration) {
-                exoPlayer.seekTo(0, 0);
-            } else {
-                exoPlayer.seekTo(currentWindow, playbackPosition);
-            }
             MediaSource mediaSource = buildExoPlayerMediaSource(videoUri);
             exoPlayer.prepare(mediaSource);
-
             exoPlayer.setPlayWhenReady(playWhenReady);
-        } else {
-            exoPlayer.setPlayWhenReady(playWhenReady);
-            exoPlayer.seekTo(currentWindow, playbackPosition);
-
         }
+        playerView.setPlayer(exoPlayer);
+        exoPlayer.addListener(this);
+        exoPlayer.setPlayWhenReady(playWhenReady);
+        exoPlayer.seekTo(currentWindow, playbackPosition);
 
     }
 
@@ -334,7 +327,7 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
     @Override
     public void onResume() {
         super.onResume();
-        if (videoUri != null && Util.SDK_INT <= 23 && exoPlayer == null) {
+        if (videoUri != null && (Util.SDK_INT <= 23 || exoPlayer == null)) {
             initializePlayer();
         }
     }
@@ -342,7 +335,7 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
     @Override
     public void onStart() {
         super.onStart();
-        if (videoUri != null && Util.SDK_INT > 23 && exoPlayer == null) {
+        if (videoUri != null && (Util.SDK_INT > 23 || exoPlayer == null)) {
             initializePlayer();
         }
 

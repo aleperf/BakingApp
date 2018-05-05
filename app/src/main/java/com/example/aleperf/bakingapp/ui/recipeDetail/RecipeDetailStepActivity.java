@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 
 
 import com.example.aleperf.bakingapp.R;
+import com.example.aleperf.bakingapp.utils.RecipeUtilities;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -56,7 +57,7 @@ public class RecipeDetailStepActivity extends AppCompatActivity implements StepS
     }
 
     private void replaceFragment(int recipeId, int position) {
-        String tag = createTagForFragment(position, recipeTitle);
+        String tag = RecipeUtilities.createTagForFragment(position, recipeTitle);
         this.stepPosition = position;
         FragmentManager fragmentManager = getSupportFragmentManager();
         RecipeDetailStepFragment fragment = (RecipeDetailStepFragment) fragmentManager.findFragmentByTag(tag);
@@ -67,9 +68,7 @@ public class RecipeDetailStepActivity extends AppCompatActivity implements StepS
                 tag).commit();
     }
 
-    private String createTagForFragment(int recipePosition, String recipeTitle){
-        return recipeTitle + recipePosition ;
-    }
+
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {

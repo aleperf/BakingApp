@@ -5,6 +5,7 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -36,7 +37,7 @@ public class IngredientsDialogFragment extends DialogFragment {
 
     private final static String RECIPE_ID = "ingredients recipe id";
     private final static String RECIPE_TITLE = "ingredients recipe title";
-    private final static String RECYCLERVIEW_POSITION = "recyclerView scroll position";
+    private final static String RECYCLER_VIEW_POSITION = "recyclerView scroll position";
     private Unbinder unbinder;
 
     private int recipeId;
@@ -85,7 +86,7 @@ public class IngredientsDialogFragment extends DialogFragment {
         recipeId = getArguments().getInt(RECIPE_ID, 1);
         recipeTitle = getArguments().getString(RECIPE_TITLE, "");
         if(savedInstanceState != null){
-            recyclerViewPosition = savedInstanceState.getInt(RECYCLERVIEW_POSITION, 0);
+            recyclerViewPosition = savedInstanceState.getInt(RECYCLER_VIEW_POSITION, 0);
         }
         layoutManager = new LinearLayoutManager(getActivity());
         ingredientsRecyclerView.setLayoutManager(layoutManager);
@@ -108,9 +109,16 @@ public class IngredientsDialogFragment extends DialogFragment {
     public void onResume() {
         super.onResume();
         ViewGroup.LayoutParams params = getDialog().getWindow().getAttributes();
+        Resources res = getResources();
+        int screenType = res.getInteger(R.integer.max_screen_switch);
+        if(screenType == 2){
+          int width = res.getDimensionPixelSize(R.dimen.dialog_fragment_width);
+          int height = res.getDimensionPixelSize(R.dimen.dialog_fragment_height);
+          getDialog().getWindow().setLayout(width, height);
+        } else {
         params.width = ViewGroup.LayoutParams.MATCH_PARENT;
         params.height = ViewGroup.LayoutParams.MATCH_PARENT;
-        getDialog().getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
+        getDialog().getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);}
     }
 
     @Override
@@ -133,7 +141,7 @@ public class IngredientsDialogFragment extends DialogFragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         int position = layoutManager.findFirstVisibleItemPosition();
-        outState.putInt(RECYCLERVIEW_POSITION, position);
+        outState.putInt(RECYCLER_VIEW_POSITION, position);
     }
 
     private void subscribe() {
