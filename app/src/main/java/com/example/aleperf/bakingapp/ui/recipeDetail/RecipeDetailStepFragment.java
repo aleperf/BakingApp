@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.example.aleperf.bakingapp.BakingApplication;
 import com.example.aleperf.bakingapp.model.Recipe.Step;
+import com.example.aleperf.bakingapp.utils.RecipeUtilities;
 import com.example.aleperf.bakingapp.utils.StepFieldsValidator;
 import com.example.aleperf.bakingapp.R;
 import com.example.aleperf.bakingapp.model.Recipe;
@@ -50,6 +51,7 @@ import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
+import com.squareup.picasso.Picasso;
 
 
 import java.util.List;
@@ -193,6 +195,8 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
         int screen_orientation = getResources().getInteger(R.integer.max_screen_switch);
         String shortDescription = step.getShortDescription();
         String longDescription = step.getDescription();
+        String thumbnailUrl = step.getThumbnailURL();
+        int defaultDrawableId = RecipeUtilities.getImageDefaultId(recipeId - 1);
         stepTitle.setText(shortDescription);
         stepDescription.setText(longDescription);
         if (stepPosition == INTRO_STEP) {
@@ -221,7 +225,11 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
             actionBar.show();
 
         }
-        //TODO Load image with Picasso
+        if(thumbnailUrl != null && thumbnailUrl.length() > 0){
+            Picasso.get().load(thumbnailUrl).placeholder(defaultDrawableId).error(defaultDrawableId).into(thumbnail);
+        } else {
+            thumbnail.setImageResource(defaultDrawableId);
+        }
     }
 
     private void showStepInfo() {
@@ -259,7 +267,7 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
     }
 
     private void initializePlayer() {
-        Log.d("uffa", "sono in initializePlayer e playbackPosition è: " + playbackPosition + " duration: " + duration);
+
         if (exoPlayer == null) {
             TrackSelector trackSelector = new DefaultTrackSelector();
             LoadControl loadControl = new DefaultLoadControl();
@@ -268,8 +276,6 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
             exoPlayer.addListener(this);
             exoPlayer.setPlayWhenReady(playWhenReady);
             if (duration > 0 && playbackPosition > duration) {
-                Log.d("uffa", "playbackposition è maggiore di duration: "
-                        + playbackPosition + " d: " + duration);
                 exoPlayer.seekTo(0, 0);
             } else {
                 exoPlayer.seekTo(currentWindow, playbackPosition);
@@ -402,8 +408,7 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
             stateBuilder.setState(PlaybackStateCompat.STATE_PLAYING,
                     exoPlayer.getCurrentPosition(), 1f);
             duration = exoPlayer.getDuration();
-            Log.d("uffa", "sono in onPlayerStateChanged e duration è " + duration);
-        } else if ((playbackState == Player.STATE_READY)) {
+            } else if ((playbackState == Player.STATE_READY)) {
             stateBuilder.setState(PlaybackStateCompat.STATE_PAUSED,
                     exoPlayer.getCurrentPosition(), 1f);
         }

@@ -61,5 +61,9 @@ public class RecipeUtilities {
         return results;
     }
 
+    public static String createTagForFragment(int recipePosition, String recipeTitle){
+        return recipeTitle + recipePosition ;
+    }
+
 
 }

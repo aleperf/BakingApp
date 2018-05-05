@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.aleperf.bakingapp.R;
+import com.example.aleperf.bakingapp.dagger.RecipesServiceModule_ProvideOkHttpClientFactory;
 import com.example.aleperf.bakingapp.model.Recipe;
 import com.squareup.picasso.Picasso;
 import com.example.aleperf.bakingapp.utils.RecipeUtilities;
@@ -25,6 +26,10 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipesV
 
     private List<Recipe> recipes;
     private Context context;
+
+    interface RecipeCallback {
+        void onClickRecipe(Recipe recipe);
+    }
 
 
     public RecipesAdapter(Context context) {
@@ -80,12 +85,12 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipesV
             Resources res = context.getResources();
             String imageUrl = recipe.getImage();
             int defaultDrawableId = RecipeUtilities.getImageDefaultId(position);
-            Picasso.get().load(imageUrl).placeholder(defaultDrawableId).error(defaultDrawableId).into(cakeImage);
-//            if (imageUrl != null && imageUrl.length() > 0) {
-//                Picasso.get().load(imageUrl).placeholder(defaultDrawableId)
-//            } else {
-//                cakeImage.setImageResource(R.drawable.cake_placeholder_16_9);
-//            }
+
+            if (imageUrl != null && imageUrl.length() > 0) {
+                Picasso.get().load(imageUrl).placeholder(defaultDrawableId).error(defaultDrawableId).into(cakeImage);
+            } else {
+                cakeImage.setImageResource(defaultDrawableId);
+            }
             cakeName.setText(recipe.getName());
             ingredients.setText(String.format(res.getString(R.string.ingredients_label_intro_card), recipe.getIngredients().size()));
             servings.setText(String.format(res.getString(R.string.servings_label_intro_card), recipe.getServings()));
@@ -95,9 +100,9 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipesV
 
         @Override
         public void onClick(View v) {
-            if (context instanceof RecipesMainActivity) {
+            if (context instanceof RecipeCallback) {
                 Recipe recipe = recipes.get(getAdapterPosition());
-                ((RecipesMainActivity) context).onClickRecipe(recipe);
+                ((RecipeCallback) context).onClickRecipe(recipe);
             }
         }
     }

@@ -88,6 +88,12 @@ public class RecipeDetailActivity extends AppCompatActivity implements StepSelec
         }
     }
 
+    private String createTagForFragment(int recipePosition, String recipeTitle){
+        return recipeTitle + recipePosition ;
+    }
+
+
+
 
 
     @Override
