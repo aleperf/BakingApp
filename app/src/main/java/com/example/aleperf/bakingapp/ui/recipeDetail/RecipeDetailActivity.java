@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.aleperf.bakingapp.R;
 import com.example.aleperf.bakingapp.ui.intro.RecipesMainActivity;
+import com.example.aleperf.bakingapp.utils.RecipeUtilities;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,7 +33,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements StepSelec
     private static final String STEP_POSITION = "step position";
     private static final String RECIPE_ID = "recipe id";
     private static final String RECIPE_TITLE = "recipe title";
-    public final static String SHOW_INGREDIENTS_ACTION ="com.example.aleperf.bakingapp.SHOW_INGREDIENT_ACTION";
+    public final static String SHOW_INGREDIENTS_ACTION = "com.example.aleperf.bakingapp.SHOW_INGREDIENT_ACTION";
     private static final String TAG = RecipeDetailActivity.class.getSimpleName();
 
     @BindView(R.id.detail_activity_toolbar)
@@ -65,35 +66,22 @@ public class RecipeDetailActivity extends AppCompatActivity implements StepSelec
             replaceFragment(recipeId, stepPosition);
         }
 
-        }
+    }
 
     @Override
     public void onStepSelected(int position) {
-        this.stepPosition = position;
-        switch (position) {
-            case 0:
-                //do nothing, this case is handled by the IngredientTitleHolder
-                break;
-            default:
-                if (!isDualPane) {
-                    Intent intent = new Intent(this, RecipeDetailStepActivity.class);
-                    intent.putExtra(STEP_EXTRA_POSITION, stepPosition - 1);
-                    intent.putExtra(RECIPE_EXTRA_TITLE, recipeTitle);
-                    intent.putExtra(RECIPE_EXTRA_ID, recipeId);
-                    startActivity(intent);
-                } else {
-                    replaceFragment(recipeId, stepPosition);
+        this.stepPosition = position ;
+        if (!isDualPane) {
+            Intent intent = new Intent(this, RecipeDetailStepActivity.class);
+            intent.putExtra(STEP_EXTRA_POSITION, position - 1);
+            intent.putExtra(RECIPE_EXTRA_TITLE, recipeTitle);
+            intent.putExtra(RECIPE_EXTRA_ID, recipeId);
+            startActivity(intent);
+        } else {
+            replaceFragment(recipeId, position - 1);
 
-                }
         }
     }
-
-    private String createTagForFragment(int recipePosition, String recipeTitle){
-        return recipeTitle + recipePosition ;
-    }
-
-
-
 
 
     @Override
@@ -105,13 +93,16 @@ public class RecipeDetailActivity extends AppCompatActivity implements StepSelec
     }
 
     private void replaceFragment(int recipeId, int stepPosition) {
-        RecipeDetailStepFragment fragment = RecipeDetailStepFragment.newInstance(recipeId, stepPosition);
         FragmentManager fragmentManager = getSupportFragmentManager();
+        String tag = RecipeUtilities.createTagForFragment(stepPosition, recipeTitle);
+        RecipeDetailStepFragment fragment = (RecipeDetailStepFragment) fragmentManager.findFragmentByTag(tag);
+        if (fragment == null) {
+            fragment = RecipeDetailStepFragment.newInstance(recipeId, stepPosition);
+        }
+
         fragmentManager.beginTransaction().replace(R.id.detail_steps_container,
-                fragment).commit();
+                fragment, tag).commit();
     }
-
-
 
 
     @Override
@@ -123,8 +114,8 @@ public class RecipeDetailActivity extends AppCompatActivity implements StepSelec
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-       if(item.getItemId() == android.R.id.home) {
-           navigateToParent();
+        if (item.getItemId() == android.R.id.home) {
+            navigateToParent();
         }
         return true;
     }
@@ -134,8 +125,8 @@ public class RecipeDetailActivity extends AppCompatActivity implements StepSelec
         navigateToParent();
     }
 
-    private void navigateToParent(){
-        if(getParent() != null){
+    private void navigateToParent() {
+        if (getParent() != null) {
             NavUtils.navigateUpFromSameTask(this);
             finish();
         } else {
