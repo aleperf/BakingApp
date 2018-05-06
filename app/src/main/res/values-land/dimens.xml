@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="cake_image_side">180dp</dimen>
+    <dimen name="long_description_font_size">14sp</dimen>
+    <dimen name="long_description_height">180dp</dimen>
+    <dimen name="long_description_width">350dp</dimen>
+</resources>

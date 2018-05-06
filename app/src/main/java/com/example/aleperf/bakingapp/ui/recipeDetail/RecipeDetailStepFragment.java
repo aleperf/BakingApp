@@ -207,12 +207,10 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
         videoUri = StepFieldsValidator.getVideoUri(step);
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         if (videoUri != null) {
-            Log.d("uffa", "video uri è diverso da null sto settando playerVuew a visibile");
             playerView.setVisibility(View.VISIBLE);
             initializeMediaSession();
             initializePlayer();
             if (screen_orientation == PHONE_LANDSCAPE) {
-                Log.d("uffa", "l'orientamento è phone landscape");
                 hideStepInfo();
                 hideSystemUi();
                 actionBar.hide();
@@ -270,6 +268,7 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
     }
 
     private void initializePlayer() {
+        Log.d("uffa", "sto chiamando initialize player");
         if (exoPlayer == null) {
             TrackSelector trackSelector = new DefaultTrackSelector();
             LoadControl loadControl = new DefaultLoadControl();
@@ -289,7 +288,6 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
         if (exoPlayer != null) {
             playbackPosition = exoPlayer.getCurrentPosition();
             currentWindow = exoPlayer.getCurrentWindowIndex();
-            playWhenReady = exoPlayer.getPlayWhenReady();
             exoPlayer.setPlayWhenReady(false);
             exoPlayer.release();
             exoPlayer = null;
@@ -344,21 +342,29 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
     @Override
     public void onPause() {
         super.onPause();
+        if(exoPlayer != null){
+            playWhenReady = exoPlayer.getPlayWhenReady();
+            exoPlayer.setPlayWhenReady(false);
+            playbackPosition = exoPlayer.getCurrentPosition();
+        }
         if (Util.SDK_INT <= 23) {
             releasePlayer();
         }
 
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (Util.SDK_INT > 23) {
+            releasePlayer();
+        }
+    }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         unbinder.unbind();
-        if (Util.SDK_INT > 23) {
-            releasePlayer();
-        }
-
     }
 
     @Override
@@ -374,7 +380,7 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
         } else {
             outState.putLong(PLAYBACK_POSITION, exoPlayer.getCurrentPosition());
             outState.putInt(CURRENT_WINDOW, exoPlayer.getCurrentWindowIndex());
-            outState.putBoolean(PLAY_WHEN_READY, exoPlayer.getPlayWhenReady());
+            outState.putBoolean(PLAY_WHEN_READY, playWhenReady);
         }
     }
 

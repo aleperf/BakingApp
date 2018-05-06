@@ -6,9 +6,14 @@
     <dimen name="card_view_image_height">120dp</dimen>
     <dimen name="card_view_corner_radius">2dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="cake_image_side">150dp</dimen>
     <!-- recipe summary ingredients -->
     <dimen name="ingredient_summary_title_text">21sp</dimen>
-
+    <dimen name="dialog_fragment_width">350dp</dimen>
+    <dimen name="dialog_fragment_height">500dp</dimen>
+    <dimen name="long_description_font_size">14sp</dimen>
+    <dimen name="long_description_height">180dp</dimen>
+    <dimen name="long_description_width">300dp</dimen>
     <!--
 Refer to App Widget Documentation for margin information
 http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout

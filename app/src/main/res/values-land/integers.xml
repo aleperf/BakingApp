@@ -4,4 +4,6 @@
       1:phone portrait 2: phone landscape 3: tablet-->
     <integer name="max_screen_switch">2</integer>
     <integer name="intro_span_count">2</integer>
+    <dimen name="dialog_fragment_width">400dp</dimen>
+    <dimen name="dialog_fragment_height">500dp</dimen>
 </resources>

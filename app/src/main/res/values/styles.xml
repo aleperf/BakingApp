@@ -58,7 +58,7 @@
 
     <!--Step detail fragment -->
     <style name="StepDetailBase">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">@dimen/long_description_font_size</item>
         <item name="android:textColor">@color/stepsTextViewColor</item>
     </style>
 

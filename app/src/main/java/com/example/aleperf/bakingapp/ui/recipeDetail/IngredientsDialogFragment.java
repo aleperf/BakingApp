@@ -14,6 +14,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -111,14 +112,12 @@ public class IngredientsDialogFragment extends DialogFragment {
         ViewGroup.LayoutParams params = getDialog().getWindow().getAttributes();
         Resources res = getResources();
         int screenType = res.getInteger(R.integer.max_screen_switch);
-        if(screenType == 2){
+        Log.d("uffa", "screen type: " + screenType);
+
           int width = res.getDimensionPixelSize(R.dimen.dialog_fragment_width);
           int height = res.getDimensionPixelSize(R.dimen.dialog_fragment_height);
           getDialog().getWindow().setLayout(width, height);
-        } else {
-        params.width = ViewGroup.LayoutParams.MATCH_PARENT;
-        params.height = ViewGroup.LayoutParams.MATCH_PARENT;
-        getDialog().getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);}
+
     }
 
     @Override

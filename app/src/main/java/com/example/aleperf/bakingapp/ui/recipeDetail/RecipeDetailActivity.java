@@ -113,7 +113,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements StepSelec
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            navigateToParent();
+             navigateToParent();
         }
         return true;
     }

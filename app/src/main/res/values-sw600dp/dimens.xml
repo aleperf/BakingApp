@@ -2,4 +2,8 @@
 <resources>
     <dimen name="dialog_fragment_width">400dp</dimen>
     <dimen name="dialog_fragment_height">600dp</dimen>
+    <dimen name="cake_image_side">200dp</dimen>
+    <dimen name="long_description_font_size">16sp</dimen>
+    <dimen name="long_description_height">180dp</dimen>
+    <dimen name="long_description_width">450dp</dimen>
 </resources>

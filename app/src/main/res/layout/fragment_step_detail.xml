@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:paddingBottom="24dp">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -41,12 +42,13 @@
 
         <ImageView
             android:id="@+id/recipeThumbnail"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="@dimen/cake_image_side"
+            android:layout_height="@dimen/cake_image_side"
             android:layout_marginTop="16dp"
             android:scaleType="centerCrop"
-            app:layout_constraintStart_toStartOf="@+id/step_title"
-            app:layout_constraintTop_toBottomOf="@+id/step_title"
+            app:layout_constraintEnd_toStartOf="@+id/step_number"
+            app:layout_constraintStart_toEndOf="@+id/step_number"
+            app:layout_constraintTop_toBottomOf="@+id/step_number"
             app:srcCompat="@drawable/cake_placeholder_16_9" />
 
         <TextView
@@ -56,22 +58,25 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:gravity="center_horizontal"
-            app:layout_constraintEnd_toEndOf="@+id/arrowRight"
-            app:layout_constraintStart_toStartOf="@+id/arrowLeft"
-            app:layout_constraintTop_toTopOf="@+id/recipeThumbnail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/step_title"
             tools:text=" STEP 1 OF 8" />
 
         <TextView
             android:id="@+id/step_long_description"
             style="@style/StepDetailBase"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/long_description_width"
+            android:layout_height="@dimen/long_description_height"
             android:layout_marginEnd="16dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="24dp"
+            android:background="#FCE4EC"
+            android:padding="8dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/recipeThumbnail"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/recipeThumbnail"
             tools:text="Recipe Introduction" />
 
@@ -79,23 +84,25 @@
             android:id="@+id/arrowLeft"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginStart="24dp"
+            android:layout_marginEnd="16dp"
             android:layout_marginTop="8dp"
             android:background="?android:selectableItemBackground"
             android:scaleType="fitXY"
-            app:layout_constraintStart_toEndOf="@+id/recipeThumbnail"
-            app:layout_constraintTop_toBottomOf="@+id/step_number"
+            app:layout_constraintBottom_toTopOf="@+id/recipeThumbnail"
+            app:layout_constraintEnd_toStartOf="@+id/recipeThumbnail"
+            app:layout_constraintTop_toBottomOf="@+id/recipeThumbnail"
             app:srcCompat="@drawable/left_arrow" />
 
         <ImageButton
             android:id="@+id/arrowRight"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginStart="70dp"
+            android:layout_marginStart="16dp"
             android:background="?android:selectableItemBackground"
             android:scaleType="fitXY"
-            app:layout_constraintStart_toEndOf="@+id/arrowLeft"
-            app:layout_constraintTop_toTopOf="@+id/arrowLeft"
+            app:layout_constraintBottom_toTopOf="@+id/recipeThumbnail"
+            app:layout_constraintStart_toEndOf="@+id/recipeThumbnail"
+            app:layout_constraintTop_toBottomOf="@+id/recipeThumbnail"
             app:srcCompat="@drawable/right_arrow" />
 
         <TextView
