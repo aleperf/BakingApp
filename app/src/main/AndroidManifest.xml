@@ -25,17 +25,16 @@
         <activity
             android:name=".ui.recipeDetail.RecipeDetailActivity"
             android:parentActivityName=".ui.intro.RecipesMainActivity"
-            android:theme="@style/AppTheme" >
+            android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.intro.RecipesMainActivity" />
-
         </activity>
         <activity
             android:name=".ui.recipeDetail.RecipeDetailStepActivity"
             android:label="@string/title_activity_recipe_detail_step"
             android:parentActivityName=".ui.recipeDetail.RecipeDetailActivity"
-            android:theme="@style/AppTheme" >
+            android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.recipeDetail.RecipeDetailActivity" />
@@ -44,7 +43,7 @@
         <receiver android:name=".widget.BakingAppWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-                <action android:name="com.example.aleperf.bakingapp.SHOW_INGREDIENT_ACTION"/>
+                <action android:name="com.example.aleperf.bakingapp.SHOW_INGREDIENT_ACTION" />
             </intent-filter>
 
             <meta-data
@@ -58,6 +57,15 @@
             android:exported="true"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
 
+
+        <activity
+            android:name=".widget.BakingAppWidgetConfigureActivity"
+            android:theme="@style/WidgetConfigTheme"
+            android:excludeFromRecents="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

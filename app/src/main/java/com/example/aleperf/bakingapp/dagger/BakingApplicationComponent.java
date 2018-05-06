@@ -8,6 +8,7 @@ import com.example.aleperf.bakingapp.ui.recipeDetail.RecipeDetailStepFragment;
 import com.example.aleperf.bakingapp.ui.recipeDetail.RecipeSummaryFragment;
 import com.example.aleperf.bakingapp.ui.intro.RecipesIntroFragment;
 import com.example.aleperf.bakingapp.widget.BakingAppWidget;
+import com.example.aleperf.bakingapp.widget.BakingAppWidgetConfigureActivity;
 import com.example.aleperf.bakingapp.widget.BakingAppWidgetService;
 
 
@@ -22,6 +23,7 @@ public interface BakingApplicationComponent {
      void inject(RecipeDetailStepFragment fragment);
      void inject(IngredientsDialogFragment dialogFragment);
      void inject(BakingAppWidgetService service);
+     void inject(BakingAppWidgetConfigureActivity configActivity);
 
      Application application();
 

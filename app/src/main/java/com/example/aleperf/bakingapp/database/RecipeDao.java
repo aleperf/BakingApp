@@ -24,14 +24,15 @@ public interface RecipeDao {
     @Query("SELECT * FROM RECIPES_TABLE")
     LiveData<List<Recipe>> getAllRecipes();
 
-    @Query("SELECT * FROM RECIPES_TABLE")
-    Flowable<List<Recipe>> provideAllRecipes();
-
     @Query("SELECT COUNT (ID) FROM RECIPES_TABLE")
     Maybe<Integer> getNumberOfRecipes();
 
     @Query("SELECT * FROM RECIPES_TABLE WHERE id = :id LIMIT 1")
     LiveData<Recipe> getRecipeWithId(int id);
+
+    @Query("SELECT * FROM RECIPES_TABLE WHERE id = :id LIMIT 1")
+    Flowable<Recipe> provideRecipeWithId(int id);
+
 
     @Insert(onConflict = REPLACE)
     void insertAllRecipes(List<Recipe> recipes);

@@ -109,14 +109,10 @@ public class IngredientsDialogFragment extends DialogFragment {
     @Override
     public void onResume() {
         super.onResume();
-        ViewGroup.LayoutParams params = getDialog().getWindow().getAttributes();
         Resources res = getResources();
-        int screenType = res.getInteger(R.integer.max_screen_switch);
-        Log.d("uffa", "screen type: " + screenType);
-
-          int width = res.getDimensionPixelSize(R.dimen.dialog_fragment_width);
-          int height = res.getDimensionPixelSize(R.dimen.dialog_fragment_height);
-          getDialog().getWindow().setLayout(width, height);
+        int width = res.getDimensionPixelSize(R.dimen.dialog_fragment_width);
+        int height = res.getDimensionPixelSize(R.dimen.dialog_fragment_height);
+        getDialog().getWindow().setLayout(width, height);
 
     }
 

@@ -34,6 +34,12 @@
     <string name="welcome_description">Bey-Bake! is more then an app: it is your step by step baking assistant. \n
     Choose a recipe, watch the videos and read the simple instructions to bake the perfect cake.\n Bei-Bake!: baking has never been so easy!</string>
 
+    <!--Widget and widget configuration activity -->
+    <string name="config_activity_intro">Choose a recipe to add the ingredients to the widget</string>
+    <string name="prefs_name">com.example.aleperf.bakingapp.widget.BakingAppWidget</string>
+    <string name="prefs_prefix">appwidget_</string>
+    <string name="prefs_recipe_prefix">recipe_name_</string>
+    <string name="widget_ingredients_title">%s Ingredients</string>
     <!-- preferences -->
 
 

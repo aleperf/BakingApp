@@ -58,11 +58,11 @@ public class RecipeRepositoryImpl implements RecipeRepository {
     }
 
     @Override
-    public Flowable<List<Recipe>> provideAllRecipes() {
+    public Flowable<Recipe> provideRecipeWithId(int recipeId) {
         if (recipes == null || recipes.getValue() == null || recipes.getValue().size() == 0) {
             loadRecipes();
         }
-        return recipeDao.provideAllRecipes().subscribeOn(Schedulers.io());
+        return recipeDao.provideRecipeWithId(recipeId).subscribeOn(Schedulers.io());
     }
 
     @Override
