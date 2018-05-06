@@ -5,6 +5,9 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -121,6 +124,10 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
     TextView nextTextView;
     @BindView(R.id.previous_arrow_text_view)
     TextView previousTextView;
+    @BindView(R.id.step_video_place_holder)
+    ImageView videoPlaceholderImageView;
+    @BindView(R.id.no_video_message)
+    TextView noVideoMessageTextView;
 
 
     public static RecipeDetailStepFragment newInstance(int recipeId, int stepPosition) {
@@ -207,26 +214,38 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
         videoUri = StepFieldsValidator.getVideoUri(step);
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         if (videoUri != null) {
-            playerView.setVisibility(View.VISIBLE);
-            initializeMediaSession();
-            initializePlayer();
-            if (screen_orientation == PHONE_LANDSCAPE) {
-                hideStepInfo();
-                hideSystemUi();
-                actionBar.hide();
+            if (isNetworkAvailable()) {
+                playerView.setVisibility(View.VISIBLE);
+                videoPlaceholderImageView.setVisibility(View.GONE);
+                noVideoMessageTextView.setVisibility(View.GONE);
+                initializeMediaSession();
+                initializePlayer();
+                if (screen_orientation == PHONE_LANDSCAPE) {
+                    hideStepInfo();
+                    hideSystemUi();
+                    actionBar.hide();
 
+                } else {
+                    showStepInfo();
+                    actionBar.show();
+                }
             } else {
-                showStepInfo();
-                actionBar.show();
+                playerView.setVisibility(View.GONE);
+                videoPlaceholderImageView.setVisibility(View.VISIBLE);
+                noVideoMessageTextView.setVisibility(View.VISIBLE);
+                noVideoMessageTextView.setText(getString(R.string.video_placeholder_no_connection));
+
             }
         } else {
-            Log.d("uffa", "videoUri è null e sto per settare a view gone");
             playerView.setVisibility(View.GONE);
+            videoPlaceholderImageView.setVisibility(View.VISIBLE);
+            noVideoMessageTextView.setVisibility(View.VISIBLE);
+            noVideoMessageTextView.setText(getString(R.string.video_placeholder_no_video));
             showStepInfo();
             actionBar.show();
 
         }
-        if(thumbnailUrl != null && thumbnailUrl.length() > 0){
+        if (thumbnailUrl != null && thumbnailUrl.length() > 0) {
             Picasso.get().load(thumbnailUrl).placeholder(defaultDrawableId).error(defaultDrawableId).into(thumbnail);
         } else {
             thumbnail.setImageResource(defaultDrawableId);
@@ -255,7 +274,7 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
         thumbnail.setVisibility(View.GONE);
         nextTextView.setVisibility(View.GONE);
         previousTextView.setVisibility(View.GONE);
-    }
+        }
 
     @SuppressLint("InlinedApi")
     private void hideSystemUi() {
@@ -268,7 +287,6 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
     }
 
     private void initializePlayer() {
-        Log.d("uffa", "sto chiamando initialize player");
         if (exoPlayer == null) {
             TrackSelector trackSelector = new DefaultTrackSelector();
             LoadControl loadControl = new DefaultLoadControl();
@@ -342,7 +360,7 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
     @Override
     public void onPause() {
         super.onPause();
-        if(exoPlayer != null){
+        if (exoPlayer != null) {
             playWhenReady = exoPlayer.getPlayWhenReady();
             exoPlayer.setPlayWhenReady(false);
             playbackPosition = exoPlayer.getCurrentPosition();
@@ -407,13 +425,21 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
             stateBuilder.setState(PlaybackStateCompat.STATE_PLAYING,
                     exoPlayer.getCurrentPosition(), 1f);
             duration = exoPlayer.getDuration();
-            } else if ((playbackState == Player.STATE_READY)) {
+        } else if ((playbackState == Player.STATE_READY)) {
             stateBuilder.setState(PlaybackStateCompat.STATE_PAUSED,
                     exoPlayer.getCurrentPosition(), 1f);
         }
         mediaSession.setPlaybackState(stateBuilder.build());
 
     }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null;
+    }
+
 
     @Override
     public void onRepeatModeChanged(int repeatMode) {

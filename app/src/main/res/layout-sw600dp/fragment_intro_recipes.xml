@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/recipes_intro_scroll_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="580dp"
+        style="@style/welcomeTitle"
+        android:background="@color/cardColor"
+        android:layout_height="wrap_content"
+        android:text="@string/welcome_title"
+        android:layout_marginTop="16dp"
+        android:layout_gravity="center_horizontal" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/cardColor"
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal">
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:padding="8dp"
+            android:layout_gravity="center_horizontal|center_vertical"
+            app:srcCompat="@drawable/welcome_cake_one"/>
+        <TextView
+            android:layout_width="380dp"
+            android:padding="8dp"
+            android:layout_height="wrap_content"
+            style="@style/welcomeIntroDescription"
+            android:text="@string/welcome_description"/>
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:padding="8dp"
+            android:layout_gravity="center_horizontal|center_vertical"
+            app:srcCompat="@drawable/welcome_cake_two"/>
+
+    </LinearLayout>
+
+
+    <ImageView
+            android:id="@+id/empty_image_view"
+            android:layout_width="300dp"
+            android:layout_height="360dp"
+            android:visibility="gone"
+            android:layout_gravity="center_horizontal|top"
+            app:srcCompat="@drawable/no_connection_400" />
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recipes_grid_intro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="16dp"
+        android:layout_gravity="center_horizontal" />
+
+
+</LinearLayout>
+</android.support.v4.widget.NestedScrollView>

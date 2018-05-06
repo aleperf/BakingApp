@@ -22,4 +22,6 @@
     <color name="colorOptionYellow">#FFD54F</color>
     <color name="colorOptionPink">#F8BBD0</color>
     <color name="widgetColorText">#663401</color>
+    <color name="welcomeTextColor">#663401</color>
+    <color name="noVideoColor">#F06292</color>
 </resources>

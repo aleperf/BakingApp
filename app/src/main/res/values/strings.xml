@@ -13,6 +13,9 @@
 
     <string name="servings_label_intro_card">Servings: %d</string>
     <string name="ingredients_label_intro_card">Ingredients: %d</string>
+    <!-- ExoPlayer placeholder -->
+    <string name="video_placeholder_no_video">NO VIDEO FOR THIS STEP</string>
+    <string name="video_placeholder_no_connection">NO NETWORK TO SHOW THE VIDEO STEP</string>
 
     <!-- Ingredients measures -->
     <string name="cups">Cups: %d</string>
@@ -25,6 +28,11 @@
     <string name="ingredients_number">Ingredients: %d</string>
     <string name="title_activity_baking_app_widget_config">BakingAppWidgetConfigActivity</string>
     <string name="configure">Configure</string>
+
+    <!-- welcome -->
+    <string name="welcome_title">WELCOME TO BEY-BAKE!</string>
+    <string name="welcome_description">Bey-Bake! is more then an app: it is your step by step baking assistant. \n
+    Choose a recipe, watch the videos and read the simple instructions to bake the perfect cake.\n Bei-Bake!: baking has never been so easy!</string>
 
     <!-- preferences -->
 

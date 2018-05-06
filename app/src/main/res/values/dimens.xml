@@ -14,9 +14,7 @@
     <dimen name="long_description_font_size">14sp</dimen>
     <dimen name="long_description_height">180dp</dimen>
     <dimen name="long_description_width">300dp</dimen>
-    <!--
-Refer to App Widget Documentation for margin information
-http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout
-    -->
+    <dimen name="no_video_place_holder_width">100dp</dimen>
+    <dimen name="no_video_place_holder_height">100dp</dimen>
     <dimen name="widget_margin">8dp</dimen>
 </resources>
