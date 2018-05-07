@@ -428,6 +428,11 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
         } else if ((playbackState == Player.STATE_READY)) {
             stateBuilder.setState(PlaybackStateCompat.STATE_PAUSED,
                     exoPlayer.getCurrentPosition(), 1f);
+        } else if(playbackState == Player.STATE_ENDED){
+            //if playing has finished, maintain on screen one of the last frames
+            // this is necessary to avoid vanishing of the exoPlayer on rotation
+            exoPlayer.seekTo(duration - 150);
+            exoPlayer.setPlayWhenReady(false);
         }
         mediaSession.setPlaybackState(stateBuilder.build());
 

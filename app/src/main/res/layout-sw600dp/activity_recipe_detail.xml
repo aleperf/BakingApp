@@ -28,7 +28,8 @@
         <fragment
             android:id="@+id/master_steps"
             android:name="com.example.aleperf.bakingapp.ui.recipeDetail.RecipeSummaryFragment"
-            android:layout_width="300dp"
+            android:layout_marginStart="8dp"
+            android:layout_width="320dp"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:layout_gravity="center_horizontal" />
@@ -38,8 +39,7 @@
             android:id="@+id/detail_steps_container"
             android:layout_width="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:layout_height="match_parent"
-            />
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>
