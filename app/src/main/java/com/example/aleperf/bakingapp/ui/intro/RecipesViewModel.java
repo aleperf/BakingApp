@@ -14,6 +14,7 @@ import javax.inject.Inject;
 public class RecipesViewModel extends ViewModel {
 
     private static final String TAG = RecipesViewModel.class.getSimpleName();
+    private LiveData<List<Recipe>> recipes;
 
     private RecipeRepository repository;
 
@@ -25,7 +26,9 @@ public class RecipesViewModel extends ViewModel {
     }
 
     public LiveData<List<Recipe>> getRecipes(){
-
-        return repository.getAllRecipes();
+        if(recipes == null){
+            recipes = repository.getAllRecipes();
+        }
+        return recipes;
     }
 }
