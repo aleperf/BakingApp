@@ -12,6 +12,7 @@ import com.example.aleperf.bakingapp.R;
 import com.example.aleperf.bakingapp.database.RecipeRepository;
 import com.example.aleperf.bakingapp.model.Recipe;
 import com.example.aleperf.bakingapp.model.Recipe.Ingredient;
+import com.example.aleperf.bakingapp.utils.RecipeUtilities;
 
 import java.util.List;
 
@@ -113,7 +114,10 @@ public class BakingAppWidgetService extends RemoteViewsService {
             Ingredient ingredient = ingredients.get(position);
             String name = ingredient.getIngredient();
             RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget_item);
-            rv.setTextViewText(R.id.widget_item_baking_app, name);
+            rv.setTextViewText(R.id.widget_item_baking_app_name, name);
+            String quantity = RecipeUtilities.getNormalizedMeasure(context, ingredient.getQuantity(),
+                    ingredient.getMeasure());
+            rv.setTextViewText(R.id.widget_item_baking_app_quantity, quantity);
             return rv;
 
         }

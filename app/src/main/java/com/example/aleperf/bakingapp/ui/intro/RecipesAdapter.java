@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.aleperf.bakingapp.R;
-import com.example.aleperf.bakingapp.dagger.RecipesServiceModule_ProvideOkHttpClientFactory;
 import com.example.aleperf.bakingapp.model.Recipe;
 import com.squareup.picasso.Picasso;
 import com.example.aleperf.bakingapp.utils.RecipeUtilities;
@@ -40,7 +39,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipesV
     @Override
     public RecipesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.recipe_card_item_2, parent, false);
+        View view = inflater.inflate(R.layout.recipe_card_item, parent, false);
         return new RecipesViewHolder(view);
     }
 

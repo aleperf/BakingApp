@@ -1,10 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/widget_item_baking_app"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="8dp"
-    style="@style/StepDetailBase">
+    android:orientation="vertical">
+<TextView
+
+    android:id="@+id/widget_item_baking_app_name"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:text="Sugar"
+    style="@style/WidgetIngredientName"/>
+
+    <TextView
+        android:id="@+id/widget_item_baking_app_quantity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="Cups: 2"
+        style="@style/WidgetQuantity">
 
 </TextView>
+    </LinearLayout>

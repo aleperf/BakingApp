@@ -13,7 +13,6 @@ import android.support.v4.app.Fragment;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,7 +62,7 @@ public class RecipeSummaryFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_recipe_summary2, container, false);
+        View root = inflater.inflate(R.layout.fragment_recipe_summary, container, false);
         unbinder = ButterKnife.bind(this, root);
         summaryManager = new LinearLayoutManager(getActivity());
         summaryRecyclerView.setLayoutManager(summaryManager);
