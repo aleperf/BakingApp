@@ -31,17 +31,6 @@
         android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ingredient_item_title"
-        tools:text="2" />
-
-    <TextView
-        android:id="@+id/ingredient_measure"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        style="@style/IngredientListQuantity"
-        android:layout_marginStart="8dp"
-        tools:text="CUPS"
-        app:layout_constraintBottom_toBottomOf="@+id/ingredient_quantity"
-        app:layout_constraintStart_toEndOf="@+id/ingredient_quantity" />
-
+        tools:text="Cups: 2" />
 
 </android.support.constraint.ConstraintLayout>

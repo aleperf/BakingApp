@@ -18,8 +18,14 @@
     <string name="video_placeholder_no_connection">NO NETWORK TO SHOW THE VIDEO STEP</string>
 
     <!-- Ingredients measures -->
-    <string name="cups">Cups: %d</string>
-    <string name="table_spoons">Table spoons:\u0020</string>
+    <string name="cups">Cups: %s</string>
+    <string name="table_spoons">Table spoons: %s</string>
+    <string name="tea_spoon">Tea spoons: %s</string>
+    <string name="kilograms">Kilograms: %s</string>
+    <string name="grams">Grams: %s</string>
+    <string name="ounce">Ounces: %s</string>
+    <string name="unit">Units: %s</string>
+    <string  name="default_measure">: %s</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="color_chooser_text">Choose Widget Color</string>
     <string name="add_widget">Add widget</string>

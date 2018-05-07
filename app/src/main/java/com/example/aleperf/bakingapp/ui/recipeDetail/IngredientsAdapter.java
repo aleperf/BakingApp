@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.example.aleperf.bakingapp.R;
 import com.example.aleperf.bakingapp.model.Recipe;
 import com.example.aleperf.bakingapp.model.Recipe.Ingredient;
+import com.example.aleperf.bakingapp.utils.RecipeUtilities;
 
 
 import java.util.List;
@@ -97,8 +98,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<ViewHolder> {
       TextView ingredientTitle;
       @BindView(R.id.ingredient_quantity)
       TextView ingredientQuantity;
-      @BindView(R.id.ingredient_measure)
-      TextView ingredientMeasure;
+
 
     public IngredientDescriptionHolder(View view){
         super(view);
@@ -107,8 +107,8 @@ public class IngredientsAdapter extends RecyclerView.Adapter<ViewHolder> {
 
         public void  bindIngredient(Ingredient ingredient){
             ingredientTitle.setText(ingredient.getIngredient());
-            ingredientQuantity.setText(String.valueOf(ingredient.getQuantity()));
-            ingredientMeasure.setText(ingredient.getMeasure());
+            String formattedMeasure = RecipeUtilities.getNormalizedMeasure(context, ingredient.getQuantity(), ingredient.getMeasure());
+            ingredientQuantity.setText(formattedMeasure);
 
         }
 

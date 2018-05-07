@@ -5,14 +5,11 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
-import android.os.Bundle;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
-
 import com.example.aleperf.bakingapp.BakingApplication;
 import com.example.aleperf.bakingapp.R;
-import com.example.aleperf.bakingapp.database.RecipeDao;
+import com.example.aleperf.bakingapp.database.RecipeRepository;
 import com.example.aleperf.bakingapp.model.Recipe;
 import com.example.aleperf.bakingapp.model.Recipe.Ingredient;
 
@@ -23,15 +20,14 @@ import javax.inject.Inject;
 import io.reactivex.Flowable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
-
 public class BakingAppWidgetService extends RemoteViewsService {
 
-    private final String RECIPE_EXTRA_NAME = "widget recipe extra name";
+
 
     @Inject
-    RecipeDao recipeDao;
+    RecipeRepository repository;
     private int appWidgetId;
-    private String recipeName;
+
 
     @Override
     public void onCreate() {
@@ -62,15 +58,16 @@ public class BakingAppWidgetService extends RemoteViewsService {
         /**
          * Observe the the database and triggers a widget update after loading new data
          *
-         * @param context
+         * @param context, the calling context.
          */
 
         private void subscribe(Context context) {
             int id = getRecipeIdPrefs(context);
-            recipeObs = recipeDao.provideRecipeWithId(id);
+            recipeObs = repository.provideRecipeWithId(id);
+
             recipeObs.observeOn(Schedulers.io()).subscribe(new Consumer<Recipe>() {
                 @Override
-                public void accept(Recipe recipe) throws Exception {
+                public void accept(Recipe recipe) {
                     ingredients = recipe.getIngredients();
                     AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
                     int appWidgetIds[] = appWidgetManager.getAppWidgetIds(
@@ -80,7 +77,8 @@ public class BakingAppWidgetService extends RemoteViewsService {
 
                 }
             });
-        }
+
+            }
 
         private int getRecipeIdPrefs(Context context) {
             SharedPreferences sharedPreferences = context.getSharedPreferences(getString(R.string.prefs_name), 0);
