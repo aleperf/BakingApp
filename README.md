@@ -11,11 +11,12 @@ Implementation of the Repository Pattern <br>
 Home Screen Widget <br>
 MVVM architecture <br>
 Espresso testing <br>
-Use of Architecture Components <br>
+Use of Architecture (Room, LiveData) Components <br>
 ### The following libraries are used: <br>
-ButterKnife <br>
-Retrofit <br>
-Dagger <br>
-RxJava <br>
+[ButterKnife ](http://jakewharton.github.io/butterknife/)<br>
+[Retrofit](http://square.github.io/retrofit/) <br>
+[Dagger](https://github.com/google/dagger) <br>
+[RxJava 2](https://github.com/ReactiveX/RxJava) <br>
+[ExoPlayer](https://github.com/google/ExoPlayer)<br>
 <br>
 Credits: all images by [FlatIcon](https://www.flaticon.com/)
