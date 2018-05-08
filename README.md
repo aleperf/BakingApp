@@ -1,9 +1,19 @@
 
-### Welcome to Yummy Bake!
+### Welcome to Bei-Bake!
 
-**Yummy Bake!** is your personal assistant in the fantastic world of baking. <br>
-Choose a recipe and follow the easy instructions step by step. <br>
+**Bei-Bake!** is a version of the Baking App, required project in the Android Developer Nanodegree<br>
 
-If the bites after baking are not enough, you can also give a look at the 'bits' in this repository. <br>
-**Yummy Bake!** is my version of the "Baking App", third project in the **Android Developer Nanodegree** by Udacity.<br>
-**WARNING**: at the moment this is a **Work in Progress**
+Bei-Bake is an app dedicated to cake recipes: for every recipe there are a list of steps, ingredients and a few videos illustrating the baking phases. </br>
+The app implements the following features: <br>
+Master-Detail Flow <br>
+Networking <br>
+Implementation of the Repository Pattern <br>
+Home Screen Widget <br>
+MVVM architecture <br>
+Espresso testing <br>
+Use of Architecture Components <br>
+### The following libraries are used: <br>
+ButterKnife <br>
+Retrofit <br>
+Dagger <br>
+RxJava <br>
