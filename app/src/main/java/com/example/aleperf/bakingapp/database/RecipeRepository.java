@@ -5,12 +5,9 @@ import android.arch.lifecycle.LiveData;
 import com.example.aleperf.bakingapp.model.Recipe;
 import java.util.List;
 
-import io.reactivex.Completable;
-import io.reactivex.Flowable;
-import io.reactivex.Maybe;
-import io.reactivex.Single;
 
-import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
+import io.reactivex.Flowable;
+
 
 public interface RecipeRepository {
 

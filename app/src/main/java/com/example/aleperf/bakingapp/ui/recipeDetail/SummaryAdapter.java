@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.aleperf.bakingapp.R;
 import com.example.aleperf.bakingapp.model.Recipe.Step;
@@ -93,7 +92,7 @@ public class SummaryAdapter extends RecyclerView.Adapter<ViewHolder> {
     public class StepHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @BindView(R.id.step_summary_description)
         TextView summaryDescription;
-        @BindView(R.id.step_number)
+        @BindView(R.id.title_step_counter)
         TextView stepNumber;
 
         public StepHolder(View view) {
@@ -106,7 +105,9 @@ public class SummaryAdapter extends RecyclerView.Adapter<ViewHolder> {
             if (position == INTRO_POSITION) {
                 stepNumber.setText(context.getString(R.string.intro_step));
             } else {
-                stepNumber.setText(context.getString(R.string.step_numerator) + String.valueOf(position - 1));
+                String formatString = context.getString(R.string.step_summary_card);
+                String stepText = String.format(formatString, position - 1);
+                stepNumber.setText(stepText);
             }
             summaryDescription.setText(step.getShortDescription());
         }

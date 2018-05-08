@@ -4,10 +4,12 @@ package com.example.aleperf.bakingapp.ui.recipeDetail;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.test.espresso.idling.CountingIdlingResource;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import com.example.aleperf.bakingapp.ui.intro.IdlingResourcesManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,7 +19,6 @@ import android.widget.Toast;
 import com.example.aleperf.bakingapp.R;
 import com.example.aleperf.bakingapp.ui.intro.RecipesMainActivity;
 import com.example.aleperf.bakingapp.utils.RecipeUtilities;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -25,7 +26,7 @@ import butterknife.ButterKnife;
  * Manage the detailed info for a single recipe (phone and tablet)
  */
 
-public class RecipeDetailActivity extends AppCompatActivity implements StepSelector, IngredientsDisplay {
+public class RecipeDetailActivity extends AppCompatActivity implements StepSelector, IngredientsDisplay, IdlingResourcesManager {
 
     private static final String STEP_EXTRA_POSITION = "step extra position";
     private static final String RECIPE_EXTRA_TITLE = "recipe extra title";
@@ -42,6 +43,8 @@ public class RecipeDetailActivity extends AppCompatActivity implements StepSelec
     private String recipeTitle;
     private boolean isDualPane = false;
     private int stepPosition = 0;
+
+    private CountingIdlingResource countingIdlingResource = new CountingIdlingResource(RecipeDetailActivity.class.getName());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,4 +136,21 @@ public class RecipeDetailActivity extends AppCompatActivity implements StepSelec
             finish();
         }
     }
+
+    @Override
+    public void incrementIdlingResource() {
+        countingIdlingResource.increment();
+    }
+
+    @Override
+    public void decrementIdlingResource() {
+      countingIdlingResource.decrement();
+    }
+
+    @Override
+    public CountingIdlingResource getCountIdlingResource() {
+       return countingIdlingResource;
+    }
+
+
 }

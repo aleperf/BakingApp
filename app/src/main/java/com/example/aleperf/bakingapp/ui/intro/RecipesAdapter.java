@@ -59,7 +59,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipesV
     public void setRecipes(List<Recipe> recipes) {
         this.recipes = recipes;
         notifyDataSetChanged();
-    }
+        }
 
 
     public class RecipesViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

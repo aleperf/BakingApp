@@ -12,14 +12,8 @@
     android:layout_gravity="center_horizontal"
     android:orientation="vertical">
 
+    <include layout="@layout/intro_empty_view" />
 
-    <ImageView
-            android:id="@+id/empty_image_view"
-            android:layout_width="300dp"
-            android:layout_height="360dp"
-            android:visibility="gone"
-            android:layout_gravity="center_horizontal|top"
-            app:srcCompat="@drawable/no_connection_400" />
 
 
     <android.support.v7.widget.RecyclerView

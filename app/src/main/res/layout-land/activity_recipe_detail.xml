@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center_horizontal">
@@ -20,65 +19,72 @@
             app:layout_scrollFlags="scroll|enterAlways"
             app:titleTextColor="@color/toolbarTitle" />
     </android.support.design.widget.AppBarLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
         <android.support.v4.widget.NestedScrollView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="200dp"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_height="match_parent"
-            android:background="@color/cardColor"
-            android:layout_margin="16dp">
+            <LinearLayout
+                android:layout_width="200dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="16dp"
+                android:background="@color/cardColor"
+                android:orientation="vertical"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp">
 
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center_horizontal"
-                app:srcCompat="@drawable/welcome_cake_one"
-                android:layout_marginBottom="8dp"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:textColor="@color/welcomeTextColor"
-                android:layout_gravity="center_horizontal"
-                android:text="@string/welcome_title"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/welcomeTextColor"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"
-                android:text="@string/welcome_description"/>
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center_horizontal"
-                app:srcCompat="@drawable/welcome_cake_two"
-                android:layout_marginTop="8dp" />
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="8dp"
+                    android:contentDescription="@string/cake_image"
+                    app:srcCompat="@drawable/welcome_cake_one" />
 
-        </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center_horizontal"
+                    android:text="@string/welcome_title"
+                    android:textColor="@color/welcomeTextColor" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingEnd="16dp"
+                    android:paddingStart="16dp"
+                    android:text="@string/welcome_description"
+                    android:textColor="@color/welcomeTextColor" />
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="8dp"
+                    android:contentDescription="@string/cake_image"
+                    app:srcCompat="@drawable/welcome_cake_two" />
+
+            </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
 
-    <fragment
+        <fragment
             android:id="@+id/master_steps"
             android:name="com.example.aleperf.bakingapp.ui.recipeDetail.RecipeSummaryFragment"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:layout_width="0dp"
-            android:layout_weight="3"
             android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="3"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
     </LinearLayout>
 
 

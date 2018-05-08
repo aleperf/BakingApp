@@ -14,9 +14,6 @@ import javax.inject.Inject;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.MaybeObserver;
-import io.reactivex.Scheduler;
-import io.reactivex.Single;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
@@ -33,11 +30,11 @@ public class RecipeRepositoryImpl implements RecipeRepository {
     private final String TAG = RecipeRepositoryImpl.class.getSimpleName();
 
 
-    RecipeDao recipeDao;
+    private RecipeDao recipeDao;
 
-    RecipesService recipeService;
+    private RecipesService recipeService;
 
-    LiveData<List<Recipe>> recipes;
+    private LiveData<List<Recipe>> recipes;
 
 
     @Inject
@@ -93,7 +90,7 @@ public class RecipeRepositoryImpl implements RecipeRepository {
      * from network and insert new data in the database
      */
 
-    public void initializeDatabase() {
+    private void initializeDatabase() {
         recipeDao.getNumberOfRecipes().subscribeOn(Schedulers.io()).observeOn(Schedulers.io()).subscribe(
                 new MaybeObserver<Integer>() {
                     Integer recipeCount = 0;
@@ -125,6 +122,7 @@ public class RecipeRepositoryImpl implements RecipeRepository {
         );
     }
 
+
     /**
      * Load recipes from network and insert them in the database
      */
@@ -137,6 +135,7 @@ public class RecipeRepositoryImpl implements RecipeRepository {
                 List<Recipe> responseRecipes = response.body();
                 if (responseRecipes != null && responseRecipes.size() > 0) {
                     insertAllRecipes(responseRecipes);
+
                 }
             }
 

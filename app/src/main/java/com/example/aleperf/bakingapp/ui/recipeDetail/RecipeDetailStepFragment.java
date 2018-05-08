@@ -17,7 +17,6 @@ import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +27,7 @@ import android.widget.Toast;
 
 import com.example.aleperf.bakingapp.BakingApplication;
 import com.example.aleperf.bakingapp.model.Recipe.Step;
+import com.example.aleperf.bakingapp.ui.intro.IdlingResourcesManager;
 import com.example.aleperf.bakingapp.utils.RecipeUtilities;
 import com.example.aleperf.bakingapp.utils.StepFieldsValidator;
 import com.example.aleperf.bakingapp.R;
@@ -36,7 +36,6 @@ import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
 import com.google.android.exoplayer2.ExoPlaybackException;
-import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.LoadControl;
 import com.google.android.exoplayer2.PlaybackParameters;
@@ -81,9 +80,7 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
     private static final String CURRENT_WINDOW = "current window";
     private static final String PLAY_WHEN_READY = "play when ready";
     private static final String VIDEO_DURATION = "exoplayer video duration";
-    private static final int PHONE_PORTRAIT = 1;
     private static final int PHONE_LANDSCAPE = 2;
-    private static final int TABLET = 3;
     private static final int INTRO_STEP = 0;
 
     private int recipeId;
@@ -110,7 +107,7 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
     PlayerView playerView;
     @BindView(R.id.step_title)
     TextView stepTitle;
-    @BindView(R.id.step_number)
+    @BindView(R.id.title_step_counter)
     TextView stepNumber;
     @BindView(R.id.step_long_description)
     TextView stepDescription;
@@ -129,6 +126,7 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
     @BindView(R.id.no_video_message)
     TextView noVideoMessageTextView;
 
+    private boolean canCount = true;
 
     public static RecipeDetailStepFragment newInstance(int recipeId, int stepPosition) {
         Bundle bundle = new Bundle();
@@ -188,11 +186,15 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
     }
 
     private void subscribe() {
+        if (canCount) {
+            incrementIdlingResource();
+        }
+
         Observer<Recipe> observer = recipe -> {
             if (recipe != null) {
                 steps = recipe.getSteps();
                 updateUI(stepPosition);
-            }
+                }
         };
         recipe.observe(this, observer);
     }
@@ -250,6 +252,11 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
         } else {
             thumbnail.setImageResource(defaultDrawableId);
         }
+
+        if(canCount){
+            decrementIdlingResource();
+            canCount = false;
+        }
     }
 
     private void showStepInfo() {
@@ -274,7 +281,7 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
         thumbnail.setVisibility(View.GONE);
         nextTextView.setVisibility(View.GONE);
         previousTextView.setVisibility(View.GONE);
-        }
+    }
 
     @SuppressLint("InlinedApi")
     private void hideSystemUi() {
@@ -428,7 +435,7 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
         } else if ((playbackState == Player.STATE_READY)) {
             stateBuilder.setState(PlaybackStateCompat.STATE_PAUSED,
                     exoPlayer.getCurrentPosition(), 1f);
-        } else if(playbackState == Player.STATE_ENDED){
+        } else if (playbackState == Player.STATE_ENDED) {
             //if playing has finished, maintain on screen one of the last frames
             // this is necessary to avoid vanishing of the exoPlayer on rotation
             exoPlayer.seekTo(duration - 150);
@@ -522,6 +529,20 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
                 }
             }
 
+        }
+    }
+
+    private void incrementIdlingResource() {
+        if (getActivity() instanceof IdlingResourcesManager) {
+            IdlingResourcesManager manager = (IdlingResourcesManager) getActivity();
+            manager.incrementIdlingResource();
+        }
+    }
+
+    private void decrementIdlingResource() {
+        if (getActivity() instanceof IdlingResourcesManager) {
+            IdlingResourcesManager manager = (IdlingResourcesManager) getActivity();
+            manager.decrementIdlingResource();
         }
     }
 

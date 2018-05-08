@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import com.example.aleperf.bakingapp.BakingApplication;
 import com.example.aleperf.bakingapp.R;
 import com.example.aleperf.bakingapp.model.Recipe;
+import com.example.aleperf.bakingapp.ui.intro.IdlingResourcesManager;
 
 import javax.inject.Inject;
 
@@ -48,6 +49,7 @@ public class RecipeSummaryFragment extends Fragment {
     SummaryAdapter summaryAdapter;
     LiveData<Recipe> recipe;
     private Unbinder unbinder;
+    private boolean canCount = true;
 
 
     @Override
@@ -83,16 +85,24 @@ public class RecipeSummaryFragment extends Fragment {
         recipe = model.getRecipe(getActivity().getIntent().getIntExtra(RECIPE_EXTRA_ID, 1));
         subscribe();
         String callingActivityAction = getActivity().getIntent().getAction();
-        if(callingActivityAction != null && callingActivityAction.equals(RecipeDetailActivity.SHOW_INGREDIENTS_ACTION ) && savedInstanceState == null  ){
-            if(getActivity() instanceof IngredientsDisplay);
-            IngredientsDisplay display  = (IngredientsDisplay) getActivity();
+        if (callingActivityAction != null && callingActivityAction.equals(RecipeDetailActivity.SHOW_INGREDIENTS_ACTION) && savedInstanceState == null) {
+            if (getActivity() instanceof IngredientsDisplay) ;
+            IngredientsDisplay display = (IngredientsDisplay) getActivity();
             display.displayIngredients();
         }
     }
 
     private void subscribe() {
+        if (canCount) {
+            incrementIdlingResource();
+        }
         Observer<Recipe> observer = recipe -> {
             if (recipe != null) {
+                if (canCount) {
+                    decrementIdlingResource();
+                    canCount = false;
+                }
+
                 summaryAdapter.setSummaryContent(recipe.getName(), recipe.getSteps());
                 summaryRecyclerView.scrollToPosition(firstVisibleItemPosition);
             }
@@ -126,5 +136,17 @@ public class RecipeSummaryFragment extends Fragment {
         unbinder.unbind();
     }
 
+    private void incrementIdlingResource() {
+        if (getActivity() instanceof IdlingResourcesManager) {
+            IdlingResourcesManager manager = (IdlingResourcesManager) getActivity();
+            manager.incrementIdlingResource();
+        }
+    }
 
+    private void decrementIdlingResource() {
+        if (getActivity() instanceof IdlingResourcesManager) {
+            IdlingResourcesManager manager = (IdlingResourcesManager) getActivity();
+            manager.decrementIdlingResource();
+        }
+    }
 }

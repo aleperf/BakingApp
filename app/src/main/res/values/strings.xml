@@ -6,10 +6,14 @@
 
     <string name="title_activity_recipe_detail_step">RecipeDetailStepActivity</string>
     <string name="step_count">STEP %d OF %d</string>
+    <string name="step_summary_card">STEP %d</string>
     <string name="no_previous_step">No previous step for this recipe</string>
     <string name="no_next_step">This is the last step for this recipe</string>
     <string name="intro_step">INTRODUCTION</string>
     <string name="intro_fetching_data">Fetching Data</string>
+
+    <string name="previous">PREVIOUS</string>
+    <string name="next">NEXT</string>
 
     <string name="servings_label_intro_card">Servings: %d</string>
     <string name="ingredients_label_intro_card">Ingredients: %d</string>
@@ -43,10 +47,27 @@
     <!--Widget and widget configuration activity -->
     <string name="config_activity_intro">Choose a recipe to add the ingredients to the widget</string>
     <string name="prefs_name">com.example.aleperf.bakingapp.widget.BakingAppWidget</string>
+    <string name="widget_no_data">No data to display yet</string>
     <string name="prefs_prefix">appwidget_</string>
     <string name="prefs_recipe_prefix">recipe_name_</string>
     <string name="widget_ingredients_title">%s Ingredients</string>
-    <!-- preferences -->
+    <string name="intro_empty_view_message">Uh Oh! No recipes!\n Check for a better connection and
+    tap to reload the recipes</string>
+
+    <!-- Test Strings -->
+    <string name="nutella_pie_test_name">Nutella Pie</string>
+    <string name="ingredients_back">button for closing list of ingredients</string>
+    <!-- content descriptions -->
+    <string name="ingredients_icon">notebook and pen</string>
+    <string name="cake_image">recipe cake or placeholder</string>
+    <string name="arrow_left">arrow back</string>
+    <string name="arrow_right">arrow next</string>
+    <string name="video_logo">video logo used as placeholder</string>
+    <string name="wi_fi">wi-fi symbol</string>
+
+    <string name="error_loading">Error in loading recipes</string>
+    <string name="test_string_step">STEP 1</string>
+    <string name="test_string_step_counter">STEP 1 OF 6</string>
 
 
 </resources>

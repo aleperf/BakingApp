@@ -44,7 +44,7 @@ public class RecipeDatabaseModule {
 
     @Provides
     @BakingApplicationScope
-    RecipeDatabase provideRecipeDatabase(Application application){
+    RecipeDatabase provideRecipeDatabase(){
         return database;
     }
 

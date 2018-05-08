@@ -2,6 +2,7 @@ package com.example.aleperf.bakingapp.ui.recipeDetail;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.test.espresso.idling.CountingIdlingResource;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -9,7 +10,7 @@ import android.support.v7.widget.Toolbar;
 
 import com.example.aleperf.bakingapp.R;
 import com.example.aleperf.bakingapp.utils.RecipeUtilities;
-
+import com.example.aleperf.bakingapp.ui.intro.IdlingResourcesManager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -17,13 +18,13 @@ import butterknife.ButterKnife;
  * Manage the details about a step of a recipe in a phone screen.
  */
 
-public class RecipeDetailStepActivity extends AppCompatActivity implements StepSelector {
+public class RecipeDetailStepActivity extends AppCompatActivity implements StepSelector, IdlingResourcesManager {
 
     private static final String STEP_EXTRA_POSITION = "step extra position";
     private static final String RECIPE_EXTRA_TITLE = "recipe extra title";
     private static final String RECIPE_EXTRA_ID = "recipe extra id";
-    private static final String FRAGMENT_TAG = "step detail fragment";
     private static final String STEP_POSITION = "recipe step position";
+
     @BindView(R.id.toolbar_detail_step)
     Toolbar toolbar;
 
@@ -31,6 +32,8 @@ public class RecipeDetailStepActivity extends AppCompatActivity implements StepS
     private String recipeTitle;
     private int recipeId;
     private int stepPosition;
+
+    private CountingIdlingResource countingIdlingResource = new CountingIdlingResource(RecipeDetailActivity.class.getName());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,5 +77,20 @@ public class RecipeDetailStepActivity extends AppCompatActivity implements StepS
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt(STEP_POSITION, stepPosition);
+    }
+
+    @Override
+    public void incrementIdlingResource() {
+        countingIdlingResource.increment();
+    }
+
+    @Override
+    public void decrementIdlingResource() {
+        countingIdlingResource.decrement();
+    }
+
+    @Override
+    public CountingIdlingResource getCountIdlingResource() {
+        return countingIdlingResource;
     }
 }

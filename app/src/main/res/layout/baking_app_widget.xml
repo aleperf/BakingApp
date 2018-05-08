@@ -1,5 +1,4 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/widget_baking_app"
     android:layout_width="match_parent"
@@ -22,25 +21,27 @@
         android:id="@+id/ingredients_icon"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:scaleType="fitXY"
-       android:background="@drawable/ingredient_ico"
         android:layout_below="@id/widget_title"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/ingredient_ico"
+        android:contentDescription="@string/ingredients_icon"
+        android:scaleType="fitXY" />
 
     <ListView
         android:id="@+id/widget_recipes_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/ingredients_icon" />
+        android:layout_below="@id/ingredients_icon"
+        android:layout_centerHorizontal="true" />
+
     <TextView
         android:id="@+id/widget_empty_view"
+        style="@style/IngredientListItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/ingredients_icon"
         android:layout_marginTop="24dp"
         android:gravity="center_horizontal"
-        style="@style/IngredientListItem"
-        android:text="No data do display yet"/>
+        android:text="@string/widget_no_data" />
 
 </RelativeLayout>

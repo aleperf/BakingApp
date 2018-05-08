@@ -7,7 +7,6 @@ import com.example.aleperf.bakingapp.ui.recipeDetail.IngredientsDialogFragment;
 import com.example.aleperf.bakingapp.ui.recipeDetail.RecipeDetailStepFragment;
 import com.example.aleperf.bakingapp.ui.recipeDetail.RecipeSummaryFragment;
 import com.example.aleperf.bakingapp.ui.intro.RecipesIntroFragment;
-import com.example.aleperf.bakingapp.widget.BakingAppWidget;
 import com.example.aleperf.bakingapp.widget.BakingAppWidgetConfigureActivity;
 import com.example.aleperf.bakingapp.widget.BakingAppWidgetService;
 

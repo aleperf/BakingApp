@@ -12,7 +12,7 @@ import java.util.List;
 
 public class RecipeTypeConverter {
 
-    static Gson gson = new Gson();
+    private static Gson gson = new Gson();
 
     @TypeConverter
     public static List<Ingredient> convertJsonStringToIngredients(String jsonString) {

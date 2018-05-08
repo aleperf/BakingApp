@@ -1,26 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp"
-    android:orientation="vertical">
-<TextView
+    android:orientation="vertical"
+    android:padding="8dp">
 
-    android:id="@+id/widget_item_baking_app_name"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:text="Sugar"
-    style="@style/WidgetIngredientName"/>
+    <TextView
+
+        android:id="@+id/widget_item_baking_app_name"
+        style="@style/WidgetIngredientName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="Sugar" />
 
     <TextView
         android:id="@+id/widget_item_baking_app_quantity"
+        style="@style/WidgetQuantity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="Cups: 2"
-        style="@style/WidgetQuantity">
+        tools:text="Cups: 2">
 
-</TextView>
-    </LinearLayout>
+    </TextView>
+</LinearLayout>

@@ -22,8 +22,8 @@ import butterknife.ButterKnife;
 
 public class IngredientsAdapter extends RecyclerView.Adapter<ViewHolder> {
 
-  Context context;
-  List<Recipe.Ingredient> ingredients;
+  private Context context;
+  private List<Recipe.Ingredient> ingredients;
   private final  int TITLE_VIEW_TYPE = 0;
   private final int INGREDIENT_VIEW_TYPE = 1;
   private boolean IS_CLICKABLE = false;

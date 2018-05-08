@@ -2,10 +2,9 @@ package com.example.aleperf.bakingapp.database;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
-import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
-import android.arch.persistence.room.Update;
+
 
 import com.example.aleperf.bakingapp.model.Recipe;
 
@@ -14,7 +13,7 @@ import java.util.List;
 
 import io.reactivex.Flowable;
 import io.reactivex.Maybe;
-import io.reactivex.Single;
+
 
 import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
 
@@ -40,14 +39,6 @@ public interface RecipeDao {
     @Insert(onConflict = REPLACE)
     void insertRecipe(Recipe recipe);
 
-    @Delete
-    void deleteRecipe(Recipe recipe);
-
-    @Delete
-    void deleteAllRecipes(List<Recipe> recipes);
-
-    @Update(onConflict = REPLACE)
-    void updateRecipe(Recipe recipe);
 
 
 }

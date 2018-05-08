@@ -2,22 +2,22 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="#FFFFFF"
+    android:orientation="vertical"
     android:padding="16dp">
 
     <TextView
+        style="@style/StepTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/StepTitle"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
         android:text="@string/config_activity_intro" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/widget_config_recycler_view"
-        android:layout_gravity="center_horizontal"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal" />
 
 </LinearLayout>

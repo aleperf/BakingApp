@@ -1,39 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:padding="8dp"
     android:layout_width="300dp"
     android:layout_height="100dp"
     android:layout_gravity="center_horizontal"
-    card_view:cardCornerRadius="@dimen/card_view_corner_radius"
-    card_view:cardBackgroundColor="@color/ingredientsColorBackground"
-    android:layout_margin="4dp">
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center_horizontal|center_vertical"
+    android:layout_margin="4dp"
     android:padding="8dp"
-    android:id="@+id/widget_item">
-    <TextView
-        android:id="@+id/widget_recipe_name"
-        style="@style/IngredientListItem"
-        android:paddingTop="2dp"
-        android:gravity="center"
-        android:layout_gravity="center_horizontal|center_vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:id="@+id/widget_number_of_ingredients"
+    card_view:cardBackgroundColor="@color/ingredientsColorBackground"
+    card_view:cardCornerRadius="@dimen/card_view_corner_radius">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/widget_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal|center_vertical"
-        style="@style/IngredientListQuantity" />
+        android:orientation="vertical"
+        android:padding="8dp">
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/widget_recipe_name"
+            style="@style/IngredientListItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:gravity="center"
+            android:paddingTop="2dp" />
+
+        <TextView
+            android:id="@+id/widget_number_of_ingredients"
+            style="@style/IngredientListQuantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|center_vertical" />
+
+    </LinearLayout>
 
 </android.support.v7.widget.CardView>

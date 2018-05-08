@@ -1,6 +1,8 @@
 package com.example.aleperf.bakingapp.ui.intro;
 
 import android.content.Intent;
+
+import android.support.test.espresso.idling.CountingIdlingResource;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -15,12 +17,12 @@ import butterknife.ButterKnife;
 /**
  * Launcher for the app, coordinates fragments.
  */
-public class RecipesMainActivity extends AppCompatActivity implements RecipesAdapter.RecipeCallback {
+public class RecipesMainActivity extends AppCompatActivity implements RecipesAdapter.RecipeCallback, IdlingResourcesManager{
 
-    private static String TAG = RecipesMainActivity.class.getSimpleName();
     private static final String RECIPE_EXTRA_ID = "recipe extra id";
     private static final String RECIPE_EXTRA_TITLE = "recipe extra title";
 
+    CountingIdlingResource countingIdlingResource = new CountingIdlingResource(RecipesMainActivity.class.getName());
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
@@ -40,5 +42,21 @@ public class RecipesMainActivity extends AppCompatActivity implements RecipesAda
         intent.putExtra(RECIPE_EXTRA_ID, recipe.getId());
         intent.putExtra(RECIPE_EXTRA_TITLE, recipe.getName());
         startActivity(intent);
+    }
+
+
+    @Override
+    public void incrementIdlingResource() {
+        countingIdlingResource.increment();
+    }
+
+    @Override
+    public void decrementIdlingResource() {
+        countingIdlingResource.decrement();
+    }
+
+    @Override
+    public CountingIdlingResource getCountIdlingResource() {
+        return countingIdlingResource;
     }
 }

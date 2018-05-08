@@ -46,24 +46,24 @@
             android:layout_height="@dimen/cake_image_side"
             android:layout_marginTop="16dp"
             android:scaleType="centerCrop"
-            app:layout_constraintEnd_toStartOf="@+id/step_number"
-            app:layout_constraintStart_toEndOf="@+id/step_number"
-            app:layout_constraintTop_toBottomOf="@+id/step_number"
-            tools:srcCompat="@drawable/intro_pie" />
+            app:layout_constraintEnd_toStartOf="@+id/title_step_counter"
+            app:layout_constraintStart_toEndOf="@+id/title_step_counter"
+            app:layout_constraintTop_toBottomOf="@+id/title_step_counter"
+            tools:srcCompat="@drawable/intro_pie"
+            android:contentDescription="@string/cake_image"/>
 
         <TextView
-            android:id="@+id/step_number"
+            android:id="@+id/title_step_counter"
             style="@style/StepNumeration"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="15dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:gravity="center_horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/step_title"
-            tools:text=" STEP 1 OF 8" />
+            app:layout_constraintTop_toBottomOf="@+id/step_title" />
 
         <TextView
             android:id="@+id/step_long_description"
@@ -75,7 +75,6 @@
             android:layout_marginTop="24dp"
             android:background="@color/stepLongDescriptionColor"
             android:gravity="center_horizontal|center_vertical"
-
             android:padding="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -93,7 +92,8 @@
             app:layout_constraintBottom_toTopOf="@+id/recipeThumbnail"
             app:layout_constraintEnd_toStartOf="@+id/recipeThumbnail"
             app:layout_constraintTop_toBottomOf="@+id/recipeThumbnail"
-            app:srcCompat="@drawable/left_arrow" />
+            app:srcCompat="@drawable/left_arrow"
+            android:contentDescription="@string/arrow_left"/>
 
         <ImageButton
             android:id="@+id/arrowRight"
@@ -105,7 +105,8 @@
             app:layout_constraintBottom_toTopOf="@+id/recipeThumbnail"
             app:layout_constraintStart_toEndOf="@+id/recipeThumbnail"
             app:layout_constraintTop_toBottomOf="@+id/recipeThumbnail"
-            app:srcCompat="@drawable/right_arrow" />
+            app:srcCompat="@drawable/right_arrow"
+            android:contentDescription="@string/arrow_right"/>
 
         <TextView
             android:id="@+id/previous_arrow_text_view"
@@ -113,7 +114,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="PREVIOUS"
+            android:text="@string/previous"
             app:layout_constraintEnd_toStartOf="@+id/arrowLeft"
             app:layout_constraintStart_toEndOf="@+id/arrowLeft"
             app:layout_constraintTop_toBottomOf="@+id/arrowLeft" />
@@ -125,8 +126,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:text="NEXT"
-            android:textSize="10sp"
+            android:text="@string/next"
             app:layout_constraintEnd_toStartOf="@+id/arrowRight"
             app:layout_constraintStart_toEndOf="@+id/arrowRight"
             app:layout_constraintTop_toBottomOf="@+id/arrowRight" />
@@ -143,7 +143,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/no_video_message"
-            app:srcCompat="@drawable/video_player_placeholder" />
+            app:srcCompat="@drawable/video_player_placeholder"
+            android:contentDescription="@string/video_logo"/>
 
         <TextView
             android:id="@+id/no_video_message"

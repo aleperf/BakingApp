@@ -1,8 +1,7 @@
 package com.example.aleperf.bakingapp.dagger;
 
 import com.example.aleperf.bakingapp.networking.RecipesService;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+
 
 import dagger.Module;
 import dagger.Provides;

@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/appBackground"
     android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal"
 
-    android:layout_gravity="center_horizontal">
+    android:background="@color/appBackground">
 
 
     <android.support.design.widget.AppBarLayout
@@ -24,15 +23,10 @@
             app:titleTextColor="@color/toolbarTitle" />
     </android.support.design.widget.AppBarLayout>
 
-
-
-        <fragment
-            android:id="@+id/master_steps"
-            android:name="com.example.aleperf.bakingapp.ui.intro.RecipesIntroFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
-            android:layout_gravity="center_horizontal" />
-
-
+    <fragment
+        android:id="@+id/master_steps"
+        android:name="com.example.aleperf.bakingapp.ui.intro.RecipesIntroFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 </android.support.design.widget.CoordinatorLayout>

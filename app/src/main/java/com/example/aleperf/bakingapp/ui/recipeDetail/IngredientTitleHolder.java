@@ -2,13 +2,11 @@ package com.example.aleperf.bakingapp.ui.recipeDetail;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 import com.example.aleperf.bakingapp.R;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
