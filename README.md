@@ -11,7 +11,7 @@ Implementation of the Repository Pattern <br>
 Home Screen Widget <br>
 MVVM architecture <br>
 Espresso testing <br>
-Use of Architecture (Room, LiveData) Components <br>
+Use of Architecture Components (Room, LiveData) <br>
 ### The following libraries are used: <br>
 [ButterKnife ](http://jakewharton.github.io/butterknife/)<br>
 [Retrofit](http://square.github.io/retrofit/) <br>
