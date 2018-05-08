@@ -1,7 +1,7 @@
 
 ### Welcome to Bei-Bake!
 
-**Bei-Bake!** is a version of the Baking App, required project in the Android Developer Nanodegree<br>
+**Bei-Bake!** is a version of the Baking App, required project in the Android Developer Nanodegree by Udacity<br>
 
 Bei-Bake is an app dedicated to cake recipes: for every recipe there are a list of steps, ingredients and a few videos illustrating the baking phases. </br>
 The app implements the following features: <br>
@@ -17,3 +17,5 @@ ButterKnife <br>
 Retrofit <br>
 Dagger <br>
 RxJava <br>
+<br>
+Credits: all images by [FlatIcon](https://www.flaticon.com/)
