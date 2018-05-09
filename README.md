@@ -1,5 +1,5 @@
 
-### Welcome to Bei-Bake!
+### Welcome to Bey-Bake!
 
 **Bey-Bake!** is a version of the Baking App, required project in the Android Developer Nanodegree by Udacity<br>
 
