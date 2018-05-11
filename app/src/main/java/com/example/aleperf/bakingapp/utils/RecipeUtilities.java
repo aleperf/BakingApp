@@ -4,8 +4,11 @@ import android.content.Context;
 import android.net.Uri;
 
 import com.example.aleperf.bakingapp.R;
-import com.example.aleperf.bakingapp.model.Recipe;
 import com.example.aleperf.bakingapp.model.Recipe.Step;
+
+/**
+ * Convenience methods for UI data
+ */
 
 public class RecipeUtilities {
 
