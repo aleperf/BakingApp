@@ -17,6 +17,7 @@ import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -247,7 +248,7 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
             actionBar.show();
 
         }
-        if (thumbnailUrl != null && thumbnailUrl.length() > 0) {
+        if (!TextUtils.isEmpty(thumbnailUrl)) {
             Picasso.get().load(thumbnailUrl).placeholder(defaultDrawableId).error(defaultDrawableId).into(thumbnail);
         } else {
             thumbnail.setImageResource(defaultDrawableId);
