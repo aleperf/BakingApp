@@ -9,7 +9,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+
 import com.example.aleperf.bakingapp.ui.intro.IdlingResourcesManager;
+
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,6 +21,7 @@ import android.widget.Toast;
 import com.example.aleperf.bakingapp.R;
 import com.example.aleperf.bakingapp.ui.intro.RecipesMainActivity;
 import com.example.aleperf.bakingapp.utils.RecipeUtilities;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -82,7 +85,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements StepSelec
             startActivity(intent);
         } else {
             replaceFragment(recipeId, position);
-            }
+        }
     }
 
 
@@ -116,7 +119,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements StepSelec
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-             navigateToParent();
+            navigateToParent();
         }
         return true;
     }
@@ -127,14 +130,14 @@ public class RecipeDetailActivity extends AppCompatActivity implements StepSelec
     }
 
     private void navigateToParent() {
+        Intent navigateUpToParentIntent = new Intent(this, RecipesMainActivity.class);
+        navigateUpToParentIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         if (getParent() != null) {
-            NavUtils.navigateUpFromSameTask(this);
-            finish();
+            NavUtils.navigateUpTo(this, navigateUpToParentIntent);
         } else {
-            Intent parentIntent = new Intent(this, RecipesMainActivity.class);
-            startActivity(parentIntent);
-            finish();
+            startActivity(navigateUpToParentIntent);
         }
+        finish();
     }
 
     @Override
@@ -144,12 +147,12 @@ public class RecipeDetailActivity extends AppCompatActivity implements StepSelec
 
     @Override
     public void decrementIdlingResource() {
-      countingIdlingResource.decrement();
+        countingIdlingResource.decrement();
     }
 
     @Override
     public CountingIdlingResource getCountIdlingResource() {
-       return countingIdlingResource;
+        return countingIdlingResource;
     }
 
 
