@@ -30,7 +30,6 @@ import com.example.aleperf.bakingapp.BakingApplication;
 import com.example.aleperf.bakingapp.model.Recipe.Step;
 import com.example.aleperf.bakingapp.ui.intro.IdlingResourcesManager;
 import com.example.aleperf.bakingapp.utils.RecipeUtilities;
-import com.example.aleperf.bakingapp.utils.StepFieldsValidator;
 import com.example.aleperf.bakingapp.R;
 import com.example.aleperf.bakingapp.model.Recipe;
 import com.google.android.exoplayer2.C;
@@ -214,7 +213,7 @@ public class RecipeDetailStepFragment extends Fragment implements Player.EventLi
         } else {
             stepNumber.setText(String.format(getString(R.string.step_count), stepPosition, steps.size() - 1));
         }
-        videoUri = StepFieldsValidator.getVideoUri(step);
+        videoUri = RecipeUtilities.getVideoUri(step);
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         if (videoUri != null) {
             if (isNetworkAvailable()) {
