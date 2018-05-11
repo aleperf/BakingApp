@@ -61,7 +61,7 @@ public class RecipesMainActivityIntentTest {
     }
 
 
-
+ 
     @After
     public void cleanUp(){
         IdlingRegistry registry = IdlingRegistry.getInstance();
